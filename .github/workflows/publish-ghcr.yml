@@ -1,0 +1,107 @@
+name: Build, Smoke-Test & Publish OCI Images to GHCR
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '0 5 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build-and-publish:
+    name: ${{ matrix.image }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        image:
+          - t2linux
+          - ghost-node
+          - ghost-py
+          - ghost-cpp
+          - ghost-jvm
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build ghcr.io/awesome-os/${{ matrix.image }}:latest
+        run: |
+          IMAGE="ghcr.io/awesome-os/${{ matrix.image }}:latest"
+          docker build \
+            --file "${{ matrix.image }}/Dockerfile" \
+            --tag "${IMAGE}" \
+            "${{ matrix.image }}"
+
+      - name: Smoke-test container and print image size
+        run: |
+          IMAGE="ghcr.io/awesome-os/${{ matrix.image }}:latest"
+          SIZE="$(docker images --format '{{.Size}}' "${IMAGE}" | head -n 1)"
+          echo "=== IMAGE SIZE: ${IMAGE} -> ${SIZE} ==="
+          case "${{ matrix.image }}" in
+            t2linux)
+              docker run --rm "${IMAGE}" -c '
+                set -eu
+                cat /etc/t2linux-release
+                ls -la /bin/busybox /bin/sh /bin/b8g-ghost /etc/ssl/certs/ca-certificates.crt
+                test -x /bin/b8g-ghost
+                test "$B8G_GHOST_CACHE_DIR" = "/var/lib/b8g/cas"
+                echo "[smoke] t2linux OK (B8G_GHOST_CACHE_DIR=$B8G_GHOST_CACHE_DIR)"
+              '
+              ;;
+            ghost-node)
+              docker run --rm "${IMAGE}" sh -c '
+                set -eu
+                node -v
+                ls -la /bin/b8g-ghost
+                test -x /bin/b8g-ghost
+                test "$B8G_GHOST_CACHE_DIR" = "/var/lib/b8g/cas"
+                echo "[smoke] ghost-node OK"
+              '
+              ;;
+            ghost-py)
+              docker run --rm "${IMAGE}" sh -c '
+                set -eu
+                python3 --version
+                python3 -c "import ghost_ffi; print(\"ghost_ffi cas dir:\", ghost_ffi.machine_cas_dir())"
+                ls -la /bin/b8g-ghost /opt/b8g/ghost_ffi.py
+                test -x /bin/b8g-ghost
+                test "$B8G_GHOST_CACHE_DIR" = "/var/lib/b8g/cas"
+                echo "[smoke] ghost-py OK"
+              '
+              ;;
+            ghost-cpp)
+              docker run --rm "${IMAGE}" sh -c '
+                set -eu
+                ls -la /bin/b8g-ghost /usr/local/include/b8g_ghost.h /usr/local/src/b8g_ghost.c /usr/include/stdio.h
+                test -x /bin/b8g-ghost
+                test "$B8G_GHOST_CACHE_DIR" = "/var/lib/b8g/cas"
+                echo "[smoke] ghost-cpp OK"
+              '
+              ;;
+            ghost-jvm)
+              docker run --rm "${IMAGE}" sh -c '
+                set -eu
+                java -version
+                ls -la /bin/b8g-ghost
+                test -x /bin/b8g-ghost
+                test "$B8G_GHOST_CACHE_DIR" = "/var/lib/b8g/cas"
+                echo "[smoke] ghost-jvm OK"
+              '
+              ;;
+          esac
+
+      - name: Push ghcr.io/awesome-os/${{ matrix.image }}:latest
+        run: |
+          docker push "ghcr.io/awesome-os/${{ matrix.image }}:latest"
