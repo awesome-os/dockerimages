@@ -1,14 +1,20 @@
 # syntax=docker/dockerfile:1
 # Ultra-slim Alpine + musl-dev + b8g-ghost + b8g_ghost.h/b8g_ghost.c OCI image
-FROM alpine:3.21 AS ghost-fetch
+FROM --platform=$BUILDPLATFORM alpine:3.21 AS ghost-fetch
 
+ARG TARGETARCH
 ARG GHOST_INDEX_URL="https://raw.githubusercontent.com/awesome-os/b8g-ghost/main/manifests/index.json"
 ARG GHOST_CPP_RAW="https://raw.githubusercontent.com/awesome-os/ghost-cpp/main"
 
 RUN set -eux; \
+    case "${TARGETARCH:-amd64}" in \
+      amd64) GHOST_ARCH="x64" ;; \
+      arm64) GHOST_ARCH="arm64" ;; \
+      *) echo "Unsupported TARGETARCH: ${TARGETARCH:-unset}" >&2; exit 1 ;; \
+    esac; \
     apk add --no-cache ca-certificates curl jq; \
     INDEX_JSON="$(curl -fsSL "${GHOST_INDEX_URL}")"; \
-    ENTRY="$(printf '%s' "${INDEX_JSON}" | jq -er '.entries["b8g-ghost-linux-x64"] // .entries["b8g-shim-linux-x64"]')"; \
+    ENTRY="$(printf '%s' "${INDEX_JSON}" | jq -er --arg a "${GHOST_ARCH}" '.entries["b8g-ghost-linux-\($a)"] // .entries["b8g-shim-linux-\($a)"]')"; \
     GHOST_URL="$(printf '%s' "${ENTRY}" | jq -r '.download_url')"; \
     GHOST_SHA="$(printf '%s' "${ENTRY}" | jq -r '.sha256')"; \
     curl -fsSL "${GHOST_URL}" -o /tmp/b8g-ghost; \
