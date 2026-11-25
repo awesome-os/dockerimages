@@ -93,3 +93,13 @@ docker run --rm -v ~/.b8g/cas:/var/lib/b8g/cas ghcr.io/awesome-os/ghost-py:lates
 # Clone & enter repository (all platforms)
 git clone https://github.com/awesome-os/dockerimages.git && cd dockerimages
 ```
+
+## Quick Install & Run (Windows / Linux / macOS)
+
+```sh
+# Install / hydrate from v11 CAS via holo-pm
+holo-pm install repository://github.com/awesome-os/dockerimages@main
+
+# Or project & run directly via holo-project (0-byte hardlink)
+holo-project "project://cpp/dockerimages?from=repository://github.com/awesome-os/dockerimages@main"
+```
