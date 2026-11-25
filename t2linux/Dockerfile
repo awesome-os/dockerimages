@@ -7,8 +7,8 @@ ARG GHOST_INDEX_URL="https://raw.githubusercontent.com/awesome-os/b8g-ghost/main
 
 RUN set -eux; \
     case "${TARGETARCH:-amd64}" in \
-      amd64) GHOST_ARCH="x64" ;; \
-      arm64) GHOST_ARCH="arm64" ;; \
+      amd64) GHOST_ARCH="x64"; COREUTILS_ARCH="x86_64" ;; \
+      arm64) GHOST_ARCH="arm64"; COREUTILS_ARCH="aarch64" ;; \
       *) echo "Unsupported TARGETARCH: ${TARGETARCH:-unset}" >&2; exit 1 ;; \
     esac; \
     apk add --no-cache busybox-static ca-certificates curl jq; \
@@ -17,8 +17,23 @@ RUN set -eux; \
     cp /bin/busybox.static /rootfs/bin/busybox; \
     chmod 0755 /rootfs/bin/busybox; \
     for cmd in sh ash ls cat cp mv rm mkdir rmdir ln chmod chown env echo printf grep sed awk head tail cut tr wc sort uniq test '[' true false uname id whoami pwd which sleep tar gzip gunzip sha256sum wget; do \
-      ln -s busybox "/rootfs/bin/${cmd}"; \
+      ln -sf busybox "/rootfs/bin/${cmd}"; \
     done; \
+    COREUTILS_URL="https://github.com/awesome-os/coreutils/releases/latest/download/coreutils-linux-${COREUTILS_ARCH}-musl"; \
+    COREUTILS_HTTP="$(curl -sSL -o /rootfs/bin/coreutils -w '%{http_code}' "${COREUTILS_URL}" || true)"; \
+    if [ "${COREUTILS_HTTP}" = "200" ] && [ -s /rootfs/bin/coreutils ]; then \
+      chmod 0755 /rootfs/bin/coreutils; \
+      for cmd in ls cat cp mv rm mkdir ln chmod stat uname env pwd echo head tail wc sort uniq cut tr sha256sum sha512sum base64 sleep true false dd df du sync touch realpath readlink tee date nproc dirname basename; do \
+        ln -sf coreutils "/rootfs/bin/${cmd}"; \
+      done; \
+    elif [ "${COREUTILS_HTTP}" = "404" ]; then \
+      echo "WARN: ${COREUTILS_URL} returned 404; falling back to busybox for coreutils applets" >&2; \
+      rm -f /rootfs/bin/coreutils; \
+    else \
+      echo "ERROR: unexpected HTTP status ${COREUTILS_HTTP} fetching ${COREUTILS_URL}" >&2; \
+      rm -f /rootfs/bin/coreutils; \
+      exit 1; \
+    fi; \
     cp /etc/ssl/certs/ca-certificates.crt /rootfs/etc/ssl/certs/ca-certificates.crt; \
     INDEX_JSON="$(curl -fsSL "${GHOST_INDEX_URL}")"; \
     ENTRY="$(printf '%s' "${INDEX_JSON}" | jq -er --arg a "${GHOST_ARCH}" '.entries["b8g-ghost-linux-\($a)"] // .entries["b8g-shim-linux-\($a)"]')"; \
