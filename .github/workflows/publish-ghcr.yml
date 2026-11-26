@@ -63,19 +63,23 @@ jobs:
               docker run --rm "${IMAGE}" -c '
                 set -eu
                 cat /etc/t2linux-release
-                ls -la /bin/busybox /bin/sh /bin/b8g-ghost /etc/ssl/certs/ca-certificates.crt
-                test -x /bin/b8g-ghost
-                test "$B8G_GHOST_CACHE_DIR" = "/var/lib/b8g/cas"
-                echo "[smoke] t2linux OK (B8G_GHOST_CACHE_DIR=$B8G_GHOST_CACHE_DIR)"
+                ls -la /bin/busybox /bin/sh /bin/holo-pm /etc/ssl/certs/ca-certificates.crt
+                test -x /bin/busybox
+                test -x /bin/holo-pm
+                test -s /etc/ssl/certs/ca-certificates.crt
+                test "$B8G_CAS_DIR" = "/var/lib/b8g/cas"
+                test "$B8G_CAS_V11_ROOT" = "/var/lib/b8g/cas/v11"
+                echo "[smoke] t2linux OK (B8G_CAS_V11_ROOT=$B8G_CAS_V11_ROOT)"
               '
               ;;
             ghost-node)
               docker run --rm "${IMAGE}" sh -c '
                 set -eu
                 node -v
-                ls -la /bin/b8g-ghost
-                test -x /bin/b8g-ghost
-                test "$B8G_GHOST_CACHE_DIR" = "/var/lib/b8g/cas"
+                ls -la /bin/busybox /bin/holo-pm /etc/ssl/certs/ca-certificates.crt
+                test -x /bin/holo-pm
+                test "$B8G_CAS_DIR" = "/var/lib/b8g/cas"
+                test "$B8G_CAS_V11_ROOT" = "/var/lib/b8g/cas/v11"
                 echo "[smoke] ghost-node OK"
               '
               ;;
@@ -83,19 +87,20 @@ jobs:
               docker run --rm "${IMAGE}" sh -c '
                 set -eu
                 python3 --version
-                python3 -c "import ghost_ffi; print(\"ghost_ffi cas dir:\", ghost_ffi.machine_cas_dir())"
-                ls -la /bin/b8g-ghost /opt/b8g/ghost_ffi.py
-                test -x /bin/b8g-ghost
-                test "$B8G_GHOST_CACHE_DIR" = "/var/lib/b8g/cas"
+                ls -la /bin/busybox /bin/holo-pm /etc/ssl/certs/ca-certificates.crt
+                test -x /bin/holo-pm
+                test "$B8G_CAS_DIR" = "/var/lib/b8g/cas"
+                test "$B8G_CAS_V11_ROOT" = "/var/lib/b8g/cas/v11"
                 echo "[smoke] ghost-py OK"
               '
               ;;
             ghost-cpp)
               docker run --rm "${IMAGE}" sh -c '
                 set -eu
-                ls -la /bin/b8g-ghost /usr/local/include/b8g_ghost.h /usr/local/src/b8g_ghost.c /usr/include/stdio.h
-                test -x /bin/b8g-ghost
-                test "$B8G_GHOST_CACHE_DIR" = "/var/lib/b8g/cas"
+                ls -la /bin/busybox /bin/holo-pm /usr/local/include/libholo_pm.h /usr/local/lib/libholo-pm.so /usr/include/stdio.h /etc/ssl/certs/ca-certificates.crt
+                test -x /bin/holo-pm
+                test "$B8G_CAS_DIR" = "/var/lib/b8g/cas"
+                test "$B8G_CAS_V11_ROOT" = "/var/lib/b8g/cas/v11"
                 echo "[smoke] ghost-cpp OK"
               '
               ;;
@@ -103,9 +108,10 @@ jobs:
               docker run --rm "${IMAGE}" sh -c '
                 set -eu
                 java -version
-                ls -la /bin/b8g-ghost
-                test -x /bin/b8g-ghost
-                test "$B8G_GHOST_CACHE_DIR" = "/var/lib/b8g/cas"
+                ls -la /bin/busybox /bin/holo-pm /etc/ssl/certs/ca-certificates.crt
+                test -x /bin/holo-pm
+                test "$B8G_CAS_DIR" = "/var/lib/b8g/cas"
+                test "$B8G_CAS_V11_ROOT" = "/var/lib/b8g/cas/v11"
                 echo "[smoke] ghost-jvm OK"
               '
               ;;

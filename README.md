@@ -1,18 +1,18 @@
 # Awesome-OS Docker Images (`ghcr.io/awesome-os/*`)
 
-Ultra-slim `FROM scratch` and `b8g-ghost` OCI container images built and published daily to **GitHub Container Registry (`ghcr.io/awesome-os/*`)** with shared Content-Addressable Store (CAS) volume support.
+Ultra-slim `FROM scratch` and Holo v11 (`holo-pm`) OCI container images built and published daily to **GitHub Container Registry (`ghcr.io/awesome-os/*`)** with shared Content-Addressable Store (CAS) volume support.
 
 ## Published Images
 
 | Image | Base | Highlights |
 | :--- | :--- | :--- |
-| `ghcr.io/awesome-os/t2linux:latest` | `FROM scratch` | ~3 MB static `busybox`, CA certificates, `/etc/t2linux-release`, `/bin/b8g-ghost` |
-| `ghcr.io/awesome-os/ghost-node:latest` | `node:24-alpine` | Node.js 24 + `/bin/b8g-ghost` |
-| `ghcr.io/awesome-os/ghost-py:latest` | `python:3.13-alpine` | Python 3.13 + `/bin/b8g-ghost` + `ghost_ffi.py` (pre-installed in `site-packages`) |
-| `ghcr.io/awesome-os/ghost-cpp:latest` | `alpine:3.21` | `musl-dev` + `/bin/b8g-ghost` + `b8g_ghost.h` & `b8g_ghost.c` |
-| `ghcr.io/awesome-os/ghost-jvm:latest` | `eclipse-temurin:21-jre-alpine` | Temurin 21 JRE + `/bin/b8g-ghost` |
+| `ghcr.io/awesome-os/t2linux:latest` | `FROM scratch` | ~3 MB static `busybox`, CA certificates, `/etc/t2linux-release`, `/bin/holo-pm` |
+| `ghcr.io/awesome-os/ghost-node:latest` | `node:24-alpine` | Node.js 24 + `/bin/holo-pm` |
+| `ghcr.io/awesome-os/ghost-py:latest` | `python:3.13-alpine` | Python 3.13 + `/bin/holo-pm` |
+| `ghcr.io/awesome-os/ghost-cpp:latest` | `alpine:3.21` | `musl-dev` + `/bin/holo-pm` + `/usr/local/include/libholo_pm.h` & `/usr/local/lib/libholo-pm.so` |
+| `ghcr.io/awesome-os/ghost-jvm:latest` | `eclipse-temurin:21-jre-alpine` | Temurin 21 JRE + `/bin/holo-pm` |
 
-All images verify `/bin/b8g-ghost` bit-for-bit via FIPS 180-4 SHA-256 against [`awesome-os/b8g-ghost @ cas-v1`](https://github.com/awesome-os/b8g-ghost/releases/tag/cas-v1) during build.
+All images verify `/bin/holo-pm` (and `libholo-pm.so` / `libholo_pm.h`) bit-for-bit via SHA-512 against [`awesome-os/holo-v11`](https://github.com/awesome-os/holo-v11/blob/main/index/holo-compiler-lockfile.json) during build.
 
 ---
 
@@ -24,7 +24,7 @@ All images verify `/bin/b8g-ghost` bit-for-bit via FIPS 180-4 SHA-256 against [`
 docker run --rm -it \
   -v ~/.b8g/cas:/var/lib/b8g/cas \
   ghcr.io/awesome-os/t2linux:latest \
-  -c 'cat /etc/t2linux-release && ls -lh /bin/b8g-ghost'
+  -c 'cat /etc/t2linux-release && ls -lh /bin/busybox /bin/holo-pm /etc/ssl/certs/ca-certificates.crt'
 ```
 
 ### `ghost-node` (Node.js 24)
@@ -36,22 +36,22 @@ docker run --rm \
   node -v
 ```
 
-### `ghost-py` (Python 3.13 + `ghost_ffi.py`)
+### `ghost-py` (Python 3.13)
 
 ```sh
 docker run --rm \
   -v ~/.b8g/cas:/var/lib/b8g/cas \
   ghcr.io/awesome-os/ghost-py:latest \
-  python3 -c "import ghost_ffi; print(ghost_ffi.machine_cas_dir())"
+  python3 --version
 ```
 
-### `ghost-cpp` (Alpine 3.21 + `musl-dev` + Ghost C/C++ SDK)
+### `ghost-cpp` (Alpine 3.21 + `musl-dev` + Holo v11 C11 SDK)
 
 ```sh
 docker run --rm \
   -v ~/.b8g/cas:/var/lib/b8g/cas \
   ghcr.io/awesome-os/ghost-cpp:latest \
-  ls -la /bin/b8g-ghost /usr/local/include/b8g_ghost.h /usr/local/src/b8g_ghost.c
+  ls -la /bin/holo-pm /usr/local/include/libholo_pm.h /usr/local/lib/libholo-pm.so
 ```
 
 ### `ghost-jvm` (Eclipse Temurin 21 JRE)
@@ -69,15 +69,10 @@ docker run --rm \
 
 Every image declares `VOLUME ["/var/lib/b8g/cas"]` and exports:
 
-- `B8G_GHOST_CACHE_DIR=/var/lib/b8g/cas`
 - `B8G_CAS_DIR=/var/lib/b8g/cas`
+- `B8G_CAS_V11_ROOT=/var/lib/b8g/cas/v11`
 
-Mount a single host CAS directory across all containers (`-v ~/.b8g/cas:/var/lib/b8g/cas`) to deduplicate native Ghost libraries across `t2linux`, `ghost-node`, `ghost-py`, `ghost-cpp`, and `ghost-jvm` with zero redundant downloads:
-
-```sh
-mkdir -p ~/.b8g/cas
-docker run --rm -v ~/.b8g/cas:/var/lib/b8g/cas ghcr.io/awesome-os/ghost-py:latest python3 -c "import ghost_ffi; print(ghost_ffi.machine_cas_dir())"
-```
+Mount a single host CAS directory across all containers (`-v ~/.b8g/cas:/var/lib/b8g/cas`) to deduplicate Holo v11 artifacts across `t2linux`, `ghost-node`, `ghost-py`, `ghost-cpp`, and `ghost-jvm` with zero redundant downloads.
 
 ## Automated Daily Publishing
 

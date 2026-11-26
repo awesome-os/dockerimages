@@ -1,43 +1,52 @@
 # syntax=docker/dockerfile:1
-# Ultra-slim Alpine + musl-dev + b8g-ghost + b8g_ghost.h/b8g_ghost.c OCI image
-FROM --platform=$BUILDPLATFORM alpine:3.21 AS ghost-fetch
+# Ultra-slim Alpine + musl-dev + Holo v11 (holo-pm + libholo_pm.h + libholo-pm.so) OCI image
+FROM --platform=$BUILDPLATFORM alpine:3.21 AS holo-fetch
 
 ARG TARGETARCH
-ARG GHOST_INDEX_URL="https://raw.githubusercontent.com/awesome-os/b8g-ghost/main/manifests/index.json"
-ARG GHOST_CPP_RAW="https://raw.githubusercontent.com/awesome-os/ghost-cpp/main"
+ARG HOLO_V11_MANIFEST_URL="https://raw.githubusercontent.com/awesome-os/holo-v11/main/index/holo-compiler-lockfile.json"
 
 RUN set -eux; \
     case "${TARGETARCH:-amd64}" in \
-      amd64) GHOST_ARCH="x64" ;; \
-      arm64) GHOST_ARCH="arm64" ;; \
+      amd64) HOLO_ARCH="x86_64" ;; \
+      arm64) HOLO_ARCH="aarch64" ;; \
       *) echo "Unsupported TARGETARCH: ${TARGETARCH:-unset}" >&2; exit 1 ;; \
     esac; \
     apk add --no-cache ca-certificates curl jq; \
-    INDEX_JSON="$(curl -fsSL "${GHOST_INDEX_URL}")"; \
-    ENTRY="$(printf '%s' "${INDEX_JSON}" | jq -er --arg a "${GHOST_ARCH}" '.entries["b8g-ghost-linux-\($a)"] // .entries["b8g-shim-linux-\($a)"]')"; \
-    GHOST_URL="$(printf '%s' "${ENTRY}" | jq -r '.download_url')"; \
-    GHOST_SHA="$(printf '%s' "${ENTRY}" | jq -r '.sha256')"; \
-    curl -fsSL "${GHOST_URL}" -o /tmp/b8g-ghost; \
-    printf '%s  %s\n' "${GHOST_SHA}" /tmp/b8g-ghost | sha256sum -c -; \
-    chmod 0755 /tmp/b8g-ghost; \
-    curl -fsSL "${GHOST_CPP_RAW}/include/b8g_ghost.h" -o /tmp/b8g_ghost.h; \
-    curl -fsSL "${GHOST_CPP_RAW}/src/b8g_ghost.c" -o /tmp/b8g_ghost.c; \
-    chmod 0644 /tmp/b8g_ghost.h /tmp/b8g_ghost.c
+    MANIFEST_JSON="$(curl -fsSL "${HOLO_V11_MANIFEST_URL}")"; \
+    BIN_ENTRY="$(printf '%s' "${MANIFEST_JSON}" | jq -er --arg f "holo-pm-linux-${HOLO_ARCH}" '[.dependencies[] | select(.filename == $f)][0]')"; \
+    BIN_URL="$(printf '%s' "${BIN_ENTRY}" | jq -r '.downloadUrl')"; \
+    BIN_SHA512="$(printf '%s' "${BIN_ENTRY}" | jq -r '.sha512')"; \
+    curl -fsSL "${BIN_URL}" -o /tmp/holo-pm; \
+    printf '%s  %s\n' "${BIN_SHA512}" /tmp/holo-pm | sha512sum -c -; \
+    chmod 0755 /tmp/holo-pm; \
+    LIB_ENTRY="$(printf '%s' "${MANIFEST_JSON}" | jq -er --arg f "libholo-pm-linux-${HOLO_ARCH}.so" '[.dependencies[] | select(.filename == $f)][0]')"; \
+    LIB_URL="$(printf '%s' "${LIB_ENTRY}" | jq -r '.downloadUrl')"; \
+    LIB_SHA512="$(printf '%s' "${LIB_ENTRY}" | jq -r '.sha512')"; \
+    curl -fsSL "${LIB_URL}" -o /tmp/libholo-pm.so; \
+    printf '%s  %s\n' "${LIB_SHA512}" /tmp/libholo-pm.so | sha512sum -c -; \
+    chmod 0755 /tmp/libholo-pm.so; \
+    HDR_ENTRY="$(printf '%s' "${MANIFEST_JSON}" | jq -er '[.dependencies[] | select(.filename == "libholo_pm.h")][0]')"; \
+    HDR_URL="$(printf '%s' "${HDR_ENTRY}" | jq -r '.downloadUrl')"; \
+    HDR_SHA512="$(printf '%s' "${HDR_ENTRY}" | jq -r '.sha512')"; \
+    curl -fsSL "${HDR_URL}" -o /tmp/libholo_pm.h; \
+    printf '%s  %s\n' "${HDR_SHA512}" /tmp/libholo_pm.h | sha512sum -c -; \
+    chmod 0644 /tmp/libholo_pm.h
 
 FROM alpine:3.21
 
 LABEL org.opencontainers.image.title="Awesome-OS ghost-cpp" \
-      org.opencontainers.image.description="Slim Alpine 3.21 + musl-dev image with b8g-ghost and ghost-cpp C/C++ SDK" \
+      org.opencontainers.image.description="Slim Alpine 3.21 + musl-dev image with Holo v11 holo-pm and libholo-pm C11 SDK" \
       org.opencontainers.image.source="https://github.com/awesome-os/dockerimages" \
       org.opencontainers.image.licenses="MIT"
 
-RUN apk add --no-cache musl-dev ca-certificates && mkdir -p /var/lib/b8g/cas /usr/local/include /usr/local/src
+RUN apk add --no-cache musl-dev ca-certificates && mkdir -p /var/lib/b8g/cas/v11 /usr/local/include /usr/local/lib
 
-COPY --from=ghost-fetch /tmp/b8g-ghost /bin/b8g-ghost
-COPY --from=ghost-fetch /tmp/b8g_ghost.h /usr/local/include/b8g_ghost.h
-COPY --from=ghost-fetch /tmp/b8g_ghost.c /usr/local/src/b8g_ghost.c
+COPY --from=holo-fetch /tmp/holo-pm /bin/holo-pm
+COPY --from=holo-fetch /tmp/libholo_pm.h /usr/local/include/libholo_pm.h
+COPY --from=holo-fetch /tmp/libholo-pm.so /usr/local/lib/libholo-pm.so
 
-ENV B8G_GHOST_CACHE_DIR="/var/lib/b8g/cas" \
-    B8G_CAS_DIR="/var/lib/b8g/cas"
+ENV SSL_CERT_FILE="/etc/ssl/certs/ca-certificates.crt" \
+    B8G_CAS_DIR="/var/lib/b8g/cas" \
+    B8G_CAS_V11_ROOT="/var/lib/b8g/cas/v11"
 
 VOLUME ["/var/lib/b8g/cas"]
