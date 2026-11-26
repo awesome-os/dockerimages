@@ -3,10 +3,12 @@
   "name": "dockerimages",
   "kind": "control-plane",
   "tests": [
-    "node -e \"const fs=require('node:fs'); for(const d of ['t2linux','ghost-node','ghost-py','ghost-cpp','ghost-jvm']){ if(!fs.existsSync(d+'/Dockerfile')) process.exit(1); }\""
+    "node -e \"const fs=require('node:fs'); for(const d of ['t2linux','holo-node','holo-py','holo-cpp','holo-jvm']){ if(!fs.existsSync(d+'/Dockerfile')) process.exit(1); }\"",
+    "node --test catalog/oci-catalog.test.mts"
   ],
   "docs": [
-    "README.md"
+    "README.md",
+    "CATALOG.md"
   ],
   "guards": {
     "zeroGhost": true,

@@ -1,0 +1,2416 @@
+{
+  "schema": "awesome-os.oci-catalog.v1",
+  "abiMagic": "0x33564742",
+  "casProtocol": "holo-v11",
+  "generatedAt": "2026-11-26T21:10:00Z",
+  "publishedBaseImages": [
+    {
+      "name": "t2linux",
+      "image": "ghcr.io/awesome-os/t2linux:latest",
+      "dockerfile": "t2linux/Dockerfile",
+      "base": "FROM scratch",
+      "platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ],
+      "casVolume": "/var/lib/b8g/cas",
+      "casV11Root": "/var/lib/b8g/cas/v11",
+      "highlights": "Ultra-slim ~3 MB static busybox, CA certificates, /etc/t2linux-release, /bin/holo-pm"
+    },
+    {
+      "name": "holo-node",
+      "image": "ghcr.io/awesome-os/holo-node:latest",
+      "dockerfile": "holo-node/Dockerfile",
+      "base": "node:24-alpine",
+      "platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ],
+      "casVolume": "/var/lib/b8g/cas",
+      "casV11Root": "/var/lib/b8g/cas/v11",
+      "highlights": "Node.js 24 Alpine + /bin/holo-pm CAS runtime"
+    },
+    {
+      "name": "holo-py",
+      "image": "ghcr.io/awesome-os/holo-py:latest",
+      "dockerfile": "holo-py/Dockerfile",
+      "base": "python:3.13-alpine",
+      "platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ],
+      "casVolume": "/var/lib/b8g/cas",
+      "casV11Root": "/var/lib/b8g/cas/v11",
+      "highlights": "Python 3.13 Alpine + /bin/holo-pm CAS runtime"
+    },
+    {
+      "name": "holo-cpp",
+      "image": "ghcr.io/awesome-os/holo-cpp:latest",
+      "dockerfile": "holo-cpp/Dockerfile",
+      "base": "alpine:3.21",
+      "platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ],
+      "casVolume": "/var/lib/b8g/cas",
+      "casV11Root": "/var/lib/b8g/cas/v11",
+      "highlights": "Alpine 3.21 + musl-dev + /bin/holo-pm + /usr/local/include/libholo_pm.h + /usr/local/lib/libholo-pm.so"
+    },
+    {
+      "name": "holo-jvm",
+      "image": "ghcr.io/awesome-os/holo-jvm:latest",
+      "dockerfile": "holo-jvm/Dockerfile",
+      "base": "eclipse-temurin:21-jre-alpine",
+      "platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ],
+      "casVolume": "/var/lib/b8g/cas",
+      "casV11Root": "/var/lib/b8g/cas/v11",
+      "highlights": "Eclipse Temurin 21 JRE Alpine + /bin/holo-pm CAS runtime"
+    }
+  ],
+  "awesomeOsOrgImages": {
+    "orgUrl": "https://github.com/awesome-os",
+    "totalOrgReposOnGitHub": 144,
+    "localMirrorsScanned": 140,
+    "reposWithOciFiles": 32,
+    "activeRepos": 19,
+    "archivedRepos": 13,
+    "totalFiles": 123,
+    "categories": {
+      "Base & Runtime": [
+        {
+          "name": "coreutils",
+          "url": "https://github.com/awesome-os/coreutils",
+          "archived": false,
+          "pushedAt": "2026-11-26T19:09:08Z",
+          "description": "Awesome-OS hard-fork of MIT Rust GNU coreutils (uutils) for multicall v11 CAS & T2Linux replacement of BusyBox",
+          "fileCount": 1,
+          "files": [
+            ".devcontainer/Dockerfile"
+          ]
+        },
+        {
+          "name": "docker",
+          "url": "https://github.com/awesome-os/docker",
+          "archived": true,
+          "pushedAt": "2026-11-26T19:09:39Z",
+          "description": "docker builds",
+          "fileCount": 3,
+          "files": [
+            "Dockerfile",
+            "debian/Dockerfile",
+            "distroless/Dockerfile"
+          ]
+        },
+        {
+          "name": "dockerimages",
+          "url": "https://github.com/awesome-os/dockerimages",
+          "archived": false,
+          "pushedAt": "2026-11-26T20:49:36Z",
+          "description": "Ultra-slim FROM scratch & Holo v11 OCI container images (t2linux, holo-node, holo-py, holo-cpp, holo-jvm) published daily to ghcr.io/awesome-os/* with shared CAS volume support",
+          "fileCount": 5,
+          "files": [
+            "holo-cpp/Dockerfile",
+            "holo-jvm/Dockerfile",
+            "holo-node/Dockerfile",
+            "holo-py/Dockerfile",
+            "t2linux/Dockerfile"
+          ]
+        },
+        {
+          "name": "pnpm",
+          "url": "https://github.com/awesome-os/pnpm",
+          "archived": false,
+          "pushedAt": "2026-11-25T08:05:11Z",
+          "description": "CAS-native Rust pnpm v12 + libpnpm C-ABI + Holo v11 launcher with GitHub Releases self-update",
+          "fileCount": 3,
+          "files": [
+            "docker/Dockerfile",
+            "docker/Dockerfile.alpine",
+            "pnpr/docker/Dockerfile"
+          ]
+        },
+        {
+          "name": "uv",
+          "url": "https://github.com/awesome-os/uv",
+          "archived": false,
+          "pushedAt": "2026-11-25T08:05:27Z",
+          "description": "Awesome-OS CAS-integrated fork of astral-sh/uv with libuv_b8g (B8G_ABI_MAGIC_V3) C-ABI shared library",
+          "fileCount": 3,
+          "files": [
+            "Dockerfile",
+            "crates/uv-dev/builder.dockerfile",
+            "crates/uv-trampoline/Dockerfile"
+          ]
+        }
+      ],
+      "Sovereign AI & GPU": [
+        {
+          "name": "colibri",
+          "url": "https://github.com/awesome-os/colibri",
+          "archived": false,
+          "pushedAt": "2026-11-26T19:32:36Z",
+          "description": "A hierarchical inference engine for frontier MoE models: hot experts on the GPU (CUDA, Vulkan), warm ones in RAM, cold ones streamed from NVMe. Written in C, runs on the hardware you already own.",
+          "fileCount": 4,
+          "files": [
+            "docker/Dockerfile",
+            "docker/Dockerfile.slim",
+            "docker/docker-compose.yml",
+            "docs/experiments/vulkan-empty-prefetch-2026-11-08/Dockerfile.models"
+          ]
+        },
+        {
+          "name": "llama.cpp",
+          "url": "https://github.com/awesome-os/llama.cpp",
+          "archived": false,
+          "pushedAt": "2026-11-26T19:32:12Z",
+          "description": "LLM inference in C/C++",
+          "fileCount": 11,
+          "files": [
+            ".devops/cann.Dockerfile",
+            ".devops/cpu.Dockerfile",
+            ".devops/cuda.Dockerfile",
+            ".devops/intel.Dockerfile",
+            ".devops/llama-cli-cann.Dockerfile",
+            ".devops/musa.Dockerfile",
+            ".devops/openvino.Dockerfile",
+            ".devops/rocm.Dockerfile",
+            ".devops/s390x.Dockerfile",
+            ".devops/vulkan.Dockerfile",
+            ".devops/zendnn.Dockerfile"
+          ]
+        },
+        {
+          "name": "vllm",
+          "url": "https://github.com/awesome-os/vllm",
+          "archived": false,
+          "pushedAt": "2026-11-26T20:20:45Z",
+          "description": "A high-throughput and memory-efficient inference and serving engine for LLMs",
+          "fileCount": 12,
+          "files": [
+            "docker/Dockerfile",
+            "docker/Dockerfile.cpu",
+            "docker/Dockerfile.efa",
+            "docker/Dockerfile.ppc64le",
+            "docker/Dockerfile.rocm",
+            "docker/Dockerfile.rocm_base",
+            "docker/Dockerfile.rocm_base_gfx1250",
+            "docker/Dockerfile.rocm_gfx1250",
+            "docker/Dockerfile.s390x",
+            "docker/Dockerfile.xpu",
+            "docker/Dockerfile.zen",
+            "examples/observability/prometheus_grafana/docker-compose.yaml"
+          ]
+        }
+      ],
+      "Sovereign Forge & Identity": [
+        {
+          "name": "gitaly",
+          "url": "https://github.com/awesome-os/gitaly",
+          "archived": false,
+          "pushedAt": "2026-11-25T08:04:54Z",
+          "description": "Awesome-OS hard-fork of Gitaly (Git RPC server) for universal-git & v11 CAS intersection",
+          "fileCount": 3,
+          "files": [
+            "Dockerfile.base",
+            "Dockerfile.bundled-git",
+            "_support/benchmarking/docker/benchmark-client/Dockerfile"
+          ]
+        },
+        {
+          "name": "gitlab-foss",
+          "url": "https://github.com/awesome-os/gitlab-foss",
+          "archived": false,
+          "pushedAt": "2026-11-25T08:04:56Z",
+          "description": "Awesome-OS hard-fork of GitLab FOSS (MIT core + Workhorse) for Section-Intersection & v11 CAS integration",
+          "fileCount": 24,
+          "files": [
+            ".gitlab/duo/session-image.Dockerfile",
+            "Dockerfile.assets",
+            "docker-compose.yml",
+            "qa/Dockerfile",
+            "qa/perf/ai/Dockerfile.ab",
+            "qa/qa/fixtures/package_managers/maven/Dockerfile",
+            "vendor/Dockerfile/Binary-alpine.Dockerfile",
+            "vendor/Dockerfile/Binary-scratch.Dockerfile",
+            "vendor/Dockerfile/Binary.Dockerfile",
+            "vendor/Dockerfile/Golang-alpine.Dockerfile",
+            "vendor/Dockerfile/Golang-scratch.Dockerfile",
+            "vendor/Dockerfile/Golang.Dockerfile",
+            "vendor/Dockerfile/HTTPd.Dockerfile",
+            "vendor/Dockerfile/Node-alpine.Dockerfile",
+            "vendor/Dockerfile/Node.Dockerfile",
+            "vendor/Dockerfile/OpenJDK.Dockerfile",
+            "vendor/Dockerfile/PHP.Dockerfile",
+            "vendor/Dockerfile/Python-alpine.Dockerfile",
+            "vendor/Dockerfile/Python.Dockerfile",
+            "vendor/Dockerfile/Python2.Dockerfile",
+            "vendor/Dockerfile/Ruby-alpine.Dockerfile",
+            "vendor/Dockerfile/Ruby.Dockerfile",
+            "vendor/Dockerfile/Rust.Dockerfile",
+            "vendor/Dockerfile/Swift.Dockerfile"
+          ]
+        },
+        {
+          "name": "gitlab-runner",
+          "url": "https://github.com/awesome-os/gitlab-runner",
+          "archived": false,
+          "pushedAt": "2026-11-25T08:04:56Z",
+          "description": "Awesome-OS hard-fork of GitLab Runner for holo-compiler, wasi-host & v11 CAS execution",
+          "fileCount": 12,
+          "files": [
+            "dockerfiles/runner-helper/Dockerfile",
+            "dockerfiles/runner-helper/Dockerfile.concrete",
+            "dockerfiles/runner/Dockerfile",
+            "tests/dockerfiles/alpine-entrypoint/Dockerfile",
+            "tests/dockerfiles/alpine-entrypoint/Dockerfile.pre-post-trap",
+            "tests/dockerfiles/alpine-entrypoint/Dockerfile.stderr",
+            "tests/dockerfiles/alpine-id-overflow/Dockerfile",
+            "tests/dockerfiles/alpine-no-root/Dockerfile",
+            "tests/dockerfiles/counter-service/Dockerfile",
+            "tests/dockerfiles/gitlab-runner-helper-entrypoint/dockerfile",
+            "tests/dockerfiles/many-exposed-ports/Dockerfile",
+            "tests/dockerfiles/powershell-entrypoint/Dockerfile.pre-post-trap"
+          ]
+        },
+        {
+          "name": "gitlab-shell",
+          "url": "https://github.com/awesome-os/gitlab-shell",
+          "archived": false,
+          "pushedAt": "2026-11-25T08:04:55Z",
+          "description": "Awesome-OS hard-fork of GitLab Shell (SSH gateway) for mTLS/pipe & B8G_ARENA_V1 intersection",
+          "fileCount": 2,
+          "files": [
+            "cmd/gitlab-sshd/Dockerfile",
+            "docker-compose.yml"
+          ]
+        },
+        {
+          "name": "ory-polis",
+          "url": "https://github.com/awesome-os/ory-polis",
+          "archived": false,
+          "pushedAt": "2026-11-26T18:52:26Z",
+          "description": "🔥 Streamline your web application's authentication with Polis, an SSO service supporting SAML and OpenID Connect protocols. Beyond enterprise-grade Single Sign-On, it also supports Directory Sync via the SCIM 2.0 protocol for automatic user and group provisioning/de-provisioning. 🤩",
+          "fileCount": 3,
+          "files": [
+            "Dockerfile",
+            "_dev/docker-compose.yml",
+            "docker-compose.yml"
+          ]
+        }
+      ],
+      "Toolchains & Systems": [
+        {
+          "name": "cargo",
+          "url": "https://github.com/awesome-os/cargo",
+          "archived": false,
+          "pushedAt": "2026-11-25T08:04:45Z",
+          "description": "CAS-native drop-in Cargo + libcargo C-ABI (B8G_ABI_MAGIC_V3) with GitHub Releases self-update",
+          "fileCount": 2,
+          "files": [
+            "crates/cargo-test-support/containers/apache/Dockerfile",
+            "crates/cargo-test-support/containers/sshd/Dockerfile"
+          ]
+        },
+        {
+          "name": "chonkstep",
+          "url": "https://github.com/awesome-os/chonkstep",
+          "archived": false,
+          "pushedAt": "2026-11-25T08:04:45Z",
+          "description": "Floating Wayland compositor drop-in replacement for Hyprland on Omarchy (Awesome-OS mirror + B8G ABI v3 bridge)",
+          "fileCount": 1,
+          "files": [
+            "packaging/arch/Dockerfile.builder"
+          ]
+        },
+        {
+          "name": "firecracker",
+          "url": "https://github.com/awesome-os/firecracker",
+          "archived": false,
+          "pushedAt": "2026-11-26T20:20:49Z",
+          "description": "Secure and fast microVMs for serverless computing.",
+          "fileCount": 1,
+          "files": [
+            "tools/devctr/Dockerfile"
+          ]
+        },
+        {
+          "name": "go-lang",
+          "url": "https://github.com/awesome-os/go-lang",
+          "archived": false,
+          "pushedAt": "2026-11-25T08:04:57Z",
+          "description": "Awesome-OS hard-fork of Go with unified v11 CAS build-cache intersection (B8G_ABI_MAGIC_V3)",
+          "fileCount": 2,
+          "files": [
+            "src/crypto/internal/boring/Dockerfile",
+            "src/crypto/internal/fips140/nistec/fiat/Dockerfile"
+          ]
+        },
+        {
+          "name": "ladybird",
+          "url": "https://github.com/awesome-os/ladybird",
+          "archived": true,
+          "pushedAt": "2026-11-26T19:11:17Z",
+          "description": "Awesome-OS Ladybird Hard-Fork — Sovereign BSD-2-Clause Independent Web Engine + Chrome Parity & B8G/Sectium Acceleration Roadmap",
+          "fileCount": 3,
+          "files": [
+            ".devcontainer/fedora-ci/Dockerfile",
+            "Meta/Docker/ci/Dockerfile",
+            "Meta/Fuzzers/FuzzilliJs.dockerfile"
+          ]
+        },
+        {
+          "name": "maclab",
+          "url": "https://github.com/awesome-os/maclab",
+          "archived": false,
+          "pushedAt": "2026-11-25T08:05:04Z",
+          "description": "Apple Silicon Linux kernel test lab with Web UI, CLI, MCP for agents, and Awesome-OS B8G_ABI_MAGIC_V3 bridge (upstream: chriskearney/maclab)",
+          "fileCount": 3,
+          "files": [
+            "Dockerfile",
+            "builder/Containerfile",
+            "builder/pkg/Containerfile"
+          ]
+        },
+        {
+          "name": "pouchdb",
+          "url": "https://github.com/awesome-os/pouchdb",
+          "archived": true,
+          "pushedAt": "2026-11-26T19:08:18Z",
+          "description": "Experimental distributed DB fork (legacy QuaternionDB prototype; see awesome-os/awesome-os for current .b8p CAS architecture).",
+          "fileCount": 1,
+          "files": [
+            "docs-dev.Dockerfile"
+          ]
+        },
+        {
+          "name": "repository",
+          "url": "https://github.com/awesome-os/repository",
+          "archived": true,
+          "pushedAt": "2026-11-25T08:05:14Z",
+          "description": "",
+          "fileCount": 2,
+          "files": [
+            "InversifyJS/inversify-ide/Dockerfile",
+            "InversifyJS/inversify-ide/browser.Dockerfile"
+          ]
+        },
+        {
+          "name": "siliconforest",
+          "url": "https://github.com/awesome-os/siliconforest",
+          "archived": false,
+          "pushedAt": "2026-11-25T08:05:20Z",
+          "description": "Awesome-OS upstream of chriskearney/siliconforest (MIT): Open Darwin/XNU OS for Apple Silicon with B8G_ABI_MAGIC_V3 + B8G_ARENA_V1 bridge",
+          "fileCount": 1,
+          "files": [
+            "integrations/siliconforest/chonkstep-darwin/desktop-shell/source/packaging/arch/Dockerfile.builder"
+          ]
+        },
+        {
+          "name": "siliconforest-m1n1",
+          "url": "https://github.com/awesome-os/siliconforest-m1n1",
+          "archived": false,
+          "pushedAt": "2026-11-25T08:05:20Z",
+          "description": "Awesome-OS upstream of chriskearney/siliconforest-m1n1 (MIT): Apple Silicon m1n1 bootloader with B8G_ABI_MAGIC_V3 + B8G_ARENA_V1 handoff bridge",
+          "fileCount": 2,
+          "files": [
+            "Dockerfile",
+            "docker-compose.yml"
+          ]
+        }
+      ],
+      "Benchmarks & Historical": [
+        {
+          "name": "benchmarks",
+          "url": "https://github.com/awesome-os/benchmarks",
+          "archived": true,
+          "pushedAt": "2026-11-25T08:04:41Z",
+          "description": "benchmarks comparing different javascript runtimes",
+          "fileCount": 4,
+          "files": [
+            ".gitpod.Dockerfile",
+            "02-sqlite/Dockerfile",
+            "05-http/Dockerfile",
+            "Dockerfile"
+          ]
+        },
+        {
+          "name": "benchy",
+          "url": "https://github.com/awesome-os/benchy",
+          "archived": true,
+          "pushedAt": "2026-11-25T08:04:41Z",
+          "description": "",
+          "fileCount": 2,
+          "files": [
+            "docker-build/Dockerfile",
+            "docker/Dockerfile"
+          ]
+        },
+        {
+          "name": "demo-iouring",
+          "url": "https://github.com/awesome-os/demo-iouring",
+          "archived": true,
+          "pushedAt": "2026-11-25T08:04:49Z",
+          "description": "iouring module demo",
+          "fileCount": 2,
+          "files": [
+            ".gitpod.Dockerfile",
+            "Dockerfile"
+          ]
+        },
+        {
+          "name": "docs",
+          "url": "https://github.com/awesome-os/docs",
+          "archived": true,
+          "pushedAt": "2026-11-25T08:06:26Z",
+          "description": "everything you always wanted to know about lo js, but were afraid to ask :blue_book:",
+          "fileCount": 2,
+          "files": [
+            "example/avx/docker/Dockerfile",
+            "example/docker/Dockerfile.debian-build"
+          ]
+        },
+        {
+          "name": "joos",
+          "url": "https://github.com/awesome-os/joos",
+          "archived": true,
+          "pushedAt": "2026-11-25T08:05:00Z",
+          "description": "A KVM Virtual Machine Manager in JavaScript",
+          "fileCount": 1,
+          "files": [
+            "docker/Dockerfile"
+          ]
+        },
+        {
+          "name": "just",
+          "url": "https://github.com/awesome-os/just",
+          "archived": true,
+          "pushedAt": "2026-11-25T08:05:01Z",
+          "description": "the only javascript runtime to hit no.1 on techempower :fire:",
+          "fileCount": 2,
+          "files": [
+            ".devcontainer/Dockerfile",
+            ".devcontainer/base.Dockerfile"
+          ]
+        },
+        {
+          "name": "lo-bench",
+          "url": "https://github.com/awesome-os/lo-bench",
+          "archived": true,
+          "pushedAt": "2026-11-26T19:11:32Z",
+          "description": "benchmarks for lo js runtime :chart_with_upwards_trend:",
+          "fileCount": 3,
+          "files": [
+            "base64/Dockerfile",
+            "fs/Dockerfile",
+            "http/docker/Dockerfile"
+          ]
+        },
+        {
+          "name": "pgbench",
+          "url": "https://github.com/awesome-os/pgbench",
+          "archived": true,
+          "pushedAt": "2026-11-25T08:05:10Z",
+          "description": "",
+          "fileCount": 1,
+          "files": [
+            "postgres.dockerfile"
+          ]
+        },
+        {
+          "name": "techempower",
+          "url": "https://github.com/awesome-os/techempower",
+          "archived": true,
+          "pushedAt": "2026-11-25T08:05:23Z",
+          "description": "Techempower Benchmark Repo",
+          "fileCount": 2,
+          "files": [
+            "just-pipeline.dockerfile",
+            "just.dockerfile"
+          ]
+        }
+      ]
+    }
+  },
+  "dockerimagesOrg": {
+    "orgUrl": "https://github.com/dockerimages",
+    "readOnlyPolicy": "Cataloged read-only; mutations stay inside awesome-os/dockerimages",
+    "totalRepos": 138,
+    "tierCounts": {
+      "tier1_flagships": 26,
+      "tier2_sameersbn_successors": 18,
+      "tier3_modernizable_utilities": 41,
+      "tier4_archive_candidates": 53
+    },
+    "tiers": {
+      "tier1_flagships": [
+        {
+          "name": "docker-systemd",
+          "url": "https://github.com/dockerimages/docker-systemd",
+          "stars": 38,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2019-03-06T08:06:26Z",
+          "defaultBranch": "master",
+          "description": "This is a Ubuntu Baseimage Running SystemD Init System inside a container it can idealy be applyed over any other ubuntu or fedora img",
+          "tier": "tier1_flagships"
+        },
+        {
+          "name": "docker-tools",
+          "url": "https://github.com/dockerimages/docker-tools",
+          "stars": 32,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2020-03-26T09:23:24Z",
+          "defaultBranch": "master",
+          "description": "Collection of useful docker-tools install able via docker run",
+          "tier": "tier1_flagships"
+        },
+        {
+          "name": "docker-varnish",
+          "url": "https://github.com/dockerimages/docker-varnish",
+          "stars": 27,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2018-09-23T17:55:23Z",
+          "defaultBranch": "master",
+          "description": "Automated build of Varnish with Docker",
+          "tier": "tier1_flagships"
+        },
+        {
+          "name": "docker-unrealircd",
+          "url": "https://github.com/dockerimages/docker-unrealircd",
+          "stars": 16,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2018-06-03T11:54:22Z",
+          "defaultBranch": "master",
+          "description": "UnrealIRCD with Anope Services",
+          "tier": "tier1_flagships"
+        },
+        {
+          "name": "openproject",
+          "url": "https://github.com/dockerimages/openproject",
+          "stars": 6,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2014-08-27T22:44:08Z",
+          "defaultBranch": "stable",
+          "description": "Let OpenProject run in a docker container",
+          "tier": "tier1_flagships"
+        },
+        {
+          "name": "docker-webmin",
+          "url": "https://github.com/dockerimages/docker-webmin",
+          "stars": 3,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2014-09-10T01:41:14Z",
+          "defaultBranch": "master",
+          "description": "Offical Webmin Dockerimages",
+          "tier": "tier1_flagships"
+        },
+        {
+          "name": "docker-apache2",
+          "url": "https://github.com/dockerimages/docker-apache2",
+          "stars": 2,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2014-09-17T16:31:01Z",
+          "defaultBranch": "master",
+          "description": "This is the Apache249 Container Maintained by B8G Datentechnik",
+          "tier": "tier1_flagships"
+        },
+        {
+          "name": "docker-virtualmin",
+          "url": "https://github.com/dockerimages/docker-virtualmin",
+          "stars": 2,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2014-09-10T06:24:59Z",
+          "defaultBranch": "master",
+          "description": "http://software.virtualmin.com/gpl/scripts/install.sh",
+          "tier": "tier1_flagships"
+        },
+        {
+          "name": "cloud9",
+          "url": "https://github.com/dockerimages/cloud9",
+          "stars": 1,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2019-02-24T19:42:23Z",
+          "defaultBranch": "master",
+          "description": "A Dockerimage for building Cloud9 Instances for diffrent Projects",
+          "tier": "tier1_flagships"
+        },
+        {
+          "name": "couchbase-sandbox",
+          "url": "https://github.com/dockerimages/couchbase-sandbox",
+          "stars": 1,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2021-09-21T07:50:09Z",
+          "defaultBranch": "master",
+          "description": "Dockerfiles for couchbase/server-sandbox automated build",
+          "tier": "tier1_flagships"
+        },
+        {
+          "name": "haproxy",
+          "url": "https://github.com/dockerimages/haproxy",
+          "stars": 1,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2015-02-01T10:47:41Z",
+          "defaultBranch": "master",
+          "description": "Haproxy Dockerfile for trusted automated Docker builds.",
+          "tier": "tier1_flagships"
+        },
+        {
+          "name": "mariadb-galera",
+          "url": "https://github.com/dockerimages/mariadb-galera",
+          "stars": 1,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2015-06-23T10:55:41Z",
+          "defaultBranch": "master",
+          "description": "MariaDB Galera cluster in Docker containers",
+          "tier": "tier1_flagships"
+        },
+        {
+          "name": "typo3",
+          "url": "https://github.com/dockerimages/typo3",
+          "stars": 1,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2019-03-04T11:46:37Z",
+          "defaultBranch": "master",
+          "description": "Typo3 Versions for fast Development of Extensions",
+          "tier": "tier1_flagships"
+        },
+        {
+          "name": "v8-build",
+          "url": "https://github.com/dockerimages/v8-build",
+          "stars": 1,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2021-05-02T22:07:15Z",
+          "defaultBranch": "main",
+          "description": "A baseimage for v8 Builds amd64-linux",
+          "tier": "tier1_flagships"
+        },
+        {
+          "name": "couchbase",
+          "url": "https://github.com/dockerimages/couchbase",
+          "stars": 0,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2021-09-20T22:02:18Z",
+          "defaultBranch": "master",
+          "description": "Dockerfiles and configuration scripts for the Docker Hub Official Couchbase images",
+          "tier": "tier1_flagships"
+        },
+        {
+          "name": "custom-build",
+          "url": "https://github.com/dockerimages/custom-build",
+          "stars": 0,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2024-06-04T10:44:12Z",
+          "defaultBranch": "main",
+          "description": "A Custom Build image",
+          "tier": "tier1_flagships"
+        },
+        {
+          "name": "deno-lambda",
+          "url": "https://github.com/dockerimages/deno-lambda",
+          "stars": 0,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2020-03-26T06:35:07Z",
+          "defaultBranch": "master",
+          "description": "A deno runtime for AWS Lambda. Deploy deno via SAM, serverless, or bundle it yourself.",
+          "tier": "tier1_flagships"
+        },
+        {
+          "name": "docker-asterisk",
+          "url": "https://github.com/dockerimages/docker-asterisk",
+          "stars": 0,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2024-06-04T09:08:35Z",
+          "defaultBranch": "master",
+          "description": " Docker image providing Asterisk PBX",
+          "tier": "tier1_flagships"
+        },
+        {
+          "name": "docker-deno",
+          "url": "https://github.com/dockerimages/docker-deno",
+          "stars": 0,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2020-03-26T13:31:13Z",
+          "defaultBranch": "master",
+          "description": "Latest dockerfiles and images for deno - alpine, centos, debian, ubuntu",
+          "tier": "tier1_flagships"
+        },
+        {
+          "name": "Docker-OSX",
+          "url": "https://github.com/dockerimages/Docker-OSX",
+          "stars": 0,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2023-11-16T18:05:41Z",
+          "defaultBranch": "master",
+          "description": "Run macOS VM in a Docker! Run near native OSX-KVM in Docker! X11 Forwarding! CI/CD for OS X Security Research! Docker mac Containers.",
+          "tier": "tier1_flagships"
+        },
+        {
+          "name": "dockerimages",
+          "url": "https://github.com/dockerimages/dockerimages",
+          "stars": 0,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2019-02-19T14:06:54Z",
+          "defaultBranch": "master",
+          "description": "General GUIDES about Docker based Deployments",
+          "tier": "tier1_flagships"
+        },
+        {
+          "name": "dockerimages.github.io",
+          "url": "https://github.com/dockerimages/dockerimages.github.io",
+          "stars": 0,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2014-06-16T16:02:03Z",
+          "defaultBranch": "master",
+          "description": "Holds Repositorys of Qualifyed code from hub.docker.io dockerimages username developed and maintained by Direkt SPEED",
+          "tier": "tier1_flagships"
+        },
+        {
+          "name": "dockerLLM",
+          "url": "https://github.com/dockerimages/dockerLLM",
+          "stars": 0,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2023-08-05T19:19:39Z",
+          "defaultBranch": "main",
+          "description": "TheBloke's Dockerfiles",
+          "tier": "tier1_flagships"
+        },
+        {
+          "name": "official-images",
+          "url": "https://github.com/dockerimages/official-images",
+          "stars": 0,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2020-03-26T03:06:28Z",
+          "defaultBranch": "master",
+          "description": "Primary source of truth for the Docker \"Official Images\" program",
+          "tier": "tier1_flagships"
+        },
+        {
+          "name": "pod-odoo",
+          "url": "https://github.com/dockerimages/pod-odoo",
+          "stars": 0,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2023-01-20T09:37:42Z",
+          "defaultBranch": "master",
+          "description": "A Play Pod Compatible Odoo Deployment",
+          "tier": "tier1_flagships"
+        },
+        {
+          "name": "scratch",
+          "url": "https://github.com/dockerimages/scratch",
+          "stars": 0,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2019-08-21T12:32:44Z",
+          "defaultBranch": "master",
+          "description": "This is a Empty docker image to get used with the docker-rootfs-mount",
+          "tier": "tier1_flagships"
+        }
+      ],
+      "tier2_sameersbn_successors": [
+        {
+          "name": "direktspeed-gateway",
+          "url": "https://github.com/dockerimages/direktspeed-gateway",
+          "stars": 1,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2014-08-10T13:28:03Z",
+          "defaultBranch": "master",
+          "description": "Container that runs GATEWAY Services like NGINX, APACHE, HAPROXY, FTP-PROXY, MYSQL-PROXY",
+          "tier": "tier2_sameersbn_successors",
+          "sameersbnSource": "sameersbn/docker-squid",
+          "awesomeOsCounterpart": null,
+          "note": "Multi-protocol proxy/gateway successor"
+        },
+        {
+          "name": "docker-pagespeed",
+          "url": "https://github.com/dockerimages/docker-pagespeed",
+          "stars": 1,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2014-12-17T23:26:32Z",
+          "defaultBranch": "master",
+          "description": "Sample Dockerfile and Nginx configuration to run nginx + ngx_pagespeed.",
+          "tier": "tier2_sameersbn_successors",
+          "sameersbnSource": "sameersbn/docker-nginx",
+          "awesomeOsCounterpart": null,
+          "note": "Nginx + ngx_pagespeed build"
+        },
+        {
+          "name": "https-gitlab.com-gitlab-org-omnibus-gitlab",
+          "url": "https://github.com/dockerimages/https-gitlab.com-gitlab-org-omnibus-gitlab",
+          "stars": 1,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2023-01-13T03:11:12Z",
+          "defaultBranch": "master",
+          "description": "",
+          "tier": "tier2_sameersbn_successors",
+          "sameersbnSource": "sameersbn/docker-gitlab",
+          "awesomeOsCounterpart": "awesome-os/gitlab-foss",
+          "note": "GitLab Omnibus mirror successor"
+        },
+        {
+          "name": "redmine",
+          "url": "https://github.com/dockerimages/redmine",
+          "stars": 1,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2022-03-24T08:18:13Z",
+          "defaultBranch": "main",
+          "description": "Dockerized redmine app server",
+          "tier": "tier2_sameersbn_successors",
+          "sameersbnSource": "sameersbn/docker-redmine",
+          "awesomeOsCounterpart": null,
+          "note": "Redmine issue tracker container"
+        },
+        {
+          "name": "apt_cache",
+          "url": "https://github.com/dockerimages/apt_cache",
+          "stars": 0,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2015-08-18T01:35:52Z",
+          "defaultBranch": "master",
+          "description": "docker apt cache server",
+          "tier": "tier2_sameersbn_successors",
+          "sameersbnSource": "sameersbn/docker-apt-cacher-ng",
+          "awesomeOsCounterpart": null,
+          "note": "Docker APT cache server"
+        },
+        {
+          "name": "apt-cacher",
+          "url": "https://github.com/dockerimages/apt-cacher",
+          "stars": 0,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2014-06-19T04:13:01Z",
+          "defaultBranch": "master",
+          "description": "A APT Cache Server that gets used by dockerimages/ubuntu-baseimage if detected.",
+          "tier": "tier2_sameersbn_successors",
+          "sameersbnSource": "sameersbn/docker-apt-cacher-ng",
+          "awesomeOsCounterpart": null,
+          "note": "APT caching proxy server"
+        },
+        {
+          "name": "docker-cache",
+          "url": "https://github.com/dockerimages/docker-cache",
+          "stars": 0,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2014-06-05T21:41:36Z",
+          "defaultBranch": "master",
+          "description": "Redis cache for a cluster of Docker hosts",
+          "tier": "tier2_sameersbn_successors",
+          "sameersbnSource": "sameersbn/docker-redis",
+          "awesomeOsCounterpart": null,
+          "note": "Redis cache cluster container"
+        },
+        {
+          "name": "docker-galera",
+          "url": "https://github.com/dockerimages/docker-galera",
+          "stars": 0,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2014-09-20T22:20:25Z",
+          "defaultBranch": "master",
+          "description": "A MYSQL Galera Cluster Controller",
+          "tier": "tier2_sameersbn_successors",
+          "sameersbnSource": "sameersbn/docker-mysql",
+          "awesomeOsCounterpart": null,
+          "note": "MySQL Galera cluster controller"
+        },
+        {
+          "name": "docker-mongodb",
+          "url": "https://github.com/dockerimages/docker-mongodb",
+          "stars": 0,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2014-10-08T12:45:50Z",
+          "defaultBranch": "master",
+          "description": "Docker image to run an out-of-the-box MongoDB server",
+          "tier": "tier2_sameersbn_successors",
+          "sameersbnSource": "sameersbn/docker-mongodb",
+          "awesomeOsCounterpart": null,
+          "note": "Out-of-the-box MongoDB server"
+        },
+        {
+          "name": "docker-nginx",
+          "url": "https://github.com/dockerimages/docker-nginx",
+          "stars": 0,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2017-02-03T18:12:04Z",
+          "defaultBranch": "master",
+          "description": "A Dockerfile that installs nginx (from source) with nginx-rtmp module support (php5 support can be added using the sameersbn/php5-fpm image)",
+          "tier": "tier2_sameersbn_successors",
+          "sameersbnSource": "sameersbn/docker-nginx",
+          "awesomeOsCounterpart": null,
+          "note": "Nginx + RTMP module successor"
+        },
+        {
+          "name": "gitlab",
+          "url": "https://github.com/dockerimages/gitlab",
+          "stars": 0,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2019-02-19T07:09:33Z",
+          "defaultBranch": "master",
+          "description": "",
+          "tier": "tier2_sameersbn_successors",
+          "sameersbnSource": "sameersbn/docker-gitlab",
+          "awesomeOsCounterpart": "awesome-os/gitlab-foss",
+          "note": "GitLab Omnibus / source build companion"
+        },
+        {
+          "name": "mongodb-local",
+          "url": "https://github.com/dockerimages/mongodb-local",
+          "stars": 0,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2014-06-13T21:51:48Z",
+          "defaultBranch": "master",
+          "description": "A MongoDB Dockerimage for geting linked from a  application container so that it has access to it via its container name and standart port it is configured as single mongodb node not as cluster.",
+          "tier": "tier2_sameersbn_successors",
+          "sameersbnSource": "sameersbn/docker-mongodb",
+          "awesomeOsCounterpart": null,
+          "note": "Single-node MongoDB linked container"
+        },
+        {
+          "name": "mysql",
+          "url": "https://github.com/dockerimages/mysql",
+          "stars": 0,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2014-12-08T21:56:23Z",
+          "defaultBranch": "5.7",
+          "description": "Fresh Mysql Server Ready to Get Configed",
+          "tier": "tier2_sameersbn_successors",
+          "sameersbnSource": "sameersbn/docker-mysql",
+          "awesomeOsCounterpart": null,
+          "note": "MySQL server container"
+        },
+        {
+          "name": "nginx",
+          "url": "https://github.com/dockerimages/nginx",
+          "stars": 0,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2017-02-06T07:37:18Z",
+          "defaultBranch": "master",
+          "description": "FROM library/nginx Added some Scripts for Auto Configuration Based on Domain Named Directorys",
+          "tier": "tier2_sameersbn_successors",
+          "sameersbnSource": "sameersbn/docker-nginx",
+          "awesomeOsCounterpart": null,
+          "note": "Domain-routed Nginx container"
+        },
+        {
+          "name": "nginx-docker-router",
+          "url": "https://github.com/dockerimages/nginx-docker-router",
+          "stars": 0,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2014-09-05T00:01:15Z",
+          "defaultBranch": "master",
+          "description": "Automated nginx proxy for Docker containers using docker-gen",
+          "tier": "tier2_sameersbn_successors",
+          "sameersbnSource": "sameersbn/docker-nginx",
+          "awesomeOsCounterpart": null,
+          "note": "Automated Nginx reverse proxy router"
+        },
+        {
+          "name": "node",
+          "url": "https://github.com/dockerimages/node",
+          "stars": 0,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2017-08-13T11:07:35Z",
+          "defaultBranch": "master",
+          "description": "complet node images includes armv7",
+          "tier": "tier2_sameersbn_successors",
+          "sameersbnSource": "sameersbn/docker-nodejs",
+          "awesomeOsCounterpart": "awesome-os/dockerimages (holo-node)",
+          "note": "Multi-arch Node.js container"
+        },
+        {
+          "name": "nsd-dnssec",
+          "url": "https://github.com/dockerimages/nsd-dnssec",
+          "stars": 0,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2019-08-15T09:32:50Z",
+          "defaultBranch": "master",
+          "description": ":warning: UNMAINTAINED -Simple authoritative name server with DNSSEC support using Docker",
+          "tier": "tier2_sameersbn_successors",
+          "sameersbnSource": "sameersbn/docker-bind",
+          "awesomeOsCounterpart": null,
+          "note": "Authoritative DNSSEC server successor"
+        },
+        {
+          "name": "php",
+          "url": "https://github.com/dockerimages/php",
+          "stars": 0,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2016-03-31T23:59:34Z",
+          "defaultBranch": "master",
+          "description": "Docker Official Image packaging for PHP",
+          "tier": "tier2_sameersbn_successors",
+          "sameersbnSource": "sameersbn/docker-php-fpm",
+          "awesomeOsCounterpart": null,
+          "note": "Official PHP packaging container"
+        }
+      ],
+      "tier3_modernizable_utilities": [
+        {
+          "name": "docker-harp",
+          "url": "https://github.com/dockerimages/docker-harp",
+          "stars": 2,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2020-01-12T16:23:26Z",
+          "defaultBranch": "master",
+          "description": "Dockerimage Running Harp",
+          "tier": "tier3_modernizable_utilities"
+        },
+        {
+          "name": "dockersh",
+          "url": "https://github.com/dockerimages/dockersh",
+          "stars": 2,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2014-08-31T12:38:54Z",
+          "defaultBranch": "master",
+          "description": "A shell which places users into individual docker containers",
+          "tier": "tier3_modernizable_utilities"
+        },
+        {
+          "name": "fedora-s6",
+          "url": "https://github.com/dockerimages/fedora-s6",
+          "stars": 2,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2015-01-21T10:20:33Z",
+          "defaultBranch": "master",
+          "description": "This is Fedora Rawhid running s6 init",
+          "tier": "tier3_modernizable_utilities"
+        },
+        {
+          "name": "cbfs",
+          "url": "https://github.com/dockerimages/cbfs",
+          "stars": 1,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2015-10-07T14:49:16Z",
+          "defaultBranch": "master",
+          "description": "Installs or runs cbfs & cbfsclient",
+          "tier": "tier3_modernizable_utilities"
+        },
+        {
+          "name": "docker-cockpit",
+          "url": "https://github.com/dockerimages/docker-cockpit",
+          "stars": 1,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2015-01-13T19:00:00Z",
+          "defaultBranch": "master",
+          "description": "A Containered Cockpit in Fedora 21",
+          "tier": "tier3_modernizable_utilities"
+        },
+        {
+          "name": "docker-desktop",
+          "url": "https://github.com/dockerimages/docker-desktop",
+          "stars": 1,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2014-10-23T17:13:14Z",
+          "defaultBranch": "master",
+          "description": "Docker Desktop enables you to create virtual desktops that can be accessed remotely. It comes with Firefox and Libreoffice already installed!",
+          "tier": "tier3_modernizable_utilities"
+        },
+        {
+          "name": "docker-elasticsearch",
+          "url": "https://github.com/dockerimages/docker-elasticsearch",
+          "stars": 1,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2014-05-28T10:20:11Z",
+          "defaultBranch": "master",
+          "description": "ElasticSearch for Docker.",
+          "tier": "tier3_modernizable_utilities"
+        },
+        {
+          "name": "docker-haproxy-docker",
+          "url": "https://github.com/dockerimages/docker-haproxy-docker",
+          "stars": 1,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2014-09-23T03:05:59Z",
+          "defaultBranch": "master",
+          "description": "Haproxy Self Updating via docker ps",
+          "tier": "tier3_modernizable_utilities"
+        },
+        {
+          "name": "docker-haproxy-serf",
+          "url": "https://github.com/dockerimages/docker-haproxy-serf",
+          "stars": 1,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2014-02-21T23:30:28Z",
+          "defaultBranch": "master",
+          "description": "Docker image for haproxy that uses serf to discover web servers.",
+          "tier": "tier3_modernizable_utilities"
+        },
+        {
+          "name": "docker-nagios",
+          "url": "https://github.com/dockerimages/docker-nagios",
+          "stars": 1,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2014-08-01T19:26:10Z",
+          "defaultBranch": "master",
+          "description": "",
+          "tier": "tier3_modernizable_utilities"
+        },
+        {
+          "name": "google-drive-ocamlfuse",
+          "url": "https://github.com/dockerimages/google-drive-ocamlfuse",
+          "stars": 1,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2014-06-13T21:39:20Z",
+          "defaultBranch": "master",
+          "description": "This is a Docker Image that has a Volume /vol/gdrive wich is synced with one of your gdrive accounts you can use that as base for interaction with your google drive account since it is a direct mount of your online Google Drive not a Sync with Snapshooting the FS you get a real sync",
+          "tier": "tier3_modernizable_utilities"
+        },
+        {
+          "name": "nsenter",
+          "url": "https://github.com/dockerimages/nsenter",
+          "stars": 1,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2014-10-04T00:03:42Z",
+          "defaultBranch": "master",
+          "description": "",
+          "tier": "tier3_modernizable_utilities"
+        },
+        {
+          "name": "ubuntu-base",
+          "url": "https://github.com/dockerimages/ubuntu-base",
+          "stars": 1,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2014-09-06T22:36:02Z",
+          "defaultBranch": "master",
+          "description": "Ubuntu 14.04 Core Root FS added",
+          "tier": "tier3_modernizable_utilities"
+        },
+        {
+          "name": "ubuntu-runit",
+          "url": "https://github.com/dockerimages/ubuntu-runit",
+          "stars": 1,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2014-06-19T05:47:21Z",
+          "defaultBranch": "master",
+          "description": "This is a RUNIT Update for Dockerimages/ubuntu-baseimage",
+          "tier": "tier3_modernizable_utilities"
+        },
+        {
+          "name": "cbfs-fused",
+          "url": "https://github.com/dockerimages/cbfs-fused",
+          "stars": 0,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2015-10-07T14:50:24Z",
+          "defaultBranch": "master",
+          "description": "This is a Dockerimage from DIREKTSPEED couchbase fuse daemon ",
+          "tier": "tier3_modernizable_utilities"
+        },
+        {
+          "name": "cbfsd-go",
+          "url": "https://github.com/dockerimages/cbfsd-go",
+          "stars": 0,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2019-01-09T10:34:02Z",
+          "defaultBranch": "master",
+          "description": "A Image that compiles and executes the https://github.com/couchbase-fs/cbfs-go",
+          "tier": "tier3_modernizable_utilities"
+        },
+        {
+          "name": "dind",
+          "url": "https://github.com/dockerimages/dind",
+          "stars": 0,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2014-06-16T17:01:04Z",
+          "defaultBranch": "master",
+          "description": "Docker in Docker",
+          "tier": "tier3_modernizable_utilities"
+        },
+        {
+          "name": "docker",
+          "url": "https://github.com/dockerimages/docker",
+          "stars": 0,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2014-08-29T02:43:16Z",
+          "defaultBranch": "master",
+          "description": "Builds and Installs docker binary to /target ",
+          "tier": "tier3_modernizable_utilities"
+        },
+        {
+          "name": "docker-build-s6",
+          "url": "https://github.com/dockerimages/docker-build-s6",
+          "stars": 0,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2015-04-14T10:36:04Z",
+          "defaultBranch": "master",
+          "description": "Dockerized S6 init builder",
+          "tier": "tier3_modernizable_utilities"
+        },
+        {
+          "name": "docker-enter",
+          "url": "https://github.com/dockerimages/docker-enter",
+          "stars": 0,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2014-12-29T06:08:05Z",
+          "defaultBranch": "master",
+          "description": "A docker tool to enter an existing container. The tools relies on docker and setns.",
+          "tier": "tier3_modernizable_utilities"
+        },
+        {
+          "name": "docker-graphite-statsd",
+          "url": "https://github.com/dockerimages/docker-graphite-statsd",
+          "stars": 0,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2014-12-22T22:24:24Z",
+          "defaultBranch": "master",
+          "description": "Docker image for Graphite & Statsd",
+          "tier": "tier3_modernizable_utilities"
+        },
+        {
+          "name": "docker-icinga2",
+          "url": "https://github.com/dockerimages/docker-icinga2",
+          "stars": 0,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2014-12-18T23:13:44Z",
+          "defaultBranch": "master",
+          "description": "",
+          "tier": "tier3_modernizable_utilities"
+        },
+        {
+          "name": "docker-nagios-plugins",
+          "url": "https://github.com/dockerimages/docker-nagios-plugins",
+          "stars": 0,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2014-09-04T01:08:53Z",
+          "defaultBranch": "master",
+          "description": "Docker definition for a Nagios plugin executor",
+          "tier": "tier3_modernizable_utilities"
+        },
+        {
+          "name": "docker-nodejs-gdrive-sync",
+          "url": "https://github.com/dockerimages/docker-nodejs-gdrive-sync",
+          "stars": 0,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2015-07-23T10:53:18Z",
+          "defaultBranch": "master",
+          "description": "Sync local files to Google Drive using Node.JS. Fast and portable.",
+          "tier": "tier3_modernizable_utilities"
+        },
+        {
+          "name": "docker-omd",
+          "url": "https://github.com/dockerimages/docker-omd",
+          "stars": 0,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2014-09-13T05:15:45Z",
+          "defaultBranch": "master",
+          "description": "Open Monitoring Distribution",
+          "tier": "tier3_modernizable_utilities"
+        },
+        {
+          "name": "docker-pm2",
+          "url": "https://github.com/dockerimages/docker-pm2",
+          "stars": 0,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2015-11-25T14:07:59Z",
+          "defaultBranch": "master",
+          "description": "pm2 Manager inside docker",
+          "tier": "tier3_modernizable_utilities"
+        },
+        {
+          "name": "docker-solr",
+          "url": "https://github.com/dockerimages/docker-solr",
+          "stars": 0,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2015-01-18T21:40:55Z",
+          "defaultBranch": "master",
+          "description": "Solr on Docker",
+          "tier": "tier3_modernizable_utilities"
+        },
+        {
+          "name": "docker-syslog",
+          "url": "https://github.com/dockerimages/docker-syslog",
+          "stars": 0,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2014-08-25T03:25:16Z",
+          "defaultBranch": "master",
+          "description": "",
+          "tier": "tier3_modernizable_utilities"
+        },
+        {
+          "name": "docker-zk-exhibitor",
+          "url": "https://github.com/dockerimages/docker-zk-exhibitor",
+          "stars": 0,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2014-07-10T15:29:59Z",
+          "defaultBranch": "master",
+          "description": "Docker definition for an Exhibitor-managed ZooKeeper instance",
+          "tier": "tier3_modernizable_utilities"
+        },
+        {
+          "name": "elk",
+          "url": "https://github.com/dockerimages/elk",
+          "stars": 0,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2016-01-23T14:32:47Z",
+          "defaultBranch": "master",
+          "description": "Docker Image of ELK stack specific to pfSense",
+          "tier": "tier3_modernizable_utilities"
+        },
+        {
+          "name": "email-services",
+          "url": "https://github.com/dockerimages/email-services",
+          "stars": 0,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2020-01-01T05:29:22Z",
+          "defaultBranch": "master",
+          "description": "Simple and full-featured mail server using Docker ",
+          "tier": "tier3_modernizable_utilities"
+        },
+        {
+          "name": "git",
+          "url": "https://github.com/dockerimages/git",
+          "stars": 0,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2019-01-09T07:43:13Z",
+          "defaultBranch": "master",
+          "description": "A useful simple git container running in alpine linux, especially for tiny linux distro, such as RancherOS, which don't have package manager.",
+          "tier": "tier3_modernizable_utilities"
+        },
+        {
+          "name": "golang-compiler",
+          "url": "https://github.com/dockerimages/golang-compiler",
+          "stars": 0,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2015-08-23T18:10:34Z",
+          "defaultBranch": "master",
+          "description": "This image can be runned with some parameters and throws out compiled go files ",
+          "tier": "tier3_modernizable_utilities"
+        },
+        {
+          "name": "harp-git",
+          "url": "https://github.com/dockerimages/harp-git",
+          "stars": 0,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2014-09-23T08:00:41Z",
+          "defaultBranch": "master",
+          "description": "A Container that fetches a git repo and runs harp on it so you can update the content of the container via git",
+          "tier": "tier3_modernizable_utilities"
+        },
+        {
+          "name": "java",
+          "url": "https://github.com/dockerimages/java",
+          "stars": 0,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2015-02-13T12:12:10Z",
+          "defaultBranch": "master",
+          "description": "Base Docker image with Java installed",
+          "tier": "tier3_modernizable_utilities"
+        },
+        {
+          "name": "ovmf",
+          "url": "https://github.com/dockerimages/ovmf",
+          "stars": 0,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2014-09-01T23:38:12Z",
+          "defaultBranch": "master",
+          "description": "This Repo Stores some ovmf examples",
+          "tier": "tier3_modernizable_utilities"
+        },
+        {
+          "name": "python",
+          "url": "https://github.com/dockerimages/python",
+          "stars": 0,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2014-09-05T22:04:45Z",
+          "defaultBranch": "master",
+          "description": "",
+          "tier": "tier3_modernizable_utilities"
+        },
+        {
+          "name": "python-ws-to-tuntap-proxy",
+          "url": "https://github.com/dockerimages/python-ws-to-tuntap-proxy",
+          "stars": 0,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2022-08-09T02:05:31Z",
+          "defaultBranch": "main",
+          "description": "python-ws-to-tuntap-proxy mainly used to add network support to wasm builds via network switching",
+          "tier": "tier3_modernizable_utilities"
+        },
+        {
+          "name": "solr",
+          "url": "https://github.com/dockerimages/solr",
+          "stars": 0,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2014-08-07T19:05:31Z",
+          "defaultBranch": "master",
+          "description": "Image that runs Apache Solr based on dockerimages/ubuntu-vm:14.04",
+          "tier": "tier3_modernizable_utilities"
+        },
+        {
+          "name": "ubuntu-core-build",
+          "url": "https://github.com/dockerimages/ubuntu-core-build",
+          "stars": 0,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2014-08-31T10:24:32Z",
+          "defaultBranch": "master",
+          "description": "Baseimage for building c Applications",
+          "tier": "tier3_modernizable_utilities"
+        },
+        {
+          "name": "vscode-ubuntu",
+          "url": "https://github.com/dockerimages/vscode-ubuntu",
+          "stars": 0,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2019-05-28T09:21:14Z",
+          "defaultBranch": "master",
+          "description": "Baseimage for sails vscode",
+          "tier": "tier3_modernizable_utilities"
+        }
+      ],
+      "tier4_archive_candidates": [
+        {
+          "name": "ubuntu-upstart",
+          "url": "https://github.com/dockerimages/ubuntu-upstart",
+          "stars": 3,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2014-08-25T20:44:38Z",
+          "defaultBranch": "master",
+          "description": "Upstart Addon for ubuntu-baseimage",
+          "tier": "tier4_archive_candidates",
+          "recommendation": "non-destructive-archive-with-catalog-pointer"
+        },
+        {
+          "name": "docker-nave",
+          "url": "https://github.com/dockerimages/docker-nave",
+          "stars": 2,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2015-07-20T10:22:51Z",
+          "defaultBranch": "master",
+          "description": "nave a NODE.JS Version manager - Running Virtual Envirments Node.JS Projects inside a docker container",
+          "tier": "tier4_archive_candidates",
+          "recommendation": "non-destructive-archive-with-catalog-pointer"
+        },
+        {
+          "name": "controller",
+          "url": "https://github.com/dockerimages/controller",
+          "stars": 1,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2014-09-04T16:55:15Z",
+          "defaultBranch": "master",
+          "description": "Longshoreman controller application.",
+          "tier": "tier4_archive_candidates",
+          "recommendation": "non-destructive-archive-with-catalog-pointer"
+        },
+        {
+          "name": "docker-couchbase",
+          "url": "https://github.com/dockerimages/docker-couchbase",
+          "stars": 1,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2015-07-27T19:36:55Z",
+          "defaultBranch": "3.0",
+          "description": "Couchbase Dockerfile",
+          "tier": "tier4_archive_candidates",
+          "recommendation": "non-destructive-archive-with-catalog-pointer"
+        },
+        {
+          "name": "docker-ispconfig-php",
+          "url": "https://github.com/dockerimages/docker-ispconfig-php",
+          "stars": 1,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2015-12-06T09:49:04Z",
+          "defaultBranch": "master",
+          "description": "PHP Environments for ISPConfig3",
+          "tier": "tier4_archive_candidates",
+          "recommendation": "non-destructive-archive-with-catalog-pointer"
+        },
+        {
+          "name": "docker-strider",
+          "url": "https://github.com/dockerimages/docker-strider",
+          "stars": 1,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2015-06-10T09:24:34Z",
+          "defaultBranch": "master",
+          "description": "Strider-CD Modular Docker Image",
+          "tier": "tier4_archive_candidates",
+          "recommendation": "non-destructive-archive-with-catalog-pointer"
+        },
+        {
+          "name": "lampp",
+          "url": "https://github.com/dockerimages/lampp",
+          "stars": 1,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2015-08-19T09:16:55Z",
+          "defaultBranch": "master",
+          "description": "LAMP base docker image",
+          "tier": "tier4_archive_candidates",
+          "recommendation": "non-destructive-archive-with-catalog-pointer"
+        },
+        {
+          "name": "magento-stack",
+          "url": "https://github.com/dockerimages/magento-stack",
+          "stars": 1,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2016-11-26T15:51:45Z",
+          "defaultBranch": "master",
+          "description": "A dockerized Magento Community Edition 1.9.x",
+          "tier": "tier4_archive_candidates",
+          "recommendation": "non-destructive-archive-with-catalog-pointer"
+        },
+        {
+          "name": "mesos-single",
+          "url": "https://github.com/dockerimages/mesos-single",
+          "stars": 1,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2014-12-21T22:32:28Z",
+          "defaultBranch": "master",
+          "description": "a Container that runs Mesos in a Single Container + Marathon + Deimos + Zookeper",
+          "tier": "tier4_archive_candidates",
+          "recommendation": "non-destructive-archive-with-catalog-pointer"
+        },
+        {
+          "name": "mesosphere-docker",
+          "url": "https://github.com/dockerimages/mesosphere-docker",
+          "stars": 1,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2015-11-23T09:21:54Z",
+          "defaultBranch": "master",
+          "description": "",
+          "tier": "tier4_archive_candidates",
+          "recommendation": "non-destructive-archive-with-catalog-pointer"
+        },
+        {
+          "name": "mmonit",
+          "url": "https://github.com/dockerimages/mmonit",
+          "stars": 1,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2014-06-13T21:49:33Z",
+          "defaultBranch": "master",
+          "description": "http://www.mmonit.com/dist/mmonit-3.2.1-linux-x64.tar.gz",
+          "tier": "tier4_archive_candidates",
+          "recommendation": "non-destructive-archive-with-catalog-pointer"
+        },
+        {
+          "name": "thebrain_8_linux",
+          "url": "https://github.com/dockerimages/thebrain_8_linux",
+          "stars": 1,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2014-06-19T08:06:51Z",
+          "defaultBranch": "master",
+          "description": "Die Software The Brain 8 als Container version Sollte also Unendlich gültig sein wenn man ein extra volumen benutzt und einmal im monat neu startet",
+          "tier": "tier4_archive_candidates",
+          "recommendation": "non-destructive-archive-with-catalog-pointer"
+        },
+        {
+          "name": "centos-core",
+          "url": "https://github.com/dockerimages/centos-core",
+          "stars": 0,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2014-09-05T22:28:18Z",
+          "defaultBranch": "7",
+          "description": "CentOS cloud images",
+          "tier": "tier4_archive_candidates",
+          "recommendation": "non-destructive-archive-with-catalog-pointer"
+        },
+        {
+          "name": "direktspeed-docker-toolbox",
+          "url": "https://github.com/dockerimages/direktspeed-docker-toolbox",
+          "stars": 0,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2014-06-15T19:54:54Z",
+          "defaultBranch": "master",
+          "description": "Some Scripts that we Use Like: Update ubuntu images, Update and Restart Containers, code snippets",
+          "tier": "tier4_archive_candidates",
+          "recommendation": "non-destructive-archive-with-catalog-pointer"
+        },
+        {
+          "name": "docker-builder",
+          "url": "https://github.com/dockerimages/docker-builder",
+          "stars": 0,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2014-10-07T00:13:22Z",
+          "defaultBranch": "master",
+          "description": "Image that does a Nightly Build via Cron Job and Uploads to S3",
+          "tier": "tier4_archive_candidates",
+          "recommendation": "non-destructive-archive-with-catalog-pointer"
+        },
+        {
+          "name": "docker-couchbase-server",
+          "url": "https://github.com/dockerimages/docker-couchbase-server",
+          "stars": 0,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2014-06-15T17:37:14Z",
+          "defaultBranch": "master",
+          "description": "Docker & Vagrant for Couchbase Server",
+          "tier": "tier4_archive_candidates",
+          "recommendation": "non-destructive-archive-with-catalog-pointer"
+        },
+        {
+          "name": "docker-donejs",
+          "url": "https://github.com/dockerimages/docker-donejs",
+          "stars": 0,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2016-01-25T03:28:15Z",
+          "defaultBranch": "master",
+          "description": "DoneJS Dockerfiles",
+          "tier": "tier4_archive_candidates",
+          "recommendation": "non-destructive-archive-with-catalog-pointer"
+        },
+        {
+          "name": "docker-dsjs",
+          "url": "https://github.com/dockerimages/docker-dsjs",
+          "stars": 0,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2014-10-03T18:49:43Z",
+          "defaultBranch": "master",
+          "description": "Dockerimage Including Node.JS via Nave and Couchbase Libs",
+          "tier": "tier4_archive_candidates",
+          "recommendation": "non-destructive-archive-with-catalog-pointer"
+        },
+        {
+          "name": "docker-haproxy-for-marathon",
+          "url": "https://github.com/dockerimages/docker-haproxy-for-marathon",
+          "stars": 0,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2014-08-02T11:05:50Z",
+          "defaultBranch": "master",
+          "description": "Run haproxy and autoconfigure it from marathon",
+          "tier": "tier4_archive_candidates",
+          "recommendation": "non-destructive-archive-with-catalog-pointer"
+        },
+        {
+          "name": "docker-java-oracle",
+          "url": "https://github.com/dockerimages/docker-java-oracle",
+          "stars": 0,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2014-12-20T22:13:04Z",
+          "defaultBranch": "master",
+          "description": "Docker file for Ubuntu with Oracle 7",
+          "tier": "tier4_archive_candidates",
+          "recommendation": "non-destructive-archive-with-catalog-pointer"
+        },
+        {
+          "name": "docker-jenkins-mesos",
+          "url": "https://github.com/dockerimages/docker-jenkins-mesos",
+          "stars": 0,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2014-05-27T22:52:05Z",
+          "defaultBranch": "master",
+          "description": "Docker definition for a Jenkins instance with the Mesos plugin installed",
+          "tier": "tier4_archive_candidates",
+          "recommendation": "non-destructive-archive-with-catalog-pointer"
+        },
+        {
+          "name": "docker-logman",
+          "url": "https://github.com/dockerimages/docker-logman",
+          "stars": 0,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2014-07-21T18:35:00Z",
+          "defaultBranch": "master",
+          "description": "Experimental Log Forwarder for Docker",
+          "tier": "tier4_archive_candidates",
+          "recommendation": "non-destructive-archive-with-catalog-pointer"
+        },
+        {
+          "name": "docker-marathon",
+          "url": "https://github.com/dockerimages/docker-marathon",
+          "stars": 0,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2014-09-03T23:08:20Z",
+          "defaultBranch": "master",
+          "description": "Docker definition for a Mesos Marathon instance",
+          "tier": "tier4_archive_candidates",
+          "recommendation": "non-destructive-archive-with-catalog-pointer"
+        },
+        {
+          "name": "docker-mesos",
+          "url": "https://github.com/dockerimages/docker-mesos",
+          "stars": 0,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2015-11-23T20:35:55Z",
+          "defaultBranch": "master",
+          "description": "The Updated Version of libmesos/ubuntu",
+          "tier": "tier4_archive_candidates",
+          "recommendation": "non-destructive-archive-with-catalog-pointer"
+        },
+        {
+          "name": "docker-mesos-slave",
+          "url": "https://github.com/dockerimages/docker-mesos-slave",
+          "stars": 0,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2014-09-05T21:19:03Z",
+          "defaultBranch": "master",
+          "description": "Docker definition for a Mesos Slave instance",
+          "tier": "tier4_archive_candidates",
+          "recommendation": "non-destructive-archive-with-catalog-pointer"
+        },
+        {
+          "name": "docker-oracle-xe-11g",
+          "url": "https://github.com/dockerimages/docker-oracle-xe-11g",
+          "stars": 0,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2014-08-03T13:40:46Z",
+          "defaultBranch": "master",
+          "description": "Dockerfile of Oracle Database Express Edition 11g Release 2",
+          "tier": "tier4_archive_candidates",
+          "recommendation": "non-destructive-archive-with-catalog-pointer"
+        },
+        {
+          "name": "docker-patched",
+          "url": "https://github.com/dockerimages/docker-patched",
+          "stars": 0,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2014-08-29T03:00:28Z",
+          "defaultBranch": "master",
+          "description": "Applys Costum patches like adding dc. to the hostname for RFC compilanc",
+          "tier": "tier4_archive_candidates",
+          "recommendation": "non-destructive-archive-with-catalog-pointer"
+        },
+        {
+          "name": "docker-solr-systemd",
+          "url": "https://github.com/dockerimages/docker-solr-systemd",
+          "stars": 0,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2014-12-21T03:05:16Z",
+          "defaultBranch": "master",
+          "description": "This image uses dockerimages/docker-solr and Adjusts it to use systemd to start and be manage able",
+          "tier": "tier4_archive_candidates",
+          "recommendation": "non-destructive-archive-with-catalog-pointer"
+        },
+        {
+          "name": "docker-ubuntu-syslog-to-cb-logger",
+          "url": "https://github.com/dockerimages/docker-ubuntu-syslog-to-cb-logger",
+          "stars": 0,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2015-07-20T10:57:18Z",
+          "defaultBranch": "master",
+          "description": "This Image Creates Containers that can be used as syslog backend to recive logs it will auto logrotate the logs into Couchbase for more Processing.",
+          "tier": "tier4_archive_candidates",
+          "recommendation": "non-destructive-archive-with-catalog-pointer"
+        },
+        {
+          "name": "docker-wordpress",
+          "url": "https://github.com/dockerimages/docker-wordpress",
+          "stars": 0,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2014-09-09T03:48:09Z",
+          "defaultBranch": "master",
+          "description": "Wordpress docker image with bundled MySQL server (only for testing purposes)",
+          "tier": "tier4_archive_candidates",
+          "recommendation": "non-destructive-archive-with-catalog-pointer"
+        },
+        {
+          "name": "docker-xampp",
+          "url": "https://github.com/dockerimages/docker-xampp",
+          "stars": 0,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2014-11-14T15:33:13Z",
+          "defaultBranch": "master",
+          "description": "Docker XAMPP",
+          "tier": "tier4_archive_candidates",
+          "recommendation": "non-destructive-archive-with-catalog-pointer"
+        },
+        {
+          "name": "docktorrent",
+          "url": "https://github.com/dockerimages/docktorrent",
+          "stars": 0,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2014-12-19T04:41:50Z",
+          "defaultBranch": "master",
+          "description": "Full-featured BitTorrent box run on Docker",
+          "tier": "tier4_archive_candidates",
+          "recommendation": "non-destructive-archive-with-catalog-pointer"
+        },
+        {
+          "name": "donejs",
+          "url": "https://github.com/dockerimages/donejs",
+          "stars": 0,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2016-09-05T04:57:35Z",
+          "defaultBranch": "master",
+          "description": "Node.JS Container with Done.JS Installed",
+          "tier": "tier4_archive_candidates",
+          "recommendation": "non-destructive-archive-with-catalog-pointer"
+        },
+        {
+          "name": "dspeed_eu_accounts",
+          "url": "https://github.com/dockerimages/dspeed_eu_accounts",
+          "stars": 0,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2014-06-14T10:38:35Z",
+          "defaultBranch": "master",
+          "description": "Is a Complet Accounts Management Container used in Production at DSPEED.EU",
+          "tier": "tier4_archive_candidates",
+          "recommendation": "non-destructive-archive-with-catalog-pointer"
+        },
+        {
+          "name": "func",
+          "url": "https://github.com/dockerimages/func",
+          "stars": 0,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2014-09-05T22:53:50Z",
+          "defaultBranch": "master",
+          "description": "",
+          "tier": "tier4_archive_candidates",
+          "recommendation": "non-destructive-archive-with-catalog-pointer"
+        },
+        {
+          "name": "geard",
+          "url": "https://github.com/dockerimages/geard",
+          "stars": 0,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2014-08-15T23:52:06Z",
+          "defaultBranch": "master",
+          "description": "A client and agent for installing and linking Docker containers into systemd across hosts",
+          "tier": "tier4_archive_candidates",
+          "recommendation": "non-destructive-archive-with-catalog-pointer"
+        },
+        {
+          "name": "geard-router-haproxy",
+          "url": "https://github.com/dockerimages/geard-router-haproxy",
+          "stars": 0,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2014-06-25T21:04:52Z",
+          "defaultBranch": "master",
+          "description": "A Docker image that can read a route configuration and generate and reload an HAProxy setup for massive vhosting",
+          "tier": "tier4_archive_candidates",
+          "recommendation": "non-destructive-archive-with-catalog-pointer"
+        },
+        {
+          "name": "Ghost",
+          "url": "https://github.com/dockerimages/Ghost",
+          "stars": 0,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2014-10-03T23:27:46Z",
+          "defaultBranch": "add-docker",
+          "description": "Just a blogging platform",
+          "tier": "tier4_archive_candidates",
+          "recommendation": "non-destructive-archive-with-catalog-pointer"
+        },
+        {
+          "name": "ircanywhere",
+          "url": "https://github.com/dockerimages/ircanywhere",
+          "stars": 0,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2014-10-07T18:06:52Z",
+          "defaultBranch": "add_",
+          "description": "IRCAnywhere web based multi-user IRC bouncer built for teams",
+          "tier": "tier4_archive_candidates",
+          "recommendation": "non-destructive-archive-with-catalog-pointer"
+        },
+        {
+          "name": "koalab",
+          "url": "https://github.com/dockerimages/koalab",
+          "stars": 0,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2015-11-27T09:51:24Z",
+          "defaultBranch": "master",
+          "description": "A scrum-like board powered by nginx, nodejs, mongodb, backbone and html5",
+          "tier": "tier4_archive_candidates",
+          "recommendation": "non-destructive-archive-with-catalog-pointer"
+        },
+        {
+          "name": "lynx",
+          "url": "https://github.com/dockerimages/lynx",
+          "stars": 0,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2015-04-24T07:47:35Z",
+          "defaultBranch": "master",
+          "description": "Dockerimage ubuntu + lynx for checking websites and routes cookis all kind of that",
+          "tier": "tier4_archive_candidates",
+          "recommendation": "non-destructive-archive-with-catalog-pointer"
+        },
+        {
+          "name": "marathon-logger",
+          "url": "https://github.com/dockerimages/marathon-logger",
+          "stars": 0,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2014-07-03T22:36:57Z",
+          "defaultBranch": "master",
+          "description": "Event logging service for Mesos Marathon",
+          "tier": "tier4_archive_candidates",
+          "recommendation": "non-destructive-archive-with-catalog-pointer"
+        },
+        {
+          "name": "mosaico",
+          "url": "https://github.com/dockerimages/mosaico",
+          "stars": 0,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2017-01-19T22:31:18Z",
+          "defaultBranch": "master",
+          "description": "Mosaico - Responsive Email Template Editor",
+          "tier": "tier4_archive_candidates",
+          "recommendation": "non-destructive-archive-with-catalog-pointer"
+        },
+        {
+          "name": "node_multilogin",
+          "url": "https://github.com/dockerimages/node_multilogin",
+          "stars": 0,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2017-12-08T14:23:25Z",
+          "defaultBranch": "master",
+          "description": "Facebook and Local Login via Node.JS and MongoDB Twitter support Passport and express 4.0 framework as docker file utils dockerimages/mongodb-local",
+          "tier": "tier4_archive_candidates",
+          "recommendation": "non-destructive-archive-with-catalog-pointer"
+        },
+        {
+          "name": "rasbian",
+          "url": "https://github.com/dockerimages/rasbian",
+          "stars": 0,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2017-08-13T11:05:57Z",
+          "defaultBranch": "master",
+          "description": "rasbian docker images",
+          "tier": "tier4_archive_candidates",
+          "recommendation": "non-destructive-archive-with-catalog-pointer"
+        },
+        {
+          "name": "testpage",
+          "url": "https://github.com/dockerimages/testpage",
+          "stars": 0,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2014-08-31T17:00:01Z",
+          "defaultBranch": "master",
+          "description": "Simple Test Page Repo",
+          "tier": "tier4_archive_candidates",
+          "recommendation": "non-destructive-archive-with-catalog-pointer"
+        },
+        {
+          "name": "ubuntu-apt-cache",
+          "url": "https://github.com/dockerimages/ubuntu-apt-cache",
+          "stars": 0,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2015-08-18T08:46:18Z",
+          "defaultBranch": "master",
+          "description": "This is a Ubuntu base image even with docker ubuntu:* base images but it has added Some OnBuild Instructions",
+          "tier": "tier4_archive_candidates",
+          "recommendation": "non-destructive-archive-with-catalog-pointer"
+        },
+        {
+          "name": "ubuntu-baseimage-supervisord",
+          "url": "https://github.com/dockerimages/ubuntu-baseimage-supervisord",
+          "stars": 0,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2014-06-15T19:51:17Z",
+          "defaultBranch": "master",
+          "description": "My Ubuntu boilerplate image that forms the base for my docker containers. Starts a SSH server by default",
+          "tier": "tier4_archive_candidates",
+          "recommendation": "non-destructive-archive-with-catalog-pointer"
+        },
+        {
+          "name": "ubuntu-httpd-php-mysql",
+          "url": "https://github.com/dockerimages/ubuntu-httpd-php-mysql",
+          "stars": 0,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2014-06-22T20:50:24Z",
+          "defaultBranch": "master",
+          "description": "This image is a Image for Running fast a PHP/MYSQL Stack based on ubuntu via supervisor",
+          "tier": "tier4_archive_candidates",
+          "recommendation": "non-destructive-archive-with-catalog-pointer"
+        },
+        {
+          "name": "ubuntu-installer",
+          "url": "https://github.com/dockerimages/ubuntu-installer",
+          "stars": 0,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2014-09-10T01:24:52Z",
+          "defaultBranch": "master",
+          "description": "Collection of install scripts for ubuntu >= 14.04",
+          "tier": "tier4_archive_candidates",
+          "recommendation": "non-destructive-archive-with-catalog-pointer"
+        },
+        {
+          "name": "ubuntu-supervisor",
+          "url": "https://github.com/dockerimages/ubuntu-supervisor",
+          "stars": 0,
+          "fork": false,
+          "archived": false,
+          "pushedAt": "2014-06-19T05:52:47Z",
+          "defaultBranch": "master",
+          "description": "This is a Supervisor Init for dockerimages/ubuntu-baseimage",
+          "tier": "tier4_archive_candidates",
+          "recommendation": "non-destructive-archive-with-catalog-pointer"
+        },
+        {
+          "name": "ubuntu-vm",
+          "url": "https://github.com/dockerimages/ubuntu-vm",
+          "stars": 0,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2014-08-07T17:49:40Z",
+          "defaultBranch": "master",
+          "description": "A minimal Ubuntu base image modified for Docker-friendliness",
+          "tier": "tier4_archive_candidates",
+          "recommendation": "non-destructive-archive-with-catalog-pointer"
+        },
+        {
+          "name": "vagrant-aws",
+          "url": "https://github.com/dockerimages/vagrant-aws",
+          "stars": 0,
+          "fork": true,
+          "archived": false,
+          "pushedAt": "2014-06-22T20:03:35Z",
+          "defaultBranch": "master",
+          "description": "Use Vagrant to manage your EC2 and VPC instances.",
+          "tier": "tier4_archive_candidates",
+          "recommendation": "non-destructive-archive-with-catalog-pointer"
+        }
+      ]
+    }
+  },
+  "sameersbnSuccessors": {
+    "upstreamUrl": "https://github.com/sameersbn",
+    "totalUpstreamReposSampled": 78,
+    "mappedCount": 19,
+    "mappings": [
+      {
+        "name": "docker-gitlab",
+        "url": "https://github.com/sameersbn/docker-gitlab",
+        "stars": 8113,
+        "pushedAt": "2026-11-26T16:19:16Z",
+        "description": "Dockerized GitLab",
+        "domain": "Sovereign Forge & Identity",
+        "successors": [
+          "dockerimages/gitlab",
+          "dockerimages/https-gitlab.com-gitlab-org-omnibus-gitlab",
+          "awesome-os/gitlab-foss"
+        ]
+      },
+      {
+        "name": "docker-redmine",
+        "url": "https://github.com/sameersbn/docker-redmine",
+        "stars": 1333,
+        "pushedAt": "2026-11-24T17:00:57Z",
+        "description": "Docker Image for Redmine",
+        "domain": "Project & Issue Tracking",
+        "successors": [
+          "dockerimages/redmine"
+        ]
+      },
+      {
+        "name": "docker-postgresql",
+        "url": "https://github.com/sameersbn/docker-postgresql",
+        "stars": 1088,
+        "pushedAt": "2024-05-23T16:10:27Z",
+        "description": "Dockerfile to build a PostgreSQL container image which can be linked to other containers.",
+        "domain": "Database Substrate",
+        "successors": [
+          "awesome-os/pgbench (postgres.dockerfile)",
+          "ghcr.io/awesome-os/t2linux (FROM scratch + holo-pm)"
+        ]
+      },
+      {
+        "name": "docker-bind",
+        "url": "https://github.com/sameersbn/docker-bind",
+        "stars": 925,
+        "pushedAt": "2024-04-01T16:16:23Z",
+        "description": "Dockerize BIND DNS server with webmin for DNS administration",
+        "domain": "DNS & Edge Infrastructure",
+        "successors": [
+          "dockerimages/nsd-dnssec"
+        ]
+      },
+      {
+        "name": "docker-squid",
+        "url": "https://github.com/sameersbn/docker-squid",
+        "stars": 853,
+        "pushedAt": "2024-02-06T09:29:50Z",
+        "description": "Dockerfile to create a Docker container image for Squid proxy server",
+        "domain": "Proxy & Caching Gateway",
+        "successors": [
+          "dockerimages/direktspeed-gateway",
+          "dockerimages/docker-varnish"
+        ]
+      },
+      {
+        "name": "docker-browser-box",
+        "url": "https://github.com/sameersbn/docker-browser-box",
+        "stars": 573,
+        "pushedAt": "2018-12-11T03:30:23Z",
+        "description": "Dockerized google-chome and tor-browser with audio support via pulseaudio",
+        "domain": "Browser Sandbox",
+        "successors": [
+          "awesome-os/sectium-browser-box (Sectium Layer-1 Display Appliance)"
+        ]
+      },
+      {
+        "name": "docker-mysql",
+        "url": "https://github.com/sameersbn/docker-mysql",
+        "stars": 246,
+        "pushedAt": "2019-07-06T07:45:09Z",
+        "description": "A Dockerfile that installs a mysql server",
+        "domain": "Relational Database",
+        "successors": [
+          "dockerimages/mysql",
+          "dockerimages/docker-galera",
+          "dockerimages/mariadb-galera"
+        ]
+      },
+      {
+        "name": "docker-apt-cacher-ng",
+        "url": "https://github.com/sameersbn/docker-apt-cacher-ng",
+        "stars": 242,
+        "pushedAt": "2025-02-04T04:24:05Z",
+        "description": "Dockerfile to create a Docker container image for Apt-Cacher NG",
+        "domain": "Package Mirror Cache",
+        "successors": [
+          "dockerimages/apt-cacher",
+          "dockerimages/apt_cache",
+          "dockerimages/ubuntu-apt-cache"
+        ]
+      },
+      {
+        "name": "docker-gitlab-ci",
+        "url": "https://github.com/sameersbn/docker-gitlab-ci",
+        "stars": 198,
+        "pushedAt": "2015-11-13T16:49:59Z",
+        "description": "Dockerfile to build a GitLab CI container image.",
+        "domain": "CI/CD Orchestration",
+        "successors": [
+          "awesome-os/gitlab-runner",
+          "awesome-os/gitlab-shell"
+        ]
+      },
+      {
+        "name": "docker-redis",
+        "url": "https://github.com/sameersbn/docker-redis",
+        "stars": 155,
+        "pushedAt": "2021-07-26T10:07:35Z",
+        "description": "Dockerfile to create a Docker container image for Redis.",
+        "domain": "In-Memory Cache",
+        "successors": [
+          "dockerimages/docker-cache"
+        ]
+      },
+      {
+        "name": "docker-gitlab-ci-multi-runner",
+        "url": "https://github.com/sameersbn/docker-gitlab-ci-multi-runner",
+        "stars": 147,
+        "pushedAt": "2018-10-21T06:36:36Z",
+        "description": "",
+        "domain": "CI/CD Runner",
+        "successors": [
+          "awesome-os/gitlab-runner"
+        ]
+      },
+      {
+        "name": "docker-openfire",
+        "url": "https://github.com/sameersbn/docker-openfire",
+        "stars": 82,
+        "pushedAt": "2018-11-23T16:14:07Z",
+        "description": "Dockerfile to create a Docker container image for Openfire.",
+        "domain": "Real-Time Messaging",
+        "successors": [
+          "dockerimages/docker-unrealircd"
+        ]
+      },
+      {
+        "name": "docker-nginx",
+        "url": "https://github.com/sameersbn/docker-nginx",
+        "stars": 73,
+        "pushedAt": "2019-07-06T07:37:55Z",
+        "description": "A Dockerfile that installs nginx (from source) with nginx-rtmp module support (php5 support can be added using the sameersbn/php5-fpm image)",
+        "domain": "Web & RTMP Reverse Proxy",
+        "successors": [
+          "dockerimages/docker-nginx",
+          "dockerimages/nginx",
+          "dockerimages/nginx-docker-router"
+        ]
+      },
+      {
+        "name": "docker-mongodb",
+        "url": "https://github.com/sameersbn/docker-mongodb",
+        "stars": 48,
+        "pushedAt": "2016-01-26T04:47:27Z",
+        "description": "Dockerfile to build a MongoDb container image which can be linked to other containers.",
+        "domain": "Document Store",
+        "successors": [
+          "dockerimages/docker-mongodb",
+          "dockerimages/mongodb-local"
+        ]
+      },
+      {
+        "name": "docker-ubuntu",
+        "url": "https://github.com/sameersbn/docker-ubuntu",
+        "stars": 32,
+        "pushedAt": "2021-02-04T14:28:11Z",
+        "description": "My Ubuntu boilerplate image that forms the base for my docker containers.",
+        "domain": "Base OS Image",
+        "successors": [
+          "dockerimages/ubuntu-base",
+          "dockerimages/docker-systemd",
+          "ghcr.io/awesome-os/t2linux"
+        ]
+      },
+      {
+        "name": "docker-nextcloud",
+        "url": "https://github.com/sameersbn/docker-nextcloud",
+        "stars": 31,
+        "pushedAt": "2021-04-01T08:14:59Z",
+        "description": "",
+        "domain": "Sovereign Storage",
+        "successors": [
+          "dockerimages/google-drive-ocamlfuse",
+          "dockerimages/cbfs"
+        ]
+      },
+      {
+        "name": "docker-memcached",
+        "url": "https://github.com/sameersbn/docker-memcached",
+        "stars": 28,
+        "pushedAt": "2019-07-06T07:56:02Z",
+        "description": "Dockerfile to build a memcached container image which can be linked to other containers.",
+        "domain": "Ephemeral Object Cache",
+        "successors": [
+          "dockerimages/docker-cache"
+        ]
+      },
+      {
+        "name": "docker-php-fpm",
+        "url": "https://github.com/sameersbn/docker-php-fpm",
+        "stars": 8,
+        "pushedAt": "2019-07-06T06:56:21Z",
+        "description": "Dockerfile to build a php-fpm container.",
+        "domain": "PHP Runtime",
+        "successors": [
+          "dockerimages/php",
+          "dockerimages/docker-ispconfig-php"
+        ]
+      },
+      {
+        "name": "docker-nodejs",
+        "url": "https://github.com/sameersbn/docker-nodejs",
+        "stars": 7,
+        "pushedAt": "2015-12-13T08:27:53Z",
+        "description": "Dockerfile to build a nodejs+express image with nodemon",
+        "domain": "Node.js Runtime",
+        "successors": [
+          "ghcr.io/awesome-os/holo-node",
+          "dockerimages/node"
+        ]
+      }
+    ]
+  }
+}

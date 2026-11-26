@@ -1,18 +1,25 @@
 # Awesome-OS Docker Images (`ghcr.io/awesome-os/*`)
 
-Ultra-slim `FROM scratch` and Holo v11 (`holo-pm`) OCI container images built and published daily to **GitHub Container Registry (`ghcr.io/awesome-os/*`)** with shared Content-Addressable Store (CAS) volume support.
+Ultra-slim `FROM scratch` and Holo v11 (`holo-pm`) OCI container images built and published daily to **GitHub Container Registry (`ghcr.io/awesome-os/*`)** with shared Content-Addressable Store (CAS) volume support, alongside the unified [`CATALOG.md`](CATALOG.md) & [`catalog/oci-catalog.json`](catalog/oci-catalog.json) inventory covering `awesome-os`, sister org [`github.com/dockerimages`](https://github.com/dockerimages) (`138` repos), and [`sameersbn`](https://github.com/sameersbn) successor mappings.
 
 ## Published Images
 
 | Image | Base | Highlights |
 | :--- | :--- | :--- |
 | `ghcr.io/awesome-os/t2linux:latest` | `FROM scratch` | ~3 MB static `busybox`, CA certificates, `/etc/t2linux-release`, `/bin/holo-pm` |
-| `ghcr.io/awesome-os/ghost-node:latest` | `node:24-alpine` | Node.js 24 + `/bin/holo-pm` |
-| `ghcr.io/awesome-os/ghost-py:latest` | `python:3.13-alpine` | Python 3.13 + `/bin/holo-pm` |
-| `ghcr.io/awesome-os/ghost-cpp:latest` | `alpine:3.21` | `musl-dev` + `/bin/holo-pm` + `/usr/local/include/libholo_pm.h` & `/usr/local/lib/libholo-pm.so` |
-| `ghcr.io/awesome-os/ghost-jvm:latest` | `eclipse-temurin:21-jre-alpine` | Temurin 21 JRE + `/bin/holo-pm` |
+| `ghcr.io/awesome-os/holo-node:latest` | `node:24-alpine` | Node.js 24 + `/bin/holo-pm` |
+| `ghcr.io/awesome-os/holo-py:latest` | `python:3.13-alpine` | Python 3.13 + `/bin/holo-pm` |
+| `ghcr.io/awesome-os/holo-cpp:latest` | `alpine:3.21` | `musl-dev` + `/bin/holo-pm` + `/usr/local/include/libholo_pm.h` & `/usr/local/lib/libholo-pm.so` |
+| `ghcr.io/awesome-os/holo-jvm:latest` | `eclipse-temurin:21-jre-alpine` | Temurin 21 JRE + `/bin/holo-pm` |
 
 All images verify `/bin/holo-pm` (and `libholo-pm.so` / `libholo_pm.h`) bit-for-bit via SHA-512 against [`awesome-os/holo-v11`](https://github.com/awesome-os/holo-v11/blob/main/index/holo-compiler-lockfile.json) during build.
+
+---
+
+## Unified OCI Catalog (`awesome-os` + `dockerimages` + `sameersbn` Successors)
+
+- **[`CATALOG.md`](CATALOG.md)** — Human-readable catalog of all `awesome-os` OCI/Compose definitions (`32` repos, `123` files), the read-only 4-tier classification of all `138` repositories in sister org [`github.com/dockerimages`](https://github.com/dockerimages), and successor mappings for `sameersbn/*` stacks (`docker-gitlab`, `docker-redmine`, `docker-postgresql`, `docker-bind`, `docker-squid`, `docker-browser-box`, etc.).
+- **[`catalog/oci-catalog.json`](catalog/oci-catalog.json)** — Machine-readable catalog (`schema: "awesome-os.oci-catalog.v1"`, `abiMagic: "0x33564742"`), verified by [`catalog/oci-catalog.test.mts`](catalog/oci-catalog.test.mts) and `holo-ci@v1`.
 
 ---
 
@@ -27,39 +34,39 @@ docker run --rm -it \
   -c 'cat /etc/t2linux-release && ls -lh /bin/busybox /bin/holo-pm /etc/ssl/certs/ca-certificates.crt'
 ```
 
-### `ghost-node` (Node.js 24)
+### `holo-node` (Node.js 24)
 
 ```sh
 docker run --rm \
   -v ~/.b8g/cas:/var/lib/b8g/cas \
-  ghcr.io/awesome-os/ghost-node:latest \
+  ghcr.io/awesome-os/holo-node:latest \
   node -v
 ```
 
-### `ghost-py` (Python 3.13)
+### `holo-py` (Python 3.13)
 
 ```sh
 docker run --rm \
   -v ~/.b8g/cas:/var/lib/b8g/cas \
-  ghcr.io/awesome-os/ghost-py:latest \
+  ghcr.io/awesome-os/holo-py:latest \
   python3 --version
 ```
 
-### `ghost-cpp` (Alpine 3.21 + `musl-dev` + Holo v11 C11 SDK)
+### `holo-cpp` (Alpine 3.21 + `musl-dev` + Holo v11 C11 SDK)
 
 ```sh
 docker run --rm \
   -v ~/.b8g/cas:/var/lib/b8g/cas \
-  ghcr.io/awesome-os/ghost-cpp:latest \
+  ghcr.io/awesome-os/holo-cpp:latest \
   ls -la /bin/holo-pm /usr/local/include/libholo_pm.h /usr/local/lib/libholo-pm.so
 ```
 
-### `ghost-jvm` (Eclipse Temurin 21 JRE)
+### `holo-jvm` (Eclipse Temurin 21 JRE)
 
 ```sh
 docker run --rm \
   -v ~/.b8g/cas:/var/lib/b8g/cas \
-  ghcr.io/awesome-os/ghost-jvm:latest \
+  ghcr.io/awesome-os/holo-jvm:latest \
   java -version
 ```
 
@@ -72,11 +79,12 @@ Every image declares `VOLUME ["/var/lib/b8g/cas"]` and exports:
 - `B8G_CAS_DIR=/var/lib/b8g/cas`
 - `B8G_CAS_V11_ROOT=/var/lib/b8g/cas/v11`
 
-Mount a single host CAS directory across all containers (`-v ~/.b8g/cas:/var/lib/b8g/cas`) to deduplicate Holo v11 artifacts across `t2linux`, `ghost-node`, `ghost-py`, `ghost-cpp`, and `ghost-jvm` with zero redundant downloads.
+Mount a single host CAS directory across all containers (`-v ~/.b8g/cas:/var/lib/b8g/cas`) to deduplicate Holo v11 artifacts across `t2linux`, `holo-node`, `holo-py`, `holo-cpp`, and `holo-jvm` with zero redundant downloads.
 
-## Automated Daily Publishing
+## Automated Daily Publishing & `holo-ci@v1`
 
-[`.github/workflows/publish-ghcr.yml`](.github/workflows/publish-ghcr.yml) rebuilds, smoke-tests, reports image sizes, and publishes all 5 images to `ghcr.io/awesome-os/*:latest` on every push to `main`, daily at `05:00 UTC`, and on manual `workflow_dispatch`.
+- [`.github/workflows/publish-ghcr.yml`](.github/workflows/publish-ghcr.yml) rebuilds, smoke-tests, reports image sizes, and publishes all 5 multi-arch (`linux/amd64`, `linux/arm64`) images to `ghcr.io/awesome-os/*:latest` on every push to `main`, daily at `05:00 UTC`, and on manual `workflow_dispatch`.
+- [`.github/workflows/holo-ci.yml`](.github/workflows/holo-ci.yml) runs `holo-ci@v1` (`awesome-os/maintenance-workflows/.github/workflows/reusable-holo-ci.yml@v1`) against [`holo-ci.json`](holo-ci.json) (`zeroGhost`, `zeroCasV1`, Dockerfile presence, `catalog/oci-catalog.test.mts`, and doc integrity).
 
 ## License
 

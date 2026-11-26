@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-# Ultra-slim Node.js 24 + Holo v11 (holo-pm) OCI image with shared CAS volume support
+# Ultra-slim Python 3.13 + Holo v11 (holo-pm) OCI image
 FROM --platform=$BUILDPLATFORM alpine:3.21 AS holo-fetch
 
 ARG TARGETARCH
@@ -20,10 +20,10 @@ RUN set -eux; \
     printf '%s  %s\n' "${HOLO_SHA512}" /tmp/holo-pm | sha512sum -c -; \
     chmod 0755 /tmp/holo-pm
 
-FROM node:24-alpine
+FROM python:3.13-alpine
 
-LABEL org.opencontainers.image.title="Awesome-OS ghost-node" \
-      org.opencontainers.image.description="Slim Node.js 24 Alpine image with Holo v11 holo-pm CAS runtime" \
+LABEL org.opencontainers.image.title="Awesome-OS holo-py" \
+      org.opencontainers.image.description="Slim Python 3.13 Alpine image with Holo v11 holo-pm CAS runtime" \
       org.opencontainers.image.source="https://github.com/awesome-os/dockerimages" \
       org.opencontainers.image.licenses="MIT"
 

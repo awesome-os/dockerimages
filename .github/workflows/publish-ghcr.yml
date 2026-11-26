@@ -21,10 +21,10 @@ jobs:
       matrix:
         image:
           - t2linux
-          - ghost-node
-          - ghost-py
-          - ghost-cpp
-          - ghost-jvm
+          - holo-node
+          - holo-py
+          - holo-cpp
+          - holo-jvm
 
     steps:
       - name: Checkout repository
@@ -72,7 +72,7 @@ jobs:
                 echo "[smoke] t2linux OK (B8G_CAS_V11_ROOT=$B8G_CAS_V11_ROOT)"
               '
               ;;
-            ghost-node)
+            holo-node)
               docker run --rm "${IMAGE}" sh -c '
                 set -eu
                 node -v
@@ -80,10 +80,10 @@ jobs:
                 test -x /bin/holo-pm
                 test "$B8G_CAS_DIR" = "/var/lib/b8g/cas"
                 test "$B8G_CAS_V11_ROOT" = "/var/lib/b8g/cas/v11"
-                echo "[smoke] ghost-node OK"
+                echo "[smoke] holo-node OK"
               '
               ;;
-            ghost-py)
+            holo-py)
               docker run --rm "${IMAGE}" sh -c '
                 set -eu
                 python3 --version
@@ -91,20 +91,20 @@ jobs:
                 test -x /bin/holo-pm
                 test "$B8G_CAS_DIR" = "/var/lib/b8g/cas"
                 test "$B8G_CAS_V11_ROOT" = "/var/lib/b8g/cas/v11"
-                echo "[smoke] ghost-py OK"
+                echo "[smoke] holo-py OK"
               '
               ;;
-            ghost-cpp)
+            holo-cpp)
               docker run --rm "${IMAGE}" sh -c '
                 set -eu
                 ls -la /bin/busybox /bin/holo-pm /usr/local/include/libholo_pm.h /usr/local/lib/libholo-pm.so /usr/include/stdio.h /etc/ssl/certs/ca-certificates.crt
                 test -x /bin/holo-pm
                 test "$B8G_CAS_DIR" = "/var/lib/b8g/cas"
                 test "$B8G_CAS_V11_ROOT" = "/var/lib/b8g/cas/v11"
-                echo "[smoke] ghost-cpp OK"
+                echo "[smoke] holo-cpp OK"
               '
               ;;
-            ghost-jvm)
+            holo-jvm)
               docker run --rm "${IMAGE}" sh -c '
                 set -eu
                 java -version
@@ -112,7 +112,7 @@ jobs:
                 test -x /bin/holo-pm
                 test "$B8G_CAS_DIR" = "/var/lib/b8g/cas"
                 test "$B8G_CAS_V11_ROOT" = "/var/lib/b8g/cas/v11"
-                echo "[smoke] ghost-jvm OK"
+                echo "[smoke] holo-jvm OK"
               '
               ;;
           esac

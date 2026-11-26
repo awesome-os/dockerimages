@@ -34,7 +34,7 @@ RUN set -eux; \
 
 FROM alpine:3.21
 
-LABEL org.opencontainers.image.title="Awesome-OS ghost-cpp" \
+LABEL org.opencontainers.image.title="Awesome-OS holo-cpp" \
       org.opencontainers.image.description="Slim Alpine 3.21 + musl-dev image with Holo v11 holo-pm and libholo-pm C11 SDK" \
       org.opencontainers.image.source="https://github.com/awesome-os/dockerimages" \
       org.opencontainers.image.licenses="MIT"
