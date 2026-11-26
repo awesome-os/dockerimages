@@ -63,7 +63,7 @@ test('catalog/oci-catalog.json parses with expected schema and ABI magic', () =>
   assert.equal(catalog.casProtocol, 'holo-v11');
 });
 
-test('all 8 publishedBaseImages exist on disk and contain zero legacy ghost-* names', () => {
+test('all 9 publishedBaseImages exist on disk and contain zero legacy ghost-* names', () => {
   const catalog = JSON.parse(fs.readFileSync(catalogPath, 'utf8')) as OciCatalog;
   const expected = [
     't2linux',
@@ -74,6 +74,7 @@ test('all 8 publishedBaseImages exist on disk and contain zero legacy ghost-* na
     'holo-php',
     'holo-ruby',
     'holo-e2e-runner',
+    'holo-e2e-lite',
   ];
 
   assert.deepEqual(
@@ -88,8 +89,19 @@ test('all 8 publishedBaseImages exist on disk and contain zero legacy ghost-* na
     assert.equal(/\bghost-/i.test(content), false, `${name}/Dockerfile must not contain ghost-`);
   }
 
-  const probePath = path.join(repoRoot, 'holo-e2e-runner', 'holo-e2e-probe.mjs');
-  assert.equal(fs.existsSync(probePath), true, 'missing holo-e2e-runner/holo-e2e-probe.mjs');
+  const holoNodeDf = fs.readFileSync(path.join(repoRoot, 'holo-node', 'Dockerfile'), 'utf8');
+  assert.equal(/node:current-alpine/i.test(holoNodeDf), false, 'holo-node/Dockerfile must not fall back to node:current-alpine');
+  assert.equal(/debian:bookworm-slim/i.test(holoNodeDf), true, 'holo-node/Dockerfile must include glibc-arm64-src stage');
+
+  const runnerProbePath = path.join(repoRoot, 'holo-e2e-runner', 'holo-e2e-probe.mjs');
+  const liteProbePath = path.join(repoRoot, 'holo-e2e-lite', 'holo-e2e-probe.mjs');
+  assert.equal(fs.existsSync(runnerProbePath), true, 'missing holo-e2e-runner/holo-e2e-probe.mjs');
+  assert.equal(fs.existsSync(liteProbePath), true, 'missing holo-e2e-lite/holo-e2e-probe.mjs');
+  assert.equal(
+    fs.readFileSync(liteProbePath, 'utf8'),
+    fs.readFileSync(runnerProbePath, 'utf8'),
+    'holo-e2e-lite/holo-e2e-probe.mjs must match holo-e2e-runner/holo-e2e-probe.mjs',
+  );
 });
 
 test('dockerimagesOrg partitions all 138 repos uniquely across 4 tiers', () => {

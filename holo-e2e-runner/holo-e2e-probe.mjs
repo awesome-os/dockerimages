@@ -115,7 +115,9 @@ function writeAndVerifyBmp(outPath) {
   };
 }
 
-const outPath = parseOutPath(process.argv.slice(2));
+const args = process.argv.slice(2);
+const liteMode = process.env.HOLO_E2E_LITE === '1' || args.includes('--lite');
+const outPath = parseOutPath(args);
 const nodeVersion = process.versions.node;
 const nodeMajor = Number.parseInt(nodeVersion.split('.')[0] ?? '0', 10);
 const nodeOk = Number.isFinite(nodeMajor) && nodeMajor >= 24;
@@ -137,6 +139,7 @@ const result = {
   schema: 'holo-e2e.probe.v1',
   abiMagic: '0x33564742',
   offscreenZeroX11: true,
+  liteMode,
   nodeVersion,
   nodeOk,
   casDir,
@@ -153,6 +156,7 @@ const result = {
 
 process.stdout.write(`${JSON.stringify(result, null, 2)}\n`);
 
-if (!nodeOk || !casOk || !holoPm || !gcc || !lavapipeIcd || !bmpOk) {
+const toolchainGpuOk = liteMode ? true : (gcc && Boolean(lavapipeIcd));
+if (!nodeOk || !casOk || !holoPm || !toolchainGpuOk || !bmpOk) {
   process.exitCode = 1;
 }

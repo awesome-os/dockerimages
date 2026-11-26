@@ -28,6 +28,7 @@ jobs:
           - holo-php
           - holo-ruby
           - holo-e2e-runner
+          - holo-e2e-lite
 
     steps:
       - name: Checkout repository
@@ -81,7 +82,7 @@ jobs:
               docker run --rm "${IMAGE}" sh -c '
                 set -eu
                 NODE_V="$(node -v)"
-                echo "node -v -> ${NODE_V}"
+                echo "amd64 node -v -> ${NODE_V}"
                 case "${NODE_V}" in
                   v27.*) ;;
                   *) echo "ERROR: expected Node v27.x on linux/amd64, got ${NODE_V}" >&2; exit 1 ;;
@@ -93,7 +94,7 @@ jobs:
                 test -x /usr/local/bin/holo-node-launcher
                 test "$B8G_CAS_DIR" = "/var/lib/b8g/cas"
                 test "$B8G_CAS_V11_ROOT" = "/var/lib/b8g/cas/v11"
-                echo "[smoke] holo-node OK (${NODE_V})"
+                echo "[smoke] holo-node linux/amd64 OK (${NODE_V})"
               '
               ;;
             holo-py)
@@ -161,27 +162,78 @@ jobs:
                 echo "[smoke] holo-e2e-runner OK"
               '
               ;;
+            holo-e2e-lite)
+              docker run --rm "${IMAGE}" sh -c '
+                set -eu
+                node -v && git --version && test -x /bin/holo-pm && /usr/local/bin/holo-e2e-probe --out /tmp/probe.bmp
+                test "$B8G_CAS_DIR" = "/var/lib/b8g/cas"
+                test "$B8G_CAS_V11_ROOT" = "/var/lib/b8g/cas/v11"
+                test "$HOLO_E2E_OFFSCREEN" = "1"
+                test "$HOLO_E2E_LITE" = "1"
+                echo "[smoke] holo-e2e-lite OK"
+              '
+              ;;
           esac
 
-      - name: Export and publish public holo-e2e-runner OCI tarball (v11-oci-latest)
-        if: matrix.image == 'holo-e2e-runner'
+      - name: Build linux/arm64 holo-node image for QEMU smoke test
+        if: matrix.image == 'holo-node'
+        uses: docker/build-push-action@v6
+        with:
+          context: holo-node
+          file: holo-node/Dockerfile
+          platforms: linux/arm64
+          load: true
+          push: false
+          tags: ghcr.io/awesome-os/holo-node:smoke-arm64
+
+      - name: Smoke-test linux/arm64 holo-node container under QEMU
+        if: matrix.image == 'holo-node'
+        run: |
+          IMAGE="ghcr.io/awesome-os/holo-node:smoke-arm64"
+          SIZE="$(docker images --format '{{.Size}}' "${IMAGE}" | head -n 1)"
+          echo "=== IMAGE SIZE (linux/arm64): ${IMAGE} -> ${SIZE} ==="
+          docker run --rm --platform linux/arm64 "${IMAGE}" sh -c '
+            set -eu
+            uname -m
+            NODE_V="$(node -v)"
+            echo "arm64 node -v -> ${NODE_V}"
+            case "${NODE_V}" in
+              v27.*) ;;
+              *) echo "ERROR: expected Node v27.x on linux/arm64, got ${NODE_V}" >&2; exit 1 ;;
+            esac
+            /bin/coreutils --version | head -n 1
+            ls -la /bin/busybox /bin/coreutils /bin/holo-pm /usr/local/bin/holo-node-launcher /etc/ssl/certs/ca-certificates.crt
+            test -x /bin/coreutils
+            test -x /bin/holo-pm
+            test -x /usr/local/bin/holo-node-launcher
+            test "$B8G_CAS_DIR" = "/var/lib/b8g/cas"
+            test "$B8G_CAS_V11_ROOT" = "/var/lib/b8g/cas/v11"
+            echo "[smoke] holo-node linux/arm64 OK (${NODE_V})"
+          '
+
+      - name: Export and publish public E2E OCI tarball (v11-oci-latest)
+        if: matrix.image == 'holo-e2e-runner' || matrix.image == 'holo-e2e-lite'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -eu
-          docker tag ghcr.io/awesome-os/holo-e2e-runner:smoke ghcr.io/awesome-os/holo-e2e-runner:latest
-          docker save ghcr.io/awesome-os/holo-e2e-runner:latest | gzip -6 > /tmp/holo-e2e-runner-linux-amd64.oci.tar.gz
-          (cd /tmp && sha512sum holo-e2e-runner-linux-amd64.oci.tar.gz > SHA512SUMS-holo-e2e-runner.txt)
-          ls -lh /tmp/holo-e2e-runner-linux-amd64.oci.tar.gz /tmp/SHA512SUMS-holo-e2e-runner.txt
-          cat /tmp/SHA512SUMS-holo-e2e-runner.txt
-          gh release view v11-oci-latest --repo awesome-os/dockerimages >/dev/null 2>&1 || \
+          IMG="${{ matrix.image }}"
+          TARBALL="/tmp/${IMG}-linux-amd64.oci.tar.gz"
+          SUMFILE="/tmp/SHA512SUMS-${IMG}.txt"
+          docker tag "ghcr.io/awesome-os/${IMG}:smoke" "ghcr.io/awesome-os/${IMG}:latest"
+          docker save "ghcr.io/awesome-os/${IMG}:latest" | gzip -6 > "${TARBALL}"
+          (cd /tmp && sha512sum "${IMG}-linux-amd64.oci.tar.gz" > "SHA512SUMS-${IMG}.txt")
+          ls -lh "${TARBALL}" "${SUMFILE}"
+          cat "${SUMFILE}"
+          if ! gh release view v11-oci-latest --repo awesome-os/dockerimages >/dev/null 2>&1; then
             gh release create v11-oci-latest \
               --repo awesome-os/dockerimages \
               --title "Awesome-OS Holo v11 Public OCI Images (v11-oci-latest)" \
-              --notes "Public SHA-512 verified OCI container bundles for zero-GHCR-auth clean-box Holo-E2E execution."
+              --notes "Public SHA-512 verified OCI container bundles for zero-GHCR-auth clean-box Holo-E2E execution." || true
+          fi
           gh release upload v11-oci-latest \
-            /tmp/holo-e2e-runner-linux-amd64.oci.tar.gz \
-            /tmp/SHA512SUMS-holo-e2e-runner.txt \
+            "${TARBALL}" \
+            "${SUMFILE}" \
             --repo awesome-os/dockerimages \
             --clobber
 

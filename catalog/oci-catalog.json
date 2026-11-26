@@ -28,7 +28,7 @@
       ],
       "casVolume": "/var/lib/b8g/cas",
       "casV11Root": "/var/lib/b8g/cas/v11",
-      "highlights": "100% sovereign FROM scratch Node.js v27.0.0-alpha.0.2.0 (amd64) / node:current-alpine (arm64) + awesome-os/coreutils + /usr/local/bin/holo-node-launcher + /bin/holo-pm CAS runtime"
+      "highlights": "100% sovereign FROM scratch Node.js v27.0.0-alpha.0.2.0 (linux/amd64 musl + linux/arm64 glibc) + awesome-os/coreutils + /usr/local/bin/holo-node-launcher + /bin/holo-pm CAS runtime"
     },
     {
       "name": "holo-py",
@@ -107,6 +107,19 @@
       "casVolume": "/var/lib/b8g/cas",
       "casV11Root": "/var/lib/b8g/cas/v11",
       "highlights": "Zero-X11 Node.js current + gcc + g++ + musl-dev + Mesa Lavapipe software Vulkan ICD + /bin/holo-pm + /usr/local/bin/holo-e2e-probe (HOLO_E2E_OFFSCREEN=1; public v11-oci-latest tarball)"
+    },
+    {
+      "name": "holo-e2e-lite",
+      "image": "ghcr.io/awesome-os/holo-e2e-lite:latest",
+      "dockerfile": "holo-e2e-lite/Dockerfile",
+      "base": "node:current-alpine",
+      "platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ],
+      "casVolume": "/var/lib/b8g/cas",
+      "casV11Root": "/var/lib/b8g/cas/v11",
+      "highlights": "Lightweight headless Node.js current + ca-certificates + curl + jq + bash + git + /bin/holo-pm + /usr/local/bin/holo-e2e-probe (no gcc/g++/musl-dev/Mesa Vulkan; public v11-oci-latest tarball)"
     }
   ],
   "awesomeOsOrgImages": {
@@ -116,7 +129,7 @@
     "reposWithOciFiles": 32,
     "activeRepos": 19,
     "archivedRepos": 13,
-    "totalFiles": 126,
+    "totalFiles": 127,
     "categories": {
       "Base & Runtime": [
         {
@@ -148,10 +161,11 @@
           "url": "https://github.com/awesome-os/dockerimages",
           "archived": false,
           "pushedAt": "2026-11-26T20:49:36Z",
-          "description": "Ultra-slim FROM scratch & Holo v11 OCI container images (t2linux, holo-node, holo-py, holo-cpp, holo-jvm, holo-php, holo-ruby, holo-e2e-runner) published daily to ghcr.io/awesome-os/* with shared CAS volume support",
-          "fileCount": 8,
+          "description": "Ultra-slim FROM scratch & Holo v11 OCI container images (t2linux, holo-node, holo-py, holo-cpp, holo-jvm, holo-php, holo-ruby, holo-e2e-runner, holo-e2e-lite) published daily to ghcr.io/awesome-os/* with shared CAS volume support",
+          "fileCount": 9,
           "files": [
             "holo-cpp/Dockerfile",
+            "holo-e2e-lite/Dockerfile",
             "holo-e2e-runner/Dockerfile",
             "holo-jvm/Dockerfile",
             "holo-node/Dockerfile",

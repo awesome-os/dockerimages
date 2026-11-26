@@ -8,33 +8,34 @@ Back to [README.md](README.md).
 
 ## 1. Published Multi-Arch Base & Runner Images (`ghcr.io/awesome-os/*`)
 
-All 8 multi-arch (`linux/amd64`, `linux/arm64`) images declare `VOLUME ["/var/lib/b8g/cas"]` (`B8G_CAS_DIR=/var/lib/b8g/cas`, `B8G_CAS_V11_ROOT=/var/lib/b8g/cas/v11`) and verify `/bin/holo-pm` via SHA-512 against `awesome-os/holo-v11`.
+All 9 multi-arch (`linux/amd64`, `linux/arm64`) images declare `VOLUME ["/var/lib/b8g/cas"]` (`B8G_CAS_DIR=/var/lib/b8g/cas`, `B8G_CAS_V11_ROOT=/var/lib/b8g/cas/v11`) and verify `/bin/holo-pm` via SHA-512 against `awesome-os/holo-v11`.
 
 | Image | Base | Dockerfile | Highlights |
 | :--- | :--- | :--- | :--- |
 | `ghcr.io/awesome-os/t2linux:latest` | `FROM scratch` | [`t2linux/Dockerfile`](t2linux/Dockerfile) | 100% sovereign zero-Alpine runtime with real `awesome-os/coreutils`, static `busybox` `sh`, CA certs, `/etc/t2linux-release`, `/bin/holo-pm` |
-| `ghcr.io/awesome-os/holo-node:latest` | `FROM scratch` | [`holo-node/Dockerfile`](holo-node/Dockerfile) | 100% sovereign zero-Alpine runtime with Node.js `v27.0.0-alpha.0.2.0` (`amd64`) / `node:current-alpine` (`arm64`), `awesome-os/coreutils`, `/usr/local/bin/holo-node-launcher` (`awesome-os/node@v0.4.0`), and `/bin/holo-pm` |
+| `ghcr.io/awesome-os/holo-node:latest` | `FROM scratch` | [`holo-node/Dockerfile`](holo-node/Dockerfile) | 100% sovereign zero-Alpine runtime with Node.js `v27.0.0-alpha.0.2.0` (`linux/amd64` musl + `linux/arm64` glibc), `awesome-os/coreutils`, `/usr/local/bin/holo-node-launcher` (`awesome-os/node@v0.4.0`), and `/bin/holo-pm` |
 | `ghcr.io/awesome-os/holo-py:latest` | `python:3.15-alpine` | [`holo-py/Dockerfile`](holo-py/Dockerfile) | Python 3.15 Alpine + `/bin/holo-pm` |
 | `ghcr.io/awesome-os/holo-cpp:latest` | `alpine:3.24` | [`holo-cpp/Dockerfile`](holo-cpp/Dockerfile) | Alpine 3.24 + `musl-dev` + `/bin/holo-pm` + `libholo_pm.h` + `libholo-pm.so` |
 | `ghcr.io/awesome-os/holo-jvm:latest` | `eclipse-temurin:25-jre-alpine` | [`holo-jvm/Dockerfile`](holo-jvm/Dockerfile) | Eclipse Temurin 25 JRE Alpine + `/bin/holo-pm` |
 | `ghcr.io/awesome-os/holo-php:latest` | `php:8.6-cli-alpine` | [`holo-php/Dockerfile`](holo-php/Dockerfile) | PHP 8.6 CLI Alpine + Composer 2 + `/bin/holo-pm` |
 | `ghcr.io/awesome-os/holo-ruby:latest` | `ruby:4.0-alpine` | [`holo-ruby/Dockerfile`](holo-ruby/Dockerfile) | Ruby 4.0 Alpine + Bundler + `/bin/holo-pm` |
 | `ghcr.io/awesome-os/holo-e2e-runner:latest` | `node:current-alpine` | [`holo-e2e-runner/Dockerfile`](holo-e2e-runner/Dockerfile) | Zero-X11 Node current + `gcc` + `g++` + `musl-dev` + Mesa Lavapipe Vulkan ICD + `/bin/holo-pm` + `/usr/local/bin/holo-e2e-probe` (`HOLO_E2E_OFFSCREEN=1`; also published as `v11-oci-latest` tarball) |
+| `ghcr.io/awesome-os/holo-e2e-lite:latest` | `node:current-alpine` | [`holo-e2e-lite/Dockerfile`](holo-e2e-lite/Dockerfile) | Lightweight headless Node current + `ca-certificates` + `curl` + `jq` + `bash` + `git` + `/bin/holo-pm` + `/usr/local/bin/holo-e2e-probe` (`HOLO_E2E_LITE=1`, zero `gcc`/`g++`/`musl-dev`/Mesa Vulkan; also published as `v11-oci-latest` tarball) |
 
 ---
 
-## 2. `awesome-os` Organization OCI Inventory (`32` Repos, `126` Files)
+## 2. `awesome-os` Organization OCI Inventory (`32` Repos, `127` Files)
 
 Scanned across `141` local mirrors (`144` org repos on GitHub): **`19` active repos** and **`13` archived repos** containing `Dockerfile`, `Containerfile`, `*.dockerfile`, `*.containerfile`, `docker-compose*.yml`, or `compose*.yml`.
 
 | Category | Repos | Active | Archived | OCI / Compose Files | Key Repositories |
 | :--- | :---: | :---: | :---: | :---: | :--- |
-| **Base & Runtime** | 5 | 4 | 1 | 18 | `dockerimages` (8), `uv` (3), `pnpm` (3), `coreutils` (1), `docker` *(archived, 3)* |
+| **Base & Runtime** | 5 | 4 | 1 | 19 | `dockerimages` (9), `uv` (3), `pnpm` (3), `coreutils` (1), `docker` *(archived, 3)* |
 | **Sovereign AI & GPU** | 3 | 3 | 0 | 27 | `vllm` (12), `llama.cpp` (11), `colibri` (4) |
 | **Sovereign Forge & Identity** | 5 | 5 | 0 | 44 | `gitlab-foss` (24), `gitlab-runner` (12), `gitaly` (3), `ory-polis` (3), `gitlab-shell` (2) |
 | **Toolchains & Systems** | 10 | 7 | 3 | 18 | `maclab` (3), `cargo` (2), `go-lang` (2), `siliconforest-m1n1` (2), `firecracker` (1), `chonkstep` (1), `siliconforest` (1), `ladybird` *(archived, 3)*, `repository` *(archived, 2)*, `pouchdb` *(archived, 1)* |
 | **Benchmarks & Historical** | 9 | 0 | 9 | 19 | `benchmarks` (4), `lo-bench` (3), `benchy` (2), `demo-iouring` (2), `docs` (2), `just` (2), `techempower` (2), `joos` (1), `pgbench` (1) *(all archived)* |
-| **Total** | **32** | **19** | **13** | **126** | Full per-file listing in [`catalog/oci-catalog.json`](catalog/oci-catalog.json) |
+| **Total** | **32** | **19** | **13** | **127** | Full per-file listing in [`catalog/oci-catalog.json`](catalog/oci-catalog.json) |
 
 ---
 
