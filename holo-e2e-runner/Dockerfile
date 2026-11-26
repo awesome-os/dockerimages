@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
-# Zero-X11 Node.js 24 + gcc + Mesa Lavapipe Vulkan + Holo v11 (holo-pm) E2E runner OCI image
-FROM --platform=$BUILDPLATFORM alpine:3.21 AS holo-fetch
+# Zero-X11 Node.js current + gcc/g++ + Mesa Lavapipe Vulkan + Holo v11 (holo-pm) E2E runner OCI image
+FROM --platform=$BUILDPLATFORM alpine:3.24 AS holo-fetch
 
 ARG TARGETARCH
 ARG HOLO_V11_MANIFEST_URL="https://raw.githubusercontent.com/awesome-os/holo-v11/main/index/holo-compiler-lockfile.json"
@@ -20,10 +20,10 @@ RUN set -eux; \
     printf '%s  %s\n' "${HOLO_SHA512}" /tmp/holo-pm | sha512sum -c -; \
     chmod 0755 /tmp/holo-pm
 
-FROM node:24-alpine
+FROM node:current-alpine
 
 LABEL org.opencontainers.image.title="Awesome-OS holo-e2e-runner" \
-      org.opencontainers.image.description="Zero-X11 Node 24 + gcc + Mesa Lavapipe Vulkan + Holo v11 holo-pm E2E runner image" \
+      org.opencontainers.image.description="Zero-X11 Node current + gcc/g++ + Mesa Lavapipe Vulkan + Holo v11 holo-pm E2E runner image" \
       org.opencontainers.image.source="https://github.com/awesome-os/dockerimages" \
       org.opencontainers.image.licenses="MIT"
 
@@ -35,6 +35,7 @@ RUN apk add --no-cache \
       bash \
       git \
       gcc \
+      g++ \
       musl-dev \
       mesa-vulkan-swrast \
       vulkan-loader && \

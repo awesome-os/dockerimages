@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
-# Ultra-slim Alpine + musl-dev + Holo v11 (holo-pm + libholo_pm.h + libholo-pm.so) OCI image
-FROM --platform=$BUILDPLATFORM alpine:3.21 AS holo-fetch
+# Ultra-slim Alpine 3.24 + musl-dev + Holo v11 (holo-pm + libholo_pm.h + libholo-pm.so) OCI image
+FROM --platform=$BUILDPLATFORM alpine:3.24 AS holo-fetch
 
 ARG TARGETARCH
 ARG HOLO_V11_MANIFEST_URL="https://raw.githubusercontent.com/awesome-os/holo-v11/main/index/holo-compiler-lockfile.json"
@@ -32,10 +32,10 @@ RUN set -eux; \
     printf '%s  %s\n' "${HDR_SHA512}" /tmp/libholo_pm.h | sha512sum -c -; \
     chmod 0644 /tmp/libholo_pm.h
 
-FROM alpine:3.21
+FROM alpine:3.24
 
 LABEL org.opencontainers.image.title="Awesome-OS holo-cpp" \
-      org.opencontainers.image.description="Slim Alpine 3.21 + musl-dev image with Holo v11 holo-pm and libholo-pm C11 SDK" \
+      org.opencontainers.image.description="Slim Alpine 3.24 + musl-dev image with Holo v11 holo-pm and libholo-pm C11 SDK" \
       org.opencontainers.image.source="https://github.com/awesome-os/dockerimages" \
       org.opencontainers.image.licenses="MIT"
 

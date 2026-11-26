@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
-# Ultra-slim Eclipse Temurin 21 JRE Alpine + Holo v11 (holo-pm) OCI image
-FROM --platform=$BUILDPLATFORM alpine:3.21 AS holo-fetch
+# Ultra-slim Eclipse Temurin 25 JRE Alpine + Holo v11 (holo-pm) OCI image
+FROM --platform=$BUILDPLATFORM alpine:3.24 AS holo-fetch
 
 ARG TARGETARCH
 ARG HOLO_V11_MANIFEST_URL="https://raw.githubusercontent.com/awesome-os/holo-v11/main/index/holo-compiler-lockfile.json"
@@ -20,10 +20,10 @@ RUN set -eux; \
     printf '%s  %s\n' "${HOLO_SHA512}" /tmp/holo-pm | sha512sum -c -; \
     chmod 0755 /tmp/holo-pm
 
-FROM eclipse-temurin:21-jre-alpine
+FROM eclipse-temurin:25-jre-alpine
 
 LABEL org.opencontainers.image.title="Awesome-OS holo-jvm" \
-      org.opencontainers.image.description="Slim Eclipse Temurin 21 JRE Alpine image with Holo v11 holo-pm CAS runtime" \
+      org.opencontainers.image.description="Slim Eclipse Temurin 25 JRE Alpine image with Holo v11 holo-pm CAS runtime" \
       org.opencontainers.image.source="https://github.com/awesome-os/dockerimages" \
       org.opencontainers.image.licenses="MIT"
 

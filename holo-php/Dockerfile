@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
-# Ultra-slim PHP 8.4 CLI + Composer 2 + Holo v11 (holo-pm) OCI image with shared CAS volume support
-FROM --platform=$BUILDPLATFORM alpine:3.21 AS holo-fetch
+# Ultra-slim PHP 8.6 CLI + Composer 2 + Holo v11 (holo-pm) OCI image with shared CAS volume support
+FROM --platform=$BUILDPLATFORM alpine:3.24 AS holo-fetch
 
 ARG TARGETARCH
 ARG HOLO_V11_MANIFEST_URL="https://raw.githubusercontent.com/awesome-os/holo-v11/main/index/holo-compiler-lockfile.json"
@@ -22,10 +22,10 @@ RUN set -eux; \
 
 FROM composer:2 AS composer-bin
 
-FROM php:8.4-cli-alpine
+FROM php:8.6-cli-alpine
 
 LABEL org.opencontainers.image.title="Awesome-OS holo-php" \
-      org.opencontainers.image.description="Slim PHP 8.4 CLI Alpine image with Composer 2 and Holo v11 holo-pm CAS runtime" \
+      org.opencontainers.image.description="Slim PHP 8.6 CLI Alpine image with Composer 2 and Holo v11 holo-pm CAS runtime" \
       org.opencontainers.image.source="https://github.com/awesome-os/dockerimages" \
       org.opencontainers.image.licenses="MIT"
 

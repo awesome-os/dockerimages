@@ -12,14 +12,14 @@ All 8 multi-arch (`linux/amd64`, `linux/arm64`) images declare `VOLUME ["/var/li
 
 | Image | Base | Dockerfile | Highlights |
 | :--- | :--- | :--- | :--- |
-| `ghcr.io/awesome-os/t2linux:latest` | `FROM scratch` | [`t2linux/Dockerfile`](t2linux/Dockerfile) | ~3 MB static `busybox`, CA certs, `/etc/t2linux-release`, `/bin/holo-pm` |
-| `ghcr.io/awesome-os/holo-node:latest` | `node:24-alpine` | [`holo-node/Dockerfile`](holo-node/Dockerfile) | Node.js 24 Alpine + `/bin/holo-pm` |
-| `ghcr.io/awesome-os/holo-py:latest` | `python:3.13-alpine` | [`holo-py/Dockerfile`](holo-py/Dockerfile) | Python 3.13 Alpine + `/bin/holo-pm` |
-| `ghcr.io/awesome-os/holo-cpp:latest` | `alpine:3.21` | [`holo-cpp/Dockerfile`](holo-cpp/Dockerfile) | Alpine 3.21 + `musl-dev` + `/bin/holo-pm` + `libholo_pm.h` + `libholo-pm.so` |
-| `ghcr.io/awesome-os/holo-jvm:latest` | `eclipse-temurin:21-jre-alpine` | [`holo-jvm/Dockerfile`](holo-jvm/Dockerfile) | Eclipse Temurin 21 JRE Alpine + `/bin/holo-pm` |
-| `ghcr.io/awesome-os/holo-php:latest` | `php:8.4-cli-alpine` | [`holo-php/Dockerfile`](holo-php/Dockerfile) | PHP 8.4 CLI Alpine + Composer 2 + `/bin/holo-pm` |
-| `ghcr.io/awesome-os/holo-ruby:latest` | `ruby:3.4-alpine` | [`holo-ruby/Dockerfile`](holo-ruby/Dockerfile) | Ruby 3.4 Alpine + Bundler + `/bin/holo-pm` |
-| `ghcr.io/awesome-os/holo-e2e-runner:latest` | `node:24-alpine` | [`holo-e2e-runner/Dockerfile`](holo-e2e-runner/Dockerfile) | Zero-X11 Node 24 + `gcc` + `musl-dev` + Mesa Lavapipe Vulkan ICD + `/bin/holo-pm` + `/usr/local/bin/holo-e2e-probe` (`HOLO_E2E_OFFSCREEN=1`) |
+| `ghcr.io/awesome-os/t2linux:latest` | `FROM scratch` | [`t2linux/Dockerfile`](t2linux/Dockerfile) | 100% sovereign zero-Alpine runtime with real `awesome-os/coreutils`, static `busybox` `sh`, CA certs, `/etc/t2linux-release`, `/bin/holo-pm` |
+| `ghcr.io/awesome-os/holo-node:latest` | `FROM scratch` | [`holo-node/Dockerfile`](holo-node/Dockerfile) | 100% sovereign zero-Alpine runtime with Node.js `v27.0.0-alpha.0.2.0` (`amd64`) / `node:current-alpine` (`arm64`), `awesome-os/coreutils`, `/usr/local/bin/holo-node-launcher` (`awesome-os/node@v0.4.0`), and `/bin/holo-pm` |
+| `ghcr.io/awesome-os/holo-py:latest` | `python:3.15-alpine` | [`holo-py/Dockerfile`](holo-py/Dockerfile) | Python 3.15 Alpine + `/bin/holo-pm` |
+| `ghcr.io/awesome-os/holo-cpp:latest` | `alpine:3.24` | [`holo-cpp/Dockerfile`](holo-cpp/Dockerfile) | Alpine 3.24 + `musl-dev` + `/bin/holo-pm` + `libholo_pm.h` + `libholo-pm.so` |
+| `ghcr.io/awesome-os/holo-jvm:latest` | `eclipse-temurin:25-jre-alpine` | [`holo-jvm/Dockerfile`](holo-jvm/Dockerfile) | Eclipse Temurin 25 JRE Alpine + `/bin/holo-pm` |
+| `ghcr.io/awesome-os/holo-php:latest` | `php:8.6-cli-alpine` | [`holo-php/Dockerfile`](holo-php/Dockerfile) | PHP 8.6 CLI Alpine + Composer 2 + `/bin/holo-pm` |
+| `ghcr.io/awesome-os/holo-ruby:latest` | `ruby:4.0-alpine` | [`holo-ruby/Dockerfile`](holo-ruby/Dockerfile) | Ruby 4.0 Alpine + Bundler + `/bin/holo-pm` |
+| `ghcr.io/awesome-os/holo-e2e-runner:latest` | `node:current-alpine` | [`holo-e2e-runner/Dockerfile`](holo-e2e-runner/Dockerfile) | Zero-X11 Node current + `gcc` + `g++` + `musl-dev` + Mesa Lavapipe Vulkan ICD + `/bin/holo-pm` + `/usr/local/bin/holo-e2e-probe` (`HOLO_E2E_OFFSCREEN=1`; also published as `v11-oci-latest` tarball) |
 
 ---
 

@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
-# Ultra-slim Ruby 3.4 + Bundler + Holo v11 (holo-pm) OCI image with shared CAS volume support
-FROM --platform=$BUILDPLATFORM alpine:3.21 AS holo-fetch
+# Ultra-slim Ruby 4.0 + Bundler + Holo v11 (holo-pm) OCI image with shared CAS volume support
+FROM --platform=$BUILDPLATFORM alpine:3.24 AS holo-fetch
 
 ARG TARGETARCH
 ARG HOLO_V11_MANIFEST_URL="https://raw.githubusercontent.com/awesome-os/holo-v11/main/index/holo-compiler-lockfile.json"
@@ -20,10 +20,10 @@ RUN set -eux; \
     printf '%s  %s\n' "${HOLO_SHA512}" /tmp/holo-pm | sha512sum -c -; \
     chmod 0755 /tmp/holo-pm
 
-FROM ruby:3.4-alpine
+FROM ruby:4.0-alpine
 
 LABEL org.opencontainers.image.title="Awesome-OS holo-ruby" \
-      org.opencontainers.image.description="Slim Ruby 3.4 Alpine image with Bundler and Holo v11 holo-pm CAS runtime" \
+      org.opencontainers.image.description="Slim Ruby 4.0 Alpine image with Bundler and Holo v11 holo-pm CAS runtime" \
       org.opencontainers.image.source="https://github.com/awesome-os/dockerimages" \
       org.opencontainers.image.licenses="MIT"
 

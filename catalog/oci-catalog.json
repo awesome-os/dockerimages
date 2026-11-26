@@ -2,7 +2,7 @@
   "schema": "awesome-os.oci-catalog.v1",
   "abiMagic": "0x33564742",
   "casProtocol": "holo-v11",
-  "generatedAt": "2026-11-26T21:10:00Z",
+  "generatedAt": "2026-11-26T21:45:00Z",
   "publishedBaseImages": [
     {
       "name": "t2linux",
@@ -15,98 +15,98 @@
       ],
       "casVolume": "/var/lib/b8g/cas",
       "casV11Root": "/var/lib/b8g/cas/v11",
-      "highlights": "Ultra-slim ~3 MB static busybox, CA certificates, /etc/t2linux-release, /bin/holo-pm"
+      "highlights": "100% sovereign FROM scratch runtime with awesome-os/coreutils, static busybox sh, CA certificates, /etc/t2linux-release, /bin/holo-pm"
     },
     {
       "name": "holo-node",
       "image": "ghcr.io/awesome-os/holo-node:latest",
       "dockerfile": "holo-node/Dockerfile",
-      "base": "node:24-alpine",
+      "base": "FROM scratch",
       "platforms": [
         "linux/amd64",
         "linux/arm64"
       ],
       "casVolume": "/var/lib/b8g/cas",
       "casV11Root": "/var/lib/b8g/cas/v11",
-      "highlights": "Node.js 24 Alpine + /bin/holo-pm CAS runtime"
+      "highlights": "100% sovereign FROM scratch Node.js v27.0.0-alpha.0.2.0 (amd64) / node:current-alpine (arm64) + awesome-os/coreutils + /usr/local/bin/holo-node-launcher + /bin/holo-pm CAS runtime"
     },
     {
       "name": "holo-py",
       "image": "ghcr.io/awesome-os/holo-py:latest",
       "dockerfile": "holo-py/Dockerfile",
-      "base": "python:3.13-alpine",
+      "base": "python:3.15-alpine",
       "platforms": [
         "linux/amd64",
         "linux/arm64"
       ],
       "casVolume": "/var/lib/b8g/cas",
       "casV11Root": "/var/lib/b8g/cas/v11",
-      "highlights": "Python 3.13 Alpine + /bin/holo-pm CAS runtime"
+      "highlights": "Python 3.15 Alpine + /bin/holo-pm CAS runtime"
     },
     {
       "name": "holo-cpp",
       "image": "ghcr.io/awesome-os/holo-cpp:latest",
       "dockerfile": "holo-cpp/Dockerfile",
-      "base": "alpine:3.21",
+      "base": "alpine:3.24",
       "platforms": [
         "linux/amd64",
         "linux/arm64"
       ],
       "casVolume": "/var/lib/b8g/cas",
       "casV11Root": "/var/lib/b8g/cas/v11",
-      "highlights": "Alpine 3.21 + musl-dev + /bin/holo-pm + /usr/local/include/libholo_pm.h + /usr/local/lib/libholo-pm.so"
+      "highlights": "Alpine 3.24 + musl-dev + /bin/holo-pm + /usr/local/include/libholo_pm.h + /usr/local/lib/libholo-pm.so"
     },
     {
       "name": "holo-jvm",
       "image": "ghcr.io/awesome-os/holo-jvm:latest",
       "dockerfile": "holo-jvm/Dockerfile",
-      "base": "eclipse-temurin:21-jre-alpine",
+      "base": "eclipse-temurin:25-jre-alpine",
       "platforms": [
         "linux/amd64",
         "linux/arm64"
       ],
       "casVolume": "/var/lib/b8g/cas",
       "casV11Root": "/var/lib/b8g/cas/v11",
-      "highlights": "Eclipse Temurin 21 JRE Alpine + /bin/holo-pm CAS runtime"
+      "highlights": "Eclipse Temurin 25 JRE Alpine + /bin/holo-pm CAS runtime"
     },
     {
       "name": "holo-php",
       "image": "ghcr.io/awesome-os/holo-php:latest",
       "dockerfile": "holo-php/Dockerfile",
-      "base": "php:8.4-cli-alpine",
+      "base": "php:8.6-cli-alpine",
       "platforms": [
         "linux/amd64",
         "linux/arm64"
       ],
       "casVolume": "/var/lib/b8g/cas",
       "casV11Root": "/var/lib/b8g/cas/v11",
-      "highlights": "PHP 8.4 CLI Alpine + Composer 2 + /bin/holo-pm CAS runtime (COMPOSER_CACHE_DIR=/var/lib/b8g/cas/v11/composer)"
+      "highlights": "PHP 8.6 CLI Alpine + Composer 2 + /bin/holo-pm CAS runtime (COMPOSER_CACHE_DIR=/var/lib/b8g/cas/v11/composer)"
     },
     {
       "name": "holo-ruby",
       "image": "ghcr.io/awesome-os/holo-ruby:latest",
       "dockerfile": "holo-ruby/Dockerfile",
-      "base": "ruby:3.4-alpine",
+      "base": "ruby:4.0-alpine",
       "platforms": [
         "linux/amd64",
         "linux/arm64"
       ],
       "casVolume": "/var/lib/b8g/cas",
       "casV11Root": "/var/lib/b8g/cas/v11",
-      "highlights": "Ruby 3.4 Alpine + Bundler + /bin/holo-pm CAS runtime (BUNDLE_CACHE_PATH=/var/lib/b8g/cas/v11/gems)"
+      "highlights": "Ruby 4.0 Alpine + Bundler + /bin/holo-pm CAS runtime (BUNDLE_CACHE_PATH=/var/lib/b8g/cas/v11/gems)"
     },
     {
       "name": "holo-e2e-runner",
       "image": "ghcr.io/awesome-os/holo-e2e-runner:latest",
       "dockerfile": "holo-e2e-runner/Dockerfile",
-      "base": "node:24-alpine",
+      "base": "node:current-alpine",
       "platforms": [
         "linux/amd64",
         "linux/arm64"
       ],
       "casVolume": "/var/lib/b8g/cas",
       "casV11Root": "/var/lib/b8g/cas/v11",
-      "highlights": "Zero-X11 Node.js 24 + gcc + musl-dev + Mesa Lavapipe software Vulkan ICD + /bin/holo-pm + /usr/local/bin/holo-e2e-probe (HOLO_E2E_OFFSCREEN=1)"
+      "highlights": "Zero-X11 Node.js current + gcc + g++ + musl-dev + Mesa Lavapipe software Vulkan ICD + /bin/holo-pm + /usr/local/bin/holo-e2e-probe (HOLO_E2E_OFFSCREEN=1; public v11-oci-latest tarball)"
     }
   ],
   "awesomeOsOrgImages": {

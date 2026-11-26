@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   packages: write
 
 jobs:
@@ -66,8 +66,10 @@ jobs:
               docker run --rm "${IMAGE}" -c '
                 set -eu
                 cat /etc/t2linux-release
-                ls -la /bin/busybox /bin/sh /bin/holo-pm /etc/ssl/certs/ca-certificates.crt
+                /bin/coreutils --version | head -n 1
+                ls -la /bin/busybox /bin/sh /bin/coreutils /bin/holo-pm /etc/ssl/certs/ca-certificates.crt
                 test -x /bin/busybox
+                test -x /bin/coreutils
                 test -x /bin/holo-pm
                 test -s /etc/ssl/certs/ca-certificates.crt
                 test "$B8G_CAS_DIR" = "/var/lib/b8g/cas"
@@ -78,12 +80,20 @@ jobs:
             holo-node)
               docker run --rm "${IMAGE}" sh -c '
                 set -eu
-                node -v
-                ls -la /bin/busybox /bin/holo-pm /etc/ssl/certs/ca-certificates.crt
+                NODE_V="$(node -v)"
+                echo "node -v -> ${NODE_V}"
+                case "${NODE_V}" in
+                  v27.*) ;;
+                  *) echo "ERROR: expected Node v27.x on linux/amd64, got ${NODE_V}" >&2; exit 1 ;;
+                esac
+                /bin/coreutils --version | head -n 1
+                ls -la /bin/busybox /bin/coreutils /bin/holo-pm /usr/local/bin/holo-node-launcher /etc/ssl/certs/ca-certificates.crt
+                test -x /bin/coreutils
                 test -x /bin/holo-pm
+                test -x /usr/local/bin/holo-node-launcher
                 test "$B8G_CAS_DIR" = "/var/lib/b8g/cas"
                 test "$B8G_CAS_V11_ROOT" = "/var/lib/b8g/cas/v11"
-                echo "[smoke] holo-node OK"
+                echo "[smoke] holo-node OK (${NODE_V})"
               '
               ;;
             holo-py)
@@ -147,11 +157,33 @@ jobs:
             holo-e2e-runner)
               docker run --rm "${IMAGE}" sh -c '
                 set -eu
-                node -v && gcc --version | head -n 1 && test -x /bin/holo-pm && /usr/local/bin/holo-e2e-probe --out /tmp/probe.bmp && ls -la /usr/share/vulkan/icd.d/
+                node -v && gcc --version | head -n 1 && g++ --version | head -n 1 && test -x /bin/holo-pm && /usr/local/bin/holo-e2e-probe --out /tmp/probe.bmp && ls -la /usr/share/vulkan/icd.d/
                 echo "[smoke] holo-e2e-runner OK"
               '
               ;;
           esac
+
+      - name: Export and publish public holo-e2e-runner OCI tarball (v11-oci-latest)
+        if: matrix.image == 'holo-e2e-runner'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -eu
+          docker tag ghcr.io/awesome-os/holo-e2e-runner:smoke ghcr.io/awesome-os/holo-e2e-runner:latest
+          docker save ghcr.io/awesome-os/holo-e2e-runner:latest | gzip -6 > /tmp/holo-e2e-runner-linux-amd64.oci.tar.gz
+          (cd /tmp && sha512sum holo-e2e-runner-linux-amd64.oci.tar.gz > SHA512SUMS-holo-e2e-runner.txt)
+          ls -lh /tmp/holo-e2e-runner-linux-amd64.oci.tar.gz /tmp/SHA512SUMS-holo-e2e-runner.txt
+          cat /tmp/SHA512SUMS-holo-e2e-runner.txt
+          gh release view v11-oci-latest --repo awesome-os/dockerimages >/dev/null 2>&1 || \
+            gh release create v11-oci-latest \
+              --repo awesome-os/dockerimages \
+              --title "Awesome-OS Holo v11 Public OCI Images (v11-oci-latest)" \
+              --notes "Public SHA-512 verified OCI container bundles for zero-GHCR-auth clean-box Holo-E2E execution."
+          gh release upload v11-oci-latest \
+            /tmp/holo-e2e-runner-linux-amd64.oci.tar.gz \
+            /tmp/SHA512SUMS-holo-e2e-runner.txt \
+            --repo awesome-os/dockerimages \
+            --clobber
 
       - name: Build & push multi-arch OCI manifest (linux/amd64, linux/arm64)
         uses: docker/build-push-action@v6
