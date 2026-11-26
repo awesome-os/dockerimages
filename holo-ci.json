@@ -1,0 +1,15 @@
+{
+  "schema": "holo-ci.v1",
+  "name": "dockerimages",
+  "kind": "control-plane",
+  "tests": [
+    "node -e \"const fs=require('node:fs'); for(const d of ['t2linux','ghost-node','ghost-py','ghost-cpp','ghost-jvm']){ if(!fs.existsSync(d+'/Dockerfile')) process.exit(1); }\""
+  ],
+  "docs": [
+    "README.md"
+  ],
+  "guards": {
+    "zeroGhost": true,
+    "zeroCasV1": true
+  }
+}
