@@ -55,7 +55,7 @@ interface OciCatalog {
 test('catalog/oci-catalog.json parses with expected schema and ABI magic', () => {
   const raw = fs.readFileSync(catalogPath, 'utf8');
   assert.equal(/\bb8g-ghost\b/i.test(raw), false, 'catalog must not contain legacy b8g-ghost references');
-  assert.equal(/\bghost-(node|py|cpp|jvm)\b/i.test(raw), false, 'catalog must not contain legacy ghost-* image names');
+  assert.equal(/\bghost-(node|py|cpp|jvm|php|ruby)\b/i.test(raw), false, 'catalog must not contain legacy ghost-* image names');
 
   const catalog = JSON.parse(raw) as OciCatalog;
   assert.equal(catalog.schema, 'awesome-os.oci-catalog.v1');
@@ -63,9 +63,9 @@ test('catalog/oci-catalog.json parses with expected schema and ABI magic', () =>
   assert.equal(catalog.casProtocol, 'holo-v11');
 });
 
-test('all 5 publishedBaseImages exist on disk and contain zero legacy ghost-* names', () => {
+test('all 7 publishedBaseImages exist on disk and contain zero legacy ghost-* names', () => {
   const catalog = JSON.parse(fs.readFileSync(catalogPath, 'utf8')) as OciCatalog;
-  const expected = ['t2linux', 'holo-node', 'holo-py', 'holo-cpp', 'holo-jvm'];
+  const expected = ['t2linux', 'holo-node', 'holo-py', 'holo-cpp', 'holo-jvm', 'holo-php', 'holo-ruby'];
 
   assert.deepEqual(
     catalog.publishedBaseImages.map((img) => img.name),

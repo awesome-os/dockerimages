@@ -25,6 +25,8 @@ jobs:
           - holo-py
           - holo-cpp
           - holo-jvm
+          - holo-php
+          - holo-ruby
 
     steps:
       - name: Checkout repository
@@ -113,6 +115,32 @@ jobs:
                 test "$B8G_CAS_DIR" = "/var/lib/b8g/cas"
                 test "$B8G_CAS_V11_ROOT" = "/var/lib/b8g/cas/v11"
                 echo "[smoke] holo-jvm OK"
+              '
+              ;;
+            holo-php)
+              docker run --rm "${IMAGE}" sh -c '
+                set -eu
+                php -v
+                composer --version
+                ls -la /bin/busybox /bin/holo-pm /usr/local/bin/composer /etc/ssl/certs/ca-certificates.crt
+                test -x /bin/holo-pm
+                test "$B8G_CAS_DIR" = "/var/lib/b8g/cas"
+                test "$B8G_CAS_V11_ROOT" = "/var/lib/b8g/cas/v11"
+                test "$COMPOSER_CACHE_DIR" = "/var/lib/b8g/cas/v11/composer"
+                echo "[smoke] holo-php OK"
+              '
+              ;;
+            holo-ruby)
+              docker run --rm "${IMAGE}" sh -c '
+                set -eu
+                ruby -v
+                bundle --version
+                ls -la /bin/busybox /bin/holo-pm /etc/ssl/certs/ca-certificates.crt
+                test -x /bin/holo-pm
+                test "$B8G_CAS_DIR" = "/var/lib/b8g/cas"
+                test "$B8G_CAS_V11_ROOT" = "/var/lib/b8g/cas/v11"
+                test "$BUNDLE_CACHE_PATH" = "/var/lib/b8g/cas/v11/gems"
+                echo "[smoke] holo-ruby OK"
               '
               ;;
           esac

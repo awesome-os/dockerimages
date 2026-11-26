@@ -8,7 +8,7 @@ Back to [README.md](README.md).
 
 ## 1. Published Multi-Arch Base Images (`ghcr.io/awesome-os/*`)
 
-All 5 multi-arch (`linux/amd64`, `linux/arm64`) images declare `VOLUME ["/var/lib/b8g/cas"]` (`B8G_CAS_DIR=/var/lib/b8g/cas`, `B8G_CAS_V11_ROOT=/var/lib/b8g/cas/v11`) and verify `/bin/holo-pm` via SHA-512 against `awesome-os/holo-v11`.
+All 7 multi-arch (`linux/amd64`, `linux/arm64`) images declare `VOLUME ["/var/lib/b8g/cas"]` (`B8G_CAS_DIR=/var/lib/b8g/cas`, `B8G_CAS_V11_ROOT=/var/lib/b8g/cas/v11`) and verify `/bin/holo-pm` via SHA-512 against `awesome-os/holo-v11`.
 
 | Image | Base | Dockerfile | Highlights |
 | :--- | :--- | :--- | :--- |
@@ -17,21 +17,23 @@ All 5 multi-arch (`linux/amd64`, `linux/arm64`) images declare `VOLUME ["/var/li
 | `ghcr.io/awesome-os/holo-py:latest` | `python:3.13-alpine` | [`holo-py/Dockerfile`](holo-py/Dockerfile) | Python 3.13 Alpine + `/bin/holo-pm` |
 | `ghcr.io/awesome-os/holo-cpp:latest` | `alpine:3.21` | [`holo-cpp/Dockerfile`](holo-cpp/Dockerfile) | Alpine 3.21 + `musl-dev` + `/bin/holo-pm` + `libholo_pm.h` + `libholo-pm.so` |
 | `ghcr.io/awesome-os/holo-jvm:latest` | `eclipse-temurin:21-jre-alpine` | [`holo-jvm/Dockerfile`](holo-jvm/Dockerfile) | Eclipse Temurin 21 JRE Alpine + `/bin/holo-pm` |
+| `ghcr.io/awesome-os/holo-php:latest` | `php:8.4-cli-alpine` | [`holo-php/Dockerfile`](holo-php/Dockerfile) | PHP 8.4 CLI Alpine + Composer 2 + `/bin/holo-pm` |
+| `ghcr.io/awesome-os/holo-ruby:latest` | `ruby:3.4-alpine` | [`holo-ruby/Dockerfile`](holo-ruby/Dockerfile) | Ruby 3.4 Alpine + Bundler + `/bin/holo-pm` |
 
 ---
 
-## 2. `awesome-os` Organization OCI Inventory (`32` Repos, `123` Files)
+## 2. `awesome-os` Organization OCI Inventory (`32` Repos, `125` Files)
 
 Scanned across `141` local mirrors (`144` org repos on GitHub): **`19` active repos** and **`13` archived repos** containing `Dockerfile`, `Containerfile`, `*.dockerfile`, `*.containerfile`, `docker-compose*.yml`, or `compose*.yml`.
 
 | Category | Repos | Active | Archived | OCI / Compose Files | Key Repositories |
 | :--- | :---: | :---: | :---: | :---: | :--- |
-| **Base & Runtime** | 5 | 4 | 1 | 15 | `dockerimages` (5), `uv` (3), `pnpm` (3), `coreutils` (1), `docker` *(archived, 3)* |
+| **Base & Runtime** | 5 | 4 | 1 | 17 | `dockerimages` (7), `uv` (3), `pnpm` (3), `coreutils` (1), `docker` *(archived, 3)* |
 | **Sovereign AI & GPU** | 3 | 3 | 0 | 27 | `vllm` (12), `llama.cpp` (11), `colibri` (4) |
 | **Sovereign Forge & Identity** | 5 | 5 | 0 | 44 | `gitlab-foss` (24), `gitlab-runner` (12), `gitaly` (3), `ory-polis` (3), `gitlab-shell` (2) |
 | **Toolchains & Systems** | 10 | 7 | 3 | 18 | `maclab` (3), `cargo` (2), `go-lang` (2), `siliconforest-m1n1` (2), `firecracker` (1), `chonkstep` (1), `siliconforest` (1), `ladybird` *(archived, 3)*, `repository` *(archived, 2)*, `pouchdb` *(archived, 1)* |
 | **Benchmarks & Historical** | 9 | 0 | 9 | 19 | `benchmarks` (4), `lo-bench` (3), `benchy` (2), `demo-iouring` (2), `docs` (2), `just` (2), `techempower` (2), `joos` (1), `pgbench` (1) *(all archived)* |
-| **Total** | **32** | **19** | **13** | **123** | Full per-file listing in [`catalog/oci-catalog.json`](catalog/oci-catalog.json) |
+| **Total** | **32** | **19** | **13** | **125** | Full per-file listing in [`catalog/oci-catalog.json`](catalog/oci-catalog.json) |
 
 ---
 

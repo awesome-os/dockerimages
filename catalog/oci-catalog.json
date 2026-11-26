@@ -68,6 +68,32 @@
       "casVolume": "/var/lib/b8g/cas",
       "casV11Root": "/var/lib/b8g/cas/v11",
       "highlights": "Eclipse Temurin 21 JRE Alpine + /bin/holo-pm CAS runtime"
+    },
+    {
+      "name": "holo-php",
+      "image": "ghcr.io/awesome-os/holo-php:latest",
+      "dockerfile": "holo-php/Dockerfile",
+      "base": "php:8.4-cli-alpine",
+      "platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ],
+      "casVolume": "/var/lib/b8g/cas",
+      "casV11Root": "/var/lib/b8g/cas/v11",
+      "highlights": "PHP 8.4 CLI Alpine + Composer 2 + /bin/holo-pm CAS runtime (COMPOSER_CACHE_DIR=/var/lib/b8g/cas/v11/composer)"
+    },
+    {
+      "name": "holo-ruby",
+      "image": "ghcr.io/awesome-os/holo-ruby:latest",
+      "dockerfile": "holo-ruby/Dockerfile",
+      "base": "ruby:3.4-alpine",
+      "platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ],
+      "casVolume": "/var/lib/b8g/cas",
+      "casV11Root": "/var/lib/b8g/cas/v11",
+      "highlights": "Ruby 3.4 Alpine + Bundler + /bin/holo-pm CAS runtime (BUNDLE_CACHE_PATH=/var/lib/b8g/cas/v11/gems)"
     }
   ],
   "awesomeOsOrgImages": {
@@ -77,7 +103,7 @@
     "reposWithOciFiles": 32,
     "activeRepos": 19,
     "archivedRepos": 13,
-    "totalFiles": 123,
+    "totalFiles": 125,
     "categories": {
       "Base & Runtime": [
         {
@@ -109,13 +135,15 @@
           "url": "https://github.com/awesome-os/dockerimages",
           "archived": false,
           "pushedAt": "2026-11-26T20:49:36Z",
-          "description": "Ultra-slim FROM scratch & Holo v11 OCI container images (t2linux, holo-node, holo-py, holo-cpp, holo-jvm) published daily to ghcr.io/awesome-os/* with shared CAS volume support",
-          "fileCount": 5,
+          "description": "Ultra-slim FROM scratch & Holo v11 OCI container images (t2linux, holo-node, holo-py, holo-cpp, holo-jvm, holo-php, holo-ruby) published daily to ghcr.io/awesome-os/* with shared CAS volume support",
+          "fileCount": 7,
           "files": [
             "holo-cpp/Dockerfile",
             "holo-jvm/Dockerfile",
             "holo-node/Dockerfile",
+            "holo-php/Dockerfile",
             "holo-py/Dockerfile",
+            "holo-ruby/Dockerfile",
             "t2linux/Dockerfile"
           ]
         },
