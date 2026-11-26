@@ -19,7 +19,7 @@ RUN set -eux; \
       arm64) HOLO_ARCH="aarch64"; NODE_ARCH="arm64" ;; \
       *) echo "Unsupported TARGETARCH: ${TARGETARCH:-unset}" >&2; exit 1 ;; \
     esac; \
-    apk add --no-cache busybox-static ca-certificates curl jq xz libstdc++ libgcc; \
+    apk add --no-cache busybox-static ca-certificates curl jq xz libstdc++ libgcc libatomic; \
     mkdir -p /rootfs/bin /rootfs/usr/local/bin /rootfs/lib /rootfs/usr/lib /rootfs/etc/ssl/certs /rootfs/var/lib/b8g/cas/v11 /rootfs/tmp /rootfs/root; \
     chmod 1777 /rootfs/tmp; \
     cp /bin/busybox.static /rootfs/bin/busybox; \
@@ -70,6 +70,7 @@ RUN set -eux; \
     done; \
     cp -aL /usr/lib/libstdc++.so.6 /rootfs/usr/lib/libstdc++.so.6; \
     cp -aL /usr/lib/libgcc_s.so.1 /rootfs/usr/lib/libgcc_s.so.1; \
+    if [ -e /usr/lib/libatomic.so.1 ]; then cp -aL /usr/lib/libatomic.so.1 /rootfs/usr/lib/libatomic.so.1; fi; \
     ldd /rootfs/usr/local/bin/node 2>/dev/null | awk '/=> \// {print $3}' | while read -r dep; do \
       [ -n "${dep}" ] || continue; \
       b="$(basename "${dep}")"; \
@@ -81,6 +82,16 @@ RUN set -eux; \
         cp -aL "/tmp/node-alpine-lib/${b}" "/rootfs${dep}"; \
       elif [ -e "/tmp/node-alpine-usr-lib/${b}" ]; then \
         cp -aL "/tmp/node-alpine-usr-lib/${b}" "/rootfs${dep}"; \
+      fi; \
+    done; \
+    ldd /rootfs/usr/local/bin/node 2>/dev/null | awk '/not found/ {print $1}' | while read -r missing; do \
+      [ -n "${missing}" ] || continue; \
+      if [ -e "/tmp/node-alpine-lib/${missing}" ]; then \
+        cp -aL "/tmp/node-alpine-lib/${missing}" "/rootfs/lib/${missing}"; \
+      elif [ -e "/tmp/node-alpine-usr-lib/${missing}" ]; then \
+        cp -aL "/tmp/node-alpine-usr-lib/${missing}" "/rootfs/usr/lib/${missing}"; \
+      else \
+        echo "ERROR: missing shared library ${missing} for node" >&2; exit 1; \
       fi; \
     done; \
     printf 'root:x:0:0:root:/root:/bin/sh\nnobody:x:65534:65534:nobody:/:/bin/false\n' > /rootfs/etc/passwd; \
