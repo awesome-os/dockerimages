@@ -63,9 +63,18 @@ test('catalog/oci-catalog.json parses with expected schema and ABI magic', () =>
   assert.equal(catalog.casProtocol, 'holo-v11');
 });
 
-test('all 7 publishedBaseImages exist on disk and contain zero legacy ghost-* names', () => {
+test('all 8 publishedBaseImages exist on disk and contain zero legacy ghost-* names', () => {
   const catalog = JSON.parse(fs.readFileSync(catalogPath, 'utf8')) as OciCatalog;
-  const expected = ['t2linux', 'holo-node', 'holo-py', 'holo-cpp', 'holo-jvm', 'holo-php', 'holo-ruby'];
+  const expected = [
+    't2linux',
+    'holo-node',
+    'holo-py',
+    'holo-cpp',
+    'holo-jvm',
+    'holo-php',
+    'holo-ruby',
+    'holo-e2e-runner',
+  ];
 
   assert.deepEqual(
     catalog.publishedBaseImages.map((img) => img.name),
@@ -78,6 +87,9 @@ test('all 7 publishedBaseImages exist on disk and contain zero legacy ghost-* na
     const content = fs.readFileSync(dfPath, 'utf8');
     assert.equal(/\bghost-/i.test(content), false, `${name}/Dockerfile must not contain ghost-`);
   }
+
+  const probePath = path.join(repoRoot, 'holo-e2e-runner', 'holo-e2e-probe.mjs');
+  assert.equal(fs.existsSync(probePath), true, 'missing holo-e2e-runner/holo-e2e-probe.mjs');
 });
 
 test('dockerimagesOrg partitions all 138 repos uniquely across 4 tiers', () => {

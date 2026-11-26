@@ -94,6 +94,19 @@
       "casVolume": "/var/lib/b8g/cas",
       "casV11Root": "/var/lib/b8g/cas/v11",
       "highlights": "Ruby 3.4 Alpine + Bundler + /bin/holo-pm CAS runtime (BUNDLE_CACHE_PATH=/var/lib/b8g/cas/v11/gems)"
+    },
+    {
+      "name": "holo-e2e-runner",
+      "image": "ghcr.io/awesome-os/holo-e2e-runner:latest",
+      "dockerfile": "holo-e2e-runner/Dockerfile",
+      "base": "node:24-alpine",
+      "platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ],
+      "casVolume": "/var/lib/b8g/cas",
+      "casV11Root": "/var/lib/b8g/cas/v11",
+      "highlights": "Zero-X11 Node.js 24 + gcc + musl-dev + Mesa Lavapipe software Vulkan ICD + /bin/holo-pm + /usr/local/bin/holo-e2e-probe (HOLO_E2E_OFFSCREEN=1)"
     }
   ],
   "awesomeOsOrgImages": {
@@ -103,7 +116,7 @@
     "reposWithOciFiles": 32,
     "activeRepos": 19,
     "archivedRepos": 13,
-    "totalFiles": 125,
+    "totalFiles": 126,
     "categories": {
       "Base & Runtime": [
         {
@@ -135,10 +148,11 @@
           "url": "https://github.com/awesome-os/dockerimages",
           "archived": false,
           "pushedAt": "2026-11-26T20:49:36Z",
-          "description": "Ultra-slim FROM scratch & Holo v11 OCI container images (t2linux, holo-node, holo-py, holo-cpp, holo-jvm, holo-php, holo-ruby) published daily to ghcr.io/awesome-os/* with shared CAS volume support",
-          "fileCount": 7,
+          "description": "Ultra-slim FROM scratch & Holo v11 OCI container images (t2linux, holo-node, holo-py, holo-cpp, holo-jvm, holo-php, holo-ruby, holo-e2e-runner) published daily to ghcr.io/awesome-os/* with shared CAS volume support",
+          "fileCount": 8,
           "files": [
             "holo-cpp/Dockerfile",
+            "holo-e2e-runner/Dockerfile",
             "holo-jvm/Dockerfile",
             "holo-node/Dockerfile",
             "holo-php/Dockerfile",

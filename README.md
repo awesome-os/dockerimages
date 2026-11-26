@@ -13,6 +13,7 @@ Ultra-slim `FROM scratch` and Holo v11 (`holo-pm`) OCI container images built an
 | `ghcr.io/awesome-os/holo-jvm:latest` | `eclipse-temurin:21-jre-alpine` | Temurin 21 JRE + `/bin/holo-pm` |
 | `ghcr.io/awesome-os/holo-php:latest` | `php:8.4-cli-alpine` | PHP 8.4 CLI + Composer 2 + `/bin/holo-pm` |
 | `ghcr.io/awesome-os/holo-ruby:latest` | `ruby:3.4-alpine` | Ruby 3.4 + Bundler + `/bin/holo-pm` |
+| `ghcr.io/awesome-os/holo-e2e-runner:latest` | `node:24-alpine` | Zero-X11 Node 24 + `gcc` + Mesa Lavapipe Vulkan ICD + `/bin/holo-pm` + `holo-e2e-probe` |
 
 All images verify `/bin/holo-pm` (and `libholo-pm.so` / `libholo_pm.h`) bit-for-bit via SHA-512 against [`awesome-os/holo-v11`](https://github.com/awesome-os/holo-v11/blob/main/index/holo-compiler-lockfile.json) during build.
 
@@ -90,6 +91,15 @@ docker run --rm \
   sh -c 'ruby -v && bundle --version'
 ```
 
+### `holo-e2e-runner` (Zero-X11 Node.js 24 + `gcc` + Mesa Lavapipe Vulkan + `holo-pm`)
+
+```sh
+docker run --rm \
+  -v ~/.b8g/cas:/var/lib/b8g/cas \
+  ghcr.io/awesome-os/holo-e2e-runner:latest \
+  holo-e2e-probe --out /tmp/probe.bmp
+```
+
 ---
 
 ## Shared Host CAS Volume (`/var/lib/b8g/cas`)
@@ -99,11 +109,11 @@ Every image declares `VOLUME ["/var/lib/b8g/cas"]` and exports:
 - `B8G_CAS_DIR=/var/lib/b8g/cas`
 - `B8G_CAS_V11_ROOT=/var/lib/b8g/cas/v11`
 
-Mount a single host CAS directory across all containers (`-v ~/.b8g/cas:/var/lib/b8g/cas`) to deduplicate Holo v11 artifacts across `t2linux`, `holo-node`, `holo-py`, `holo-cpp`, `holo-jvm`, `holo-php`, and `holo-ruby` with zero redundant downloads.
+Mount a single host CAS directory across all containers (`-v ~/.b8g/cas:/var/lib/b8g/cas`) to deduplicate Holo v11 artifacts across `t2linux`, `holo-node`, `holo-py`, `holo-cpp`, `holo-jvm`, `holo-php`, `holo-ruby`, and `holo-e2e-runner` with zero redundant downloads.
 
 ## Automated Daily Publishing & `holo-ci@v1`
 
-- [`.github/workflows/publish-ghcr.yml`](.github/workflows/publish-ghcr.yml) rebuilds, smoke-tests, reports image sizes, and publishes all 7 multi-arch (`linux/amd64`, `linux/arm64`) images to `ghcr.io/awesome-os/*:latest` on every push to `main`, daily at `05:00 UTC`, and on manual `workflow_dispatch`.
+- [`.github/workflows/publish-ghcr.yml`](.github/workflows/publish-ghcr.yml) rebuilds, smoke-tests, reports image sizes, and publishes all 8 multi-arch (`linux/amd64`, `linux/arm64`) images to `ghcr.io/awesome-os/*:latest` on every push to `main`, daily at `05:00 UTC`, and on manual `workflow_dispatch`.
 - [`.github/workflows/holo-ci.yml`](.github/workflows/holo-ci.yml) runs `holo-ci@v1` (`awesome-os/maintenance-workflows/.github/workflows/reusable-holo-ci.yml@v1`) against [`holo-ci.json`](holo-ci.json) (`zeroGhost`, `zeroCasV1`, Dockerfile presence, `catalog/oci-catalog.test.mts`, and doc integrity).
 
 ## License

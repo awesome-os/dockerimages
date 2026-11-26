@@ -27,6 +27,7 @@ jobs:
           - holo-jvm
           - holo-php
           - holo-ruby
+          - holo-e2e-runner
 
     steps:
       - name: Checkout repository
@@ -141,6 +142,13 @@ jobs:
                 test "$B8G_CAS_V11_ROOT" = "/var/lib/b8g/cas/v11"
                 test "$BUNDLE_CACHE_PATH" = "/var/lib/b8g/cas/v11/gems"
                 echo "[smoke] holo-ruby OK"
+              '
+              ;;
+            holo-e2e-runner)
+              docker run --rm "${IMAGE}" sh -c '
+                set -eu
+                node -v && gcc --version | head -n 1 && test -x /bin/holo-pm && /usr/local/bin/holo-e2e-probe --out /tmp/probe.bmp && ls -la /usr/share/vulkan/icd.d/
+                echo "[smoke] holo-e2e-runner OK"
               '
               ;;
           esac
