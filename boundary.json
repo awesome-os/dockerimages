@@ -1,0 +1,24 @@
+{
+  "schema": "holo-boundary.v1",
+  "plane": 2,
+  "publicEntrypoints": [
+    "catalog/oci-catalog.json",
+    "holo-e2e-runner/holo-e2e-probe.mjs",
+    "holo-e2e-lite/holo-e2e-probe.mjs"
+  ],
+  "includePaths": [
+    "catalog",
+    "holo-e2e-lite",
+    "holo-e2e-runner"
+  ],
+  "abiGoldenFiles": [
+    "catalog/oci-catalog.json"
+  ],
+  "forbiddenImports": [
+    "intersections/sectium-browser",
+    "../../packages/",
+    "../../sections/"
+  ],
+  "maxParentTraversals": 2,
+  "scanSourceHttpIpc": true
+}
