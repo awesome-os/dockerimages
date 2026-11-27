@@ -1,30 +1,47 @@
-# Awesome-OS Docker Images (`ghcr.io/awesome-os/*`)
+# Awesome-OS Docker Images (Zero-Auth CAS Pipe & `v11-oci-latest`)
 
-Ultra-slim `FROM scratch` and Holo v11 (`holo-pm`) OCI container images built and published daily to **GitHub Container Registry (`ghcr.io/awesome-os/*`)** and anonymous public GitHub Release **`v11-oci-latest`** (all 9 base images as `<name>-linux-amd64.oci.tar.gz` + `SHA512SUMS-<name>.txt`) with shared Content-Addressable Store (CAS) volume support, alongside the unified [`CATALOG.md`](CATALOG.md) & [`catalog/oci-catalog.json`](catalog/oci-catalog.json) inventory covering `awesome-os`, sister org [`github.com/dockerimages`](https://github.com/dockerimages) (`138` repos), and [`sameersbn`](https://github.com/sameersbn) successor mappings.
+Ultra-slim `FROM scratch` and Holo v11 (`holo-pm`) OCI container images distributed through two **zero-auth public channels** with shared Content-Addressable Store (CAS) volume support, alongside the unified [`CATALOG.md`](CATALOG.md) & [`catalog/oci-catalog.json`](catalog/oci-catalog.json) inventory covering `awesome-os`, sister org [`github.com/dockerimages`](https://github.com/dockerimages) (`138` repos), and [`sameersbn`](https://github.com/sameersbn) successor mappings.
 
-## Published Images
-
-| Image | Base | Highlights |
-| :--- | :--- | :--- |
-| `ghcr.io/awesome-os/t2linux:latest` | `FROM scratch` | 100% sovereign zero-Alpine runtime with real [`awesome-os/coreutils`](https://github.com/awesome-os/coreutils), static `busybox` `sh`, CA certificates, `/etc/t2linux-release`, `/bin/holo-pm` |
-| `ghcr.io/awesome-os/holo-node:latest` | `FROM scratch` | 100% sovereign zero-Alpine runtime with Node.js `v27.0.0-alpha.0.2.0` (`linux/amd64` musl + `linux/arm64` glibc), `awesome-os/coreutils`, `/usr/local/bin/holo-node-launcher` (`awesome-os/node@v0.4.0`), and `/bin/holo-pm` |
-| `ghcr.io/awesome-os/holo-py:latest` | `python:3.15-alpine` | Python 3.15 + `/bin/holo-pm` |
-| `ghcr.io/awesome-os/holo-cpp:latest` | `alpine:3.24` | Alpine 3.24 + `musl-dev` + `/bin/holo-pm` + `/usr/local/include/libholo_pm.h` & `/usr/local/lib/libholo-pm.so` |
-| `ghcr.io/awesome-os/holo-jvm:latest` | `eclipse-temurin:25-jre-alpine` | Temurin 25 JRE + `/bin/holo-pm` |
-| `ghcr.io/awesome-os/holo-php:latest` | `php:8.6-cli-alpine` | PHP 8.6 CLI + Composer 2 + `/bin/holo-pm` |
-| `ghcr.io/awesome-os/holo-ruby:latest` | `ruby:4.0-alpine` | Ruby 4.0 + Bundler + `/bin/holo-pm` |
-| `ghcr.io/awesome-os/holo-e2e-runner:latest` | `node:current-alpine` | Zero-X11 Node current + `gcc` + `g++` + `musl-dev` + Mesa Lavapipe Vulkan ICD + `/bin/holo-pm` + `holo-e2e-probe` (+ public `v11-oci-latest` tarball) |
-| `ghcr.io/awesome-os/holo-e2e-lite:latest` | `node:current-alpine` | Lightweight headless Node current + `ca-certificates` + `curl` + `jq` + `bash` + `git` + `/bin/holo-pm` + `holo-e2e-probe` (`HOLO_E2E_LITE=1`, zero `gcc`/`g++`/Mesa Vulkan; + public `v11-oci-latest` tarball) |
-
-All images verify `/bin/holo-pm` (and `libholo-pm.so` / `libholo_pm.h`) bit-for-bit via SHA-512 against [`awesome-os/holo-v11`](https://github.com/awesome-os/holo-v11/blob/main/index/holo-compiler-lockfile.json) during build.
+> **Why GHCR public pulls are retired:** GitHub's Free Org Container Registry offers no API for public visibility flip and blocks/hides per-package visibility changes under organization inheritance UI rules. Every Awesome-OS image is therefore built deterministically `1:1` from its CAS lockfile + `Dockerfile` via shell pipe or consumed directly from anonymous public `v11-oci-latest` release bundles. `ghcr.io/awesome-os/*` serves strictly as an **internal CI mirror cache**.
 
 ---
 
-## Public Sovereign OCI Tarballs (`v11-oci-latest`) & Anonymous GHCR Pulls
+## Two Zero-Auth Public Distribution Channels
 
-For zero-GHCR-auth clean-box execution, [`.github/workflows/publish-ghcr.yml`](.github/workflows/publish-ghcr.yml) exports and uploads SHA-512 verified `<name>-linux-amd64.oci.tar.gz` + `SHA512SUMS-<name>.txt` bundles for **all 9 base images** (`t2linux`, `holo-node`, `holo-py`, `holo-cpp`, `holo-jvm`, `holo-php`, `holo-ruby`, `holo-e2e-runner`, `holo-e2e-lite`) to GitHub Release [`v11-oci-latest`](https://github.com/awesome-os/dockerimages/releases/tag/v11-oci-latest).
+### 1. 1:1 CAS-to-Container Shell Pipe Build (Zero Auth, Any Base or Stack Image in Seconds)
 
-### Anonymous Public `v11-oci-latest` Tarball Consumption (Zero Auth)
+Every one of the **9 base images** and **16 modernized stack images** maps `1:1` from its pinned [`awesome-os/holo-v11`](https://github.com/awesome-os/holo-v11/blob/main/index/holo-compiler-lockfile.json) metadata, `Dockerfile`, and sibling context files to a deterministic SHA-512 identity (`awesome-os/<name>:cas-<sha512[:12]>` + OCI label `org.awesome-os.cas-id=<sha512>`).
+
+Because the GHCR visibility toggle is skipped intentionally, build any zero-context base or stack image directly in seconds via a single `curl | docker build -` shell pipe:
+
+```sh
+# Base image (FROM scratch + Node.js v27 + awesome-os/coreutils + holo-pm)
+curl -fsSL https://raw.githubusercontent.com/awesome-os/dockerimages/main/holo-node/Dockerfile | docker build --build-arg SOURCE_DATE_EPOCH=0 -t awesome-os/holo-node:latest -
+
+# Any modernized stack image (e.g. holo-nginx)
+curl -fsSL https://raw.githubusercontent.com/awesome-os/dockerimages/main/stacks/holo-nginx/Dockerfile | docker build --build-arg SOURCE_DATE_EPOCH=0 -t awesome-os/holo-nginx:latest -
+```
+
+Context-bearing images (`holo-e2e-runner` and `holo-e2e-lite`, which bundle `holo-e2e-probe.mjs`) build cleanly in one command over public Git context:
+
+```sh
+docker build --build-arg SOURCE_DATE_EPOCH=0 -t awesome-os/holo-e2e-lite:latest https://github.com/awesome-os/dockerimages.git#main:holo-e2e-lite
+```
+
+Or resolve deterministic 1:1 CAS IDs, inspect all 25 images, or build locally with [`catalog/cas-pipe-build.mts`](catalog/cas-pipe-build.mts) (verified by [`catalog/cas-pipe-build.test.mts`](catalog/cas-pipe-build.test.mts)):
+
+```sh
+# List deterministic 1:1 CAS-to-container mappings for all 9 base + 16 stack images
+node catalog/cas-pipe-build.mts --list --json
+
+# Print or execute the deterministic pipe build for any image
+node catalog/cas-pipe-build.mts --image holo-node --print-script
+node catalog/cas-pipe-build.mts --image holo-node --build
+```
+
+### 2. Prebuilt Anonymous `.oci.tar.gz` Bundles (`v11-oci-latest`)
+
+For zero-build clean-box consumption, [`.github/workflows/publish-ghcr.yml`](.github/workflows/publish-ghcr.yml) exports and uploads SHA-512 verified `<name>-linux-amd64.oci.tar.gz` + `SHA512SUMS-<name>.txt` bundles for **all 9 base images** (`t2linux`, `holo-node`, `holo-py`, `holo-cpp`, `holo-jvm`, `holo-php`, `holo-ruby`, `holo-e2e-runner`, `holo-e2e-lite`) to anonymous public GitHub Release [`v11-oci-latest`](https://github.com/awesome-os/dockerimages/releases/tag/v11-oci-latest).
 
 Stream directly into `docker load` without a GitHub token:
 
@@ -47,12 +64,25 @@ Verify anonymous HTTP 200 reachability across all 9 release checksums:
 node catalog/oci-smoke.mts --mode verify-anonymous-release --tag v11-oci-latest
 ```
 
-### Optional Org Admin Step for Public `ghcr.io/awesome-os/*` Pulls
+> **Note on `ghcr.io/awesome-os/*`:** CI workflows still push multi-arch layers to `ghcr.io/awesome-os/*` strictly as an **internal CI mirror cache**; end users and downstream workflows should never depend on GHCR public pull visibility.
 
-To allow unauthenticated `docker pull ghcr.io/awesome-os/<image>:latest` directly from GHCR, a GitHub organization admin sets default package creation visibility to **Public** under:
+---
 
-1. [`https://github.com/organizations/awesome-os/settings/packages`](https://github.com/organizations/awesome-os/settings/packages)
-2. **Package creation** -> select **Public** -> Save (and mark existing packages Public in package settings if previously created private).
+## Base Images (`9`)
+
+| Image | Base | Dockerfile | Highlights |
+| :--- | :--- | :--- | :--- |
+| `awesome-os/t2linux:latest` | `FROM scratch` | [`t2linux/Dockerfile`](t2linux/Dockerfile) | 100% sovereign zero-Alpine runtime with real [`awesome-os/coreutils`](https://github.com/awesome-os/coreutils), static `busybox` `sh`, CA certificates, `/etc/t2linux-release`, `/bin/holo-pm` |
+| `awesome-os/holo-node:latest` | `FROM scratch` | [`holo-node/Dockerfile`](holo-node/Dockerfile) | 100% sovereign zero-Alpine runtime with Node.js `v27.0.0-alpha.0.2.0` (`linux/amd64` musl + `linux/arm64` glibc), `awesome-os/coreutils`, `/usr/local/bin/holo-node-launcher` (`awesome-os/node@v0.4.0`), and `/bin/holo-pm` |
+| `awesome-os/holo-py:latest` | `python:3.15-alpine` | [`holo-py/Dockerfile`](holo-py/Dockerfile) | Python 3.15 + `/bin/holo-pm` |
+| `awesome-os/holo-cpp:latest` | `alpine:3.24` | [`holo-cpp/Dockerfile`](holo-cpp/Dockerfile) | Alpine 3.24 + `musl-dev` + `/bin/holo-pm` + `/usr/local/include/libholo_pm.h` & `/usr/local/lib/libholo-pm.so` |
+| `awesome-os/holo-jvm:latest` | `eclipse-temurin:25-jre-alpine` | [`holo-jvm/Dockerfile`](holo-jvm/Dockerfile) | Temurin 25 JRE + `/bin/holo-pm` |
+| `awesome-os/holo-php:latest` | `php:8.6-cli-alpine` | [`holo-php/Dockerfile`](holo-php/Dockerfile) | PHP 8.6 CLI + Composer 2 + `/bin/holo-pm` |
+| `awesome-os/holo-ruby:latest` | `ruby:4.0-alpine` | [`holo-ruby/Dockerfile`](holo-ruby/Dockerfile) | Ruby 4.0 + Bundler + `/bin/holo-pm` |
+| `awesome-os/holo-e2e-runner:latest` | `node:current-alpine` | [`holo-e2e-runner/Dockerfile`](holo-e2e-runner/Dockerfile) | Zero-X11 Node current + `gcc` + `g++` + `musl-dev` + Mesa Lavapipe Vulkan ICD + `/bin/holo-pm` + `holo-e2e-probe` (+ public `v11-oci-latest` tarball) |
+| `awesome-os/holo-e2e-lite:latest` | `node:current-alpine` | [`holo-e2e-lite/Dockerfile`](holo-e2e-lite/Dockerfile) | Lightweight headless Node current + `ca-certificates` + `curl` + `jq` + `bash` + `git` + `/bin/holo-pm` + `holo-e2e-probe` (`HOLO_E2E_LITE=1`, zero `gcc`/`g++`/Mesa Vulkan; + public `v11-oci-latest` tarball) |
+
+All images verify `/bin/holo-pm` (and `libholo-pm.so` / `libholo_pm.h`) bit-for-bit via SHA-512 against [`awesome-os/holo-v11`](https://github.com/awesome-os/holo-v11/blob/main/index/holo-compiler-lockfile.json) during build.
 
 ---
 
@@ -66,26 +96,26 @@ To allow unauthenticated `docker pull ghcr.io/awesome-os/<image>:latest` directl
 
 ## Modernized Multi-Arch Stack Images (`stacks/holo-*`)
 
-Published to `ghcr.io/awesome-os/<stack>:latest` (`linux/amd64` + `linux/arm64`) by [`.github/workflows/publish-stacks-ghcr.yml`](.github/workflows/publish-stacks-ghcr.yml) with SHA-512 verified `/bin/holo-pm` and `/var/lib/b8g/cas/v11`:
+Built deterministically via 1:1 CAS shell pipe (`curl -fsSL ... | docker build -`) or `node catalog/cas-pipe-build.mts --image <stack> --build` (with `ghcr.io/awesome-os/<stack>:latest` as internal CI mirror cache via [`.github/workflows/publish-stacks-ghcr.yml`](.github/workflows/publish-stacks-ghcr.yml)), each bundling SHA-512 verified `/bin/holo-pm` and `/var/lib/b8g/cas/v11`:
 
 | Stack Image | Upstream Base | Dockerfile | Highlights |
 | :--- | :--- | :--- | :--- |
-| `ghcr.io/awesome-os/holo-nginx:latest` | `nginx:alpine` | [`stacks/holo-nginx/Dockerfile`](stacks/holo-nginx/Dockerfile) | Slim Nginx reverse proxy & HTTP server + `/bin/holo-pm` |
-| `ghcr.io/awesome-os/holo-haproxy:latest` | `haproxy:lts-alpine` | [`stacks/holo-haproxy/Dockerfile`](stacks/holo-haproxy/Dockerfile) | Slim HAProxy LTS load balancer (non-root `haproxy`) + `/bin/holo-pm` |
-| `ghcr.io/awesome-os/holo-varnish:latest` | `varnish:alpine` | [`stacks/holo-varnish/Dockerfile`](stacks/holo-varnish/Dockerfile) | Slim Varnish HTTP accelerator (non-root `varnish`) + `/bin/holo-pm` |
-| `ghcr.io/awesome-os/holo-httpd:latest` | `httpd:2.4-alpine` | [`stacks/holo-httpd/Dockerfile`](stacks/holo-httpd/Dockerfile) | Slim Apache HTTPd 2.4 server + `/bin/holo-pm` |
-| `ghcr.io/awesome-os/holo-postgres:latest` | `postgres:17-alpine` | [`stacks/holo-postgres/Dockerfile`](stacks/holo-postgres/Dockerfile) | Slim PostgreSQL 17 database server + `/bin/holo-pm` |
-| `ghcr.io/awesome-os/holo-mariadb:latest` | `mariadb:11` | [`stacks/holo-mariadb/Dockerfile`](stacks/holo-mariadb/Dockerfile) | MariaDB 11 database server + `/bin/holo-pm` |
-| `ghcr.io/awesome-os/holo-valkey:latest` | `valkey/valkey:8-alpine` | [`stacks/holo-valkey/Dockerfile`](stacks/holo-valkey/Dockerfile) | Slim Valkey 8 in-memory cache/store + `/bin/holo-pm` |
-| `ghcr.io/awesome-os/holo-mongodb:latest` | `mongo:8` | [`stacks/holo-mongodb/Dockerfile`](stacks/holo-mongodb/Dockerfile) | MongoDB 8 document database + `/bin/holo-pm` |
-| `ghcr.io/awesome-os/holo-solr:latest` | `solr:9-slim` | [`stacks/holo-solr/Dockerfile`](stacks/holo-solr/Dockerfile) | Apache Solr 9 search engine (non-root `solr`) + `/bin/holo-pm` |
-| `ghcr.io/awesome-os/holo-go:latest` | `golang:alpine` | [`stacks/holo-go/Dockerfile`](stacks/holo-go/Dockerfile) | Slim Go Alpine toolchain + `/bin/holo-pm` |
-| `ghcr.io/awesome-os/holo-deno:latest` | `denoland/deno:alpine` | [`stacks/holo-deno/Dockerfile`](stacks/holo-deno/Dockerfile) | Slim Deno Alpine runtime + `/bin/holo-pm` |
-| `ghcr.io/awesome-os/holo-git:latest` | `alpine/git:latest` | [`stacks/holo-git/Dockerfile`](stacks/holo-git/Dockerfile) | Slim Git Alpine client + `/bin/holo-pm` |
-| `ghcr.io/awesome-os/holo-wordpress:latest` | `wordpress:php8.4-fpm-alpine` | [`stacks/holo-wordpress/Dockerfile`](stacks/holo-wordpress/Dockerfile) | Slim WordPress PHP 8.4 FPM Alpine + `/bin/holo-pm` |
-| `ghcr.io/awesome-os/holo-ghost:latest` | `ghost:5-alpine` | [`stacks/holo-ghost/Dockerfile`](stacks/holo-ghost/Dockerfile) | Slim Ghost 5 Alpine publishing platform + `/bin/holo-pm` |
-| `ghcr.io/awesome-os/holo-redmine:latest` | `redmine:6-alpine` | [`stacks/holo-redmine/Dockerfile`](stacks/holo-redmine/Dockerfile) | Slim Redmine 6 Alpine issue tracker + `/bin/holo-pm` |
-| `ghcr.io/awesome-os/holo-squid:latest` | `alpine:3.21` | [`stacks/holo-squid/Dockerfile`](stacks/holo-squid/Dockerfile) | Slim Squid HTTP caching proxy (`ENTRYPOINT ["squid", "-N", "-d", "1"]`) + `/bin/holo-pm` |
+| `awesome-os/holo-nginx:latest` | `nginx:alpine` | [`stacks/holo-nginx/Dockerfile`](stacks/holo-nginx/Dockerfile) | Slim Nginx reverse proxy & HTTP server + `/bin/holo-pm` |
+| `awesome-os/holo-haproxy:latest` | `haproxy:lts-alpine` | [`stacks/holo-haproxy/Dockerfile`](stacks/holo-haproxy/Dockerfile) | Slim HAProxy LTS load balancer (non-root `haproxy`) + `/bin/holo-pm` |
+| `awesome-os/holo-varnish:latest` | `varnish:alpine` | [`stacks/holo-varnish/Dockerfile`](stacks/holo-varnish/Dockerfile) | Slim Varnish HTTP accelerator (non-root `varnish`) + `/bin/holo-pm` |
+| `awesome-os/holo-httpd:latest` | `httpd:2.4-alpine` | [`stacks/holo-httpd/Dockerfile`](stacks/holo-httpd/Dockerfile) | Slim Apache HTTPd 2.4 server + `/bin/holo-pm` |
+| `awesome-os/holo-postgres:latest` | `postgres:17-alpine` | [`stacks/holo-postgres/Dockerfile`](stacks/holo-postgres/Dockerfile) | Slim PostgreSQL 17 database server + `/bin/holo-pm` |
+| `awesome-os/holo-mariadb:latest` | `mariadb:11` | [`stacks/holo-mariadb/Dockerfile`](stacks/holo-mariadb/Dockerfile) | MariaDB 11 database server + `/bin/holo-pm` |
+| `awesome-os/holo-valkey:latest` | `valkey/valkey:8-alpine` | [`stacks/holo-valkey/Dockerfile`](stacks/holo-valkey/Dockerfile) | Slim Valkey 8 in-memory cache/store + `/bin/holo-pm` |
+| `awesome-os/holo-mongodb:latest` | `mongo:8` | [`stacks/holo-mongodb/Dockerfile`](stacks/holo-mongodb/Dockerfile) | MongoDB 8 document database + `/bin/holo-pm` |
+| `awesome-os/holo-solr:latest` | `solr:9-slim` | [`stacks/holo-solr/Dockerfile`](stacks/holo-solr/Dockerfile) | Apache Solr 9 search engine (non-root `solr`) + `/bin/holo-pm` |
+| `awesome-os/holo-go:latest` | `golang:alpine` | [`stacks/holo-go/Dockerfile`](stacks/holo-go/Dockerfile) | Slim Go Alpine toolchain + `/bin/holo-pm` |
+| `awesome-os/holo-deno:latest` | `denoland/deno:alpine` | [`stacks/holo-deno/Dockerfile`](stacks/holo-deno/Dockerfile) | Slim Deno Alpine runtime + `/bin/holo-pm` |
+| `awesome-os/holo-git:latest` | `alpine/git:latest` | [`stacks/holo-git/Dockerfile`](stacks/holo-git/Dockerfile) | Slim Git Alpine client + `/bin/holo-pm` |
+| `awesome-os/holo-wordpress:latest` | `wordpress:php8.4-fpm-alpine` | [`stacks/holo-wordpress/Dockerfile`](stacks/holo-wordpress/Dockerfile) | Slim WordPress PHP 8.4 FPM Alpine + `/bin/holo-pm` |
+| `awesome-os/holo-ghost:latest` | `ghost:5-alpine` | [`stacks/holo-ghost/Dockerfile`](stacks/holo-ghost/Dockerfile) | Slim Ghost 5 Alpine publishing platform + `/bin/holo-pm` |
+| `awesome-os/holo-redmine:latest` | `redmine:6-alpine` | [`stacks/holo-redmine/Dockerfile`](stacks/holo-redmine/Dockerfile) | Slim Redmine 6 Alpine issue tracker + `/bin/holo-pm` |
+| `awesome-os/holo-squid:latest` | `alpine:3.21` | [`stacks/holo-squid/Dockerfile`](stacks/holo-squid/Dockerfile) | Slim Squid HTTP caching proxy (`ENTRYPOINT ["squid", "-N", "-d", "1"]`) + `/bin/holo-pm` |
 
 ---
 
@@ -96,7 +126,7 @@ Published to `ghcr.io/awesome-os/<stack>:latest` (`linux/amd64` + `linux/arm64`)
 ```sh
 docker run --rm -it \
   -v ~/.b8g/cas:/var/lib/b8g/cas \
-  ghcr.io/awesome-os/t2linux:latest \
+  awesome-os/t2linux:latest \
   -c 'cat /etc/t2linux-release && ls -lh /bin/busybox /bin/coreutils /bin/holo-pm /etc/ssl/certs/ca-certificates.crt'
 ```
 
@@ -105,7 +135,7 @@ docker run --rm -it \
 ```sh
 docker run --rm \
   -v ~/.b8g/cas:/var/lib/b8g/cas \
-  ghcr.io/awesome-os/holo-node:latest \
+  awesome-os/holo-node:latest \
   node -v
 ```
 
@@ -114,7 +144,7 @@ docker run --rm \
 ```sh
 docker run --rm \
   -v ~/.b8g/cas:/var/lib/b8g/cas \
-  ghcr.io/awesome-os/holo-py:latest \
+  awesome-os/holo-py:latest \
   python3 --version
 ```
 
@@ -123,7 +153,7 @@ docker run --rm \
 ```sh
 docker run --rm \
   -v ~/.b8g/cas:/var/lib/b8g/cas \
-  ghcr.io/awesome-os/holo-cpp:latest \
+  awesome-os/holo-cpp:latest \
   ls -la /bin/holo-pm /usr/local/include/libholo_pm.h /usr/local/lib/libholo-pm.so
 ```
 
@@ -132,7 +162,7 @@ docker run --rm \
 ```sh
 docker run --rm \
   -v ~/.b8g/cas:/var/lib/b8g/cas \
-  ghcr.io/awesome-os/holo-jvm:latest \
+  awesome-os/holo-jvm:latest \
   java -version
 ```
 
@@ -141,7 +171,7 @@ docker run --rm \
 ```sh
 docker run --rm \
   -v ~/.b8g/cas:/var/lib/b8g/cas \
-  ghcr.io/awesome-os/holo-php:latest \
+  awesome-os/holo-php:latest \
   sh -c 'php -v && composer --version'
 ```
 
@@ -150,7 +180,7 @@ docker run --rm \
 ```sh
 docker run --rm \
   -v ~/.b8g/cas:/var/lib/b8g/cas \
-  ghcr.io/awesome-os/holo-ruby:latest \
+  awesome-os/holo-ruby:latest \
   sh -c 'ruby -v && bundle --version'
 ```
 
@@ -159,7 +189,7 @@ docker run --rm \
 ```sh
 docker run --rm \
   -v ~/.b8g/cas:/var/lib/b8g/cas \
-  ghcr.io/awesome-os/holo-e2e-runner:latest \
+  awesome-os/holo-e2e-runner:latest \
   holo-e2e-probe --out /tmp/probe.bmp
 ```
 
@@ -168,7 +198,7 @@ docker run --rm \
 ```sh
 docker run --rm \
   -v ~/.b8g/cas:/var/lib/b8g/cas \
-  ghcr.io/awesome-os/holo-e2e-lite:latest \
+  awesome-os/holo-e2e-lite:latest \
   holo-e2e-probe --out /tmp/probe.bmp
 ```
 
@@ -185,8 +215,8 @@ Mount a single host CAS directory across all containers (`-v ~/.b8g/cas:/var/lib
 
 ## Automated Daily Publishing & `holo-ci@v1`
 
-- [`.github/workflows/publish-ghcr.yml`](.github/workflows/publish-ghcr.yml) rebuilds, smoke-tests (including `holo-node` on both `linux/amd64` and `linux/arm64` under QEMU), reports image sizes, exports and uploads `<name>-linux-amd64.oci.tar.gz` + `SHA512SUMS-<name>.txt` for all 9 base images to anonymous public release `v11-oci-latest`, and publishes all 9 multi-arch (`linux/amd64`, `linux/arm64`) images to `ghcr.io/awesome-os/*:latest` on every push to `main`, daily at `05:00 UTC`, and on manual `workflow_dispatch`.
-- [`.github/workflows/holo-ci.yml`](.github/workflows/holo-ci.yml) runs `holo-ci@v1` (`awesome-os/maintenance-workflows/.github/workflows/reusable-holo-ci.yml@v1`) against [`holo-ci.json`](holo-ci.json) (`zeroGhost`, `zeroCasV1`, `spdxLicense`, `gitattributes`, `codeowners`, Dockerfile presence, `catalog/oci-catalog.test.mts`, and doc integrity).
+- [`.github/workflows/publish-ghcr.yml`](.github/workflows/publish-ghcr.yml) rebuilds, smoke-tests (including `holo-node` on both `linux/amd64` and `linux/arm64` under QEMU), reports image sizes, exports and uploads `<name>-linux-amd64.oci.tar.gz` + `SHA512SUMS-<name>.txt` for all 9 base images to anonymous public release `v11-oci-latest`, and populates the internal `ghcr.io/awesome-os/*:latest` CI mirror cache on every push to `main`, daily at `05:00 UTC`, and on manual `workflow_dispatch`.
+- [`.github/workflows/holo-ci.yml`](.github/workflows/holo-ci.yml) runs `holo-ci@v1` (`awesome-os/maintenance-workflows/.github/workflows/reusable-holo-ci.yml@v1`) against [`holo-ci.json`](holo-ci.json) (`zeroGhost`, `zeroCasV1`, `spdxLicense`, `gitattributes`, `codeowners`, Dockerfile presence, `catalog/oci-catalog.test.mts`, `catalog/cas-pipe-build.test.mts`, and doc integrity).
 
 ## License
 
