@@ -119,6 +119,42 @@ Built deterministically via 1:1 CAS shell pipe (`curl -fsSL ... | docker build -
 
 ---
 
+## Deterministic CAS Pipe Catalog (`25` Images: `9` Base + `16` Stack)
+
+Generated from `node catalog/cas-pipe-build.mts --list --json` (`schema: "awesome-os.cas-pipe.v1"`, `lockfileDigest: f1e88f8a6a95`):
+
+<!-- AUTO-GENERATED:BEGIN source="cas-pipe-build --list --json" id="dockerimages:cas-catalog" -->
+| Image | Kind | Dockerfile | Short CAS ID | CAS Tag | Context |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| `t2linux` | `base` | [`t2linux/Dockerfile`](t2linux/Dockerfile) | `b10dc20fad96` | `awesome-os/t2linux:cas-b10dc20fad96` | `pipe` |
+| `holo-node` | `base` | [`holo-node/Dockerfile`](holo-node/Dockerfile) | `cb2af3d5a9f3` | `awesome-os/holo-node:cas-cb2af3d5a9f3` | `pipe` |
+| `holo-py` | `base` | [`holo-py/Dockerfile`](holo-py/Dockerfile) | `a0862ba09d2d` | `awesome-os/holo-py:cas-a0862ba09d2d` | `pipe` |
+| `holo-cpp` | `base` | [`holo-cpp/Dockerfile`](holo-cpp/Dockerfile) | `17a63b534949` | `awesome-os/holo-cpp:cas-17a63b534949` | `pipe` |
+| `holo-jvm` | `base` | [`holo-jvm/Dockerfile`](holo-jvm/Dockerfile) | `ca356f3736b5` | `awesome-os/holo-jvm:cas-ca356f3736b5` | `pipe` |
+| `holo-php` | `base` | [`holo-php/Dockerfile`](holo-php/Dockerfile) | `01915651408e` | `awesome-os/holo-php:cas-01915651408e` | `pipe` |
+| `holo-ruby` | `base` | [`holo-ruby/Dockerfile`](holo-ruby/Dockerfile) | `7eb1b80c2ecc` | `awesome-os/holo-ruby:cas-7eb1b80c2ecc` | `pipe` |
+| `holo-e2e-runner` | `base` | [`holo-e2e-runner/Dockerfile`](holo-e2e-runner/Dockerfile) | `5c5ef61a60c0` | `awesome-os/holo-e2e-runner:cas-5c5ef61a60c0` | `git` (`holo-e2e-probe.mjs`) |
+| `holo-e2e-lite` | `base` | [`holo-e2e-lite/Dockerfile`](holo-e2e-lite/Dockerfile) | `1804dbf5472f` | `awesome-os/holo-e2e-lite:cas-1804dbf5472f` | `git` (`holo-e2e-probe.mjs`) |
+| `holo-nginx` | `stack` | [`stacks/holo-nginx/Dockerfile`](stacks/holo-nginx/Dockerfile) | `bc2fcb5117b2` | `awesome-os/holo-nginx:cas-bc2fcb5117b2` | `pipe` |
+| `holo-haproxy` | `stack` | [`stacks/holo-haproxy/Dockerfile`](stacks/holo-haproxy/Dockerfile) | `376a4b72d7a1` | `awesome-os/holo-haproxy:cas-376a4b72d7a1` | `pipe` |
+| `holo-varnish` | `stack` | [`stacks/holo-varnish/Dockerfile`](stacks/holo-varnish/Dockerfile) | `264a51a8d6a5` | `awesome-os/holo-varnish:cas-264a51a8d6a5` | `pipe` |
+| `holo-httpd` | `stack` | [`stacks/holo-httpd/Dockerfile`](stacks/holo-httpd/Dockerfile) | `89d49b7cf406` | `awesome-os/holo-httpd:cas-89d49b7cf406` | `pipe` |
+| `holo-postgres` | `stack` | [`stacks/holo-postgres/Dockerfile`](stacks/holo-postgres/Dockerfile) | `37acdd53e241` | `awesome-os/holo-postgres:cas-37acdd53e241` | `pipe` |
+| `holo-mariadb` | `stack` | [`stacks/holo-mariadb/Dockerfile`](stacks/holo-mariadb/Dockerfile) | `36491e8cc9c1` | `awesome-os/holo-mariadb:cas-36491e8cc9c1` | `pipe` |
+| `holo-valkey` | `stack` | [`stacks/holo-valkey/Dockerfile`](stacks/holo-valkey/Dockerfile) | `edf18a4f74fe` | `awesome-os/holo-valkey:cas-edf18a4f74fe` | `pipe` |
+| `holo-mongodb` | `stack` | [`stacks/holo-mongodb/Dockerfile`](stacks/holo-mongodb/Dockerfile) | `49faae092562` | `awesome-os/holo-mongodb:cas-49faae092562` | `pipe` |
+| `holo-solr` | `stack` | [`stacks/holo-solr/Dockerfile`](stacks/holo-solr/Dockerfile) | `411cbaf47fad` | `awesome-os/holo-solr:cas-411cbaf47fad` | `pipe` |
+| `holo-go` | `stack` | [`stacks/holo-go/Dockerfile`](stacks/holo-go/Dockerfile) | `6964cf090433` | `awesome-os/holo-go:cas-6964cf090433` | `pipe` |
+| `holo-deno` | `stack` | [`stacks/holo-deno/Dockerfile`](stacks/holo-deno/Dockerfile) | `932a58742dcd` | `awesome-os/holo-deno:cas-932a58742dcd` | `pipe` |
+| `holo-git` | `stack` | [`stacks/holo-git/Dockerfile`](stacks/holo-git/Dockerfile) | `d4bf327a155f` | `awesome-os/holo-git:cas-d4bf327a155f` | `pipe` |
+| `holo-wordpress` | `stack` | [`stacks/holo-wordpress/Dockerfile`](stacks/holo-wordpress/Dockerfile) | `524cdcd6a665` | `awesome-os/holo-wordpress:cas-524cdcd6a665` | `pipe` |
+| `holo-ghost` | `stack` | [`stacks/holo-ghost/Dockerfile`](stacks/holo-ghost/Dockerfile) | `85f1e680221a` | `awesome-os/holo-ghost:cas-85f1e680221a` | `pipe` |
+| `holo-redmine` | `stack` | [`stacks/holo-redmine/Dockerfile`](stacks/holo-redmine/Dockerfile) | `5af97d8117db` | `awesome-os/holo-redmine:cas-5af97d8117db` | `pipe` |
+| `holo-squid` | `stack` | [`stacks/holo-squid/Dockerfile`](stacks/holo-squid/Dockerfile) | `8e843d9f640b` | `awesome-os/holo-squid:cas-8e843d9f640b` | `pipe` |
+<!-- AUTO-GENERATED:END -->
+
+---
+
 ## Quick Start
 
 ### `t2linux` (`FROM scratch` + `awesome-os/coreutils`)
