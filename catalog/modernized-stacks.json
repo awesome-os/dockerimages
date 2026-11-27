@@ -1,0 +1,3408 @@
+{
+  "schema": "awesome-os.modernized-stacks.v1",
+  "abiMagic": "0x33564742",
+  "casProtocol": "holo-v11",
+  "sourceCatalogSchema": "awesome-os.oci-catalog.v1",
+  "sourceCatalogGeneratedAt": "2026-11-26T21:45:00Z",
+  "summary": {
+    "totalLegacyEntries": 157,
+    "dockerimagesOrgRepos": 138,
+    "sameersbnSuccessors": 19,
+    "modernizedStackImages": 16,
+    "byDisposition": {
+      "modernized-stack": 40,
+      "consolidated-into-base": 43,
+      "superseded-by-awesome-os": 22,
+      "archived-obsolete": 52
+    },
+    "bySourceOrg": {
+      "dockerimages": 138,
+      "sameersbn": 19
+    },
+    "byTargetImage": {
+      "ghcr.io/awesome-os/holo-cpp:latest": 3,
+      "ghcr.io/awesome-os/holo-deno:latest": 2,
+      "ghcr.io/awesome-os/holo-e2e-runner:latest": 3,
+      "ghcr.io/awesome-os/holo-ghost:latest": 1,
+      "ghcr.io/awesome-os/holo-git:latest": 2,
+      "ghcr.io/awesome-os/holo-go:latest": 4,
+      "ghcr.io/awesome-os/holo-haproxy:latest": 5,
+      "ghcr.io/awesome-os/holo-httpd:latest": 1,
+      "ghcr.io/awesome-os/holo-jvm:latest": 6,
+      "ghcr.io/awesome-os/holo-mariadb:latest": 4,
+      "ghcr.io/awesome-os/holo-mongodb:latest": 3,
+      "ghcr.io/awesome-os/holo-nginx:latest": 5,
+      "ghcr.io/awesome-os/holo-node:latest": 13,
+      "ghcr.io/awesome-os/holo-php:latest": 8,
+      "ghcr.io/awesome-os/holo-postgres:latest": 1,
+      "ghcr.io/awesome-os/holo-py:latest": 3,
+      "ghcr.io/awesome-os/holo-redmine:latest": 2,
+      "ghcr.io/awesome-os/holo-ruby:latest": 1,
+      "ghcr.io/awesome-os/holo-solr:latest": 3,
+      "ghcr.io/awesome-os/holo-squid:latest": 2,
+      "ghcr.io/awesome-os/holo-valkey:latest": 3,
+      "ghcr.io/awesome-os/holo-varnish:latest": 1,
+      "ghcr.io/awesome-os/holo-wordpress:latest": 1,
+      "ghcr.io/awesome-os/t2linux:latest": 80
+    }
+  },
+  "stacks": [
+    {
+      "name": "holo-nginx",
+      "image": "ghcr.io/awesome-os/holo-nginx:latest",
+      "dockerfile": "stacks/holo-nginx/Dockerfile",
+      "upstreamBase": "nginx:alpine",
+      "platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ],
+      "casVolume": "/var/lib/b8g/cas",
+      "casV11Root": "/var/lib/b8g/cas/v11",
+      "description": "Slim Nginx Alpine reverse proxy & HTTP server with /bin/holo-pm CAS runtime",
+      "legacySourcesCount": 5,
+      "legacySources": [
+        "dockerimages/docker-nginx",
+        "dockerimages/docker-pagespeed",
+        "dockerimages/nginx",
+        "dockerimages/nginx-docker-router",
+        "sameersbn/docker-nginx"
+      ]
+    },
+    {
+      "name": "holo-haproxy",
+      "image": "ghcr.io/awesome-os/holo-haproxy:latest",
+      "dockerfile": "stacks/holo-haproxy/Dockerfile",
+      "upstreamBase": "haproxy:lts-alpine",
+      "platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ],
+      "casVolume": "/var/lib/b8g/cas",
+      "casV11Root": "/var/lib/b8g/cas/v11",
+      "description": "Slim HAProxy LTS Alpine TCP/HTTP load balancer with /bin/holo-pm CAS runtime",
+      "legacySourcesCount": 5,
+      "legacySources": [
+        "dockerimages/docker-haproxy-docker",
+        "dockerimages/docker-haproxy-for-marathon",
+        "dockerimages/docker-haproxy-serf",
+        "dockerimages/geard-router-haproxy",
+        "dockerimages/haproxy"
+      ]
+    },
+    {
+      "name": "holo-varnish",
+      "image": "ghcr.io/awesome-os/holo-varnish:latest",
+      "dockerfile": "stacks/holo-varnish/Dockerfile",
+      "upstreamBase": "varnish:alpine",
+      "platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ],
+      "casVolume": "/var/lib/b8g/cas",
+      "casV11Root": "/var/lib/b8g/cas/v11",
+      "description": "Slim Varnish Cache Alpine HTTP accelerator with /bin/holo-pm CAS runtime",
+      "legacySourcesCount": 1,
+      "legacySources": [
+        "dockerimages/docker-varnish"
+      ]
+    },
+    {
+      "name": "holo-httpd",
+      "image": "ghcr.io/awesome-os/holo-httpd:latest",
+      "dockerfile": "stacks/holo-httpd/Dockerfile",
+      "upstreamBase": "httpd:2.4-alpine",
+      "platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ],
+      "casVolume": "/var/lib/b8g/cas",
+      "casV11Root": "/var/lib/b8g/cas/v11",
+      "description": "Slim Apache HTTPd 2.4 Alpine server with /bin/holo-pm CAS runtime",
+      "legacySourcesCount": 1,
+      "legacySources": [
+        "dockerimages/docker-apache2"
+      ]
+    },
+    {
+      "name": "holo-postgres",
+      "image": "ghcr.io/awesome-os/holo-postgres:latest",
+      "dockerfile": "stacks/holo-postgres/Dockerfile",
+      "upstreamBase": "postgres:17-alpine",
+      "platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ],
+      "casVolume": "/var/lib/b8g/cas",
+      "casV11Root": "/var/lib/b8g/cas/v11",
+      "description": "Slim PostgreSQL 17 Alpine database server with /bin/holo-pm CAS runtime",
+      "legacySourcesCount": 1,
+      "legacySources": [
+        "sameersbn/docker-postgresql"
+      ]
+    },
+    {
+      "name": "holo-mariadb",
+      "image": "ghcr.io/awesome-os/holo-mariadb:latest",
+      "dockerfile": "stacks/holo-mariadb/Dockerfile",
+      "upstreamBase": "mariadb:11",
+      "platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ],
+      "casVolume": "/var/lib/b8g/cas",
+      "casV11Root": "/var/lib/b8g/cas/v11",
+      "description": "MariaDB 11 server with /bin/holo-pm CAS runtime",
+      "legacySourcesCount": 4,
+      "legacySources": [
+        "dockerimages/docker-galera",
+        "dockerimages/mariadb-galera",
+        "dockerimages/mysql",
+        "sameersbn/docker-mysql"
+      ]
+    },
+    {
+      "name": "holo-valkey",
+      "image": "ghcr.io/awesome-os/holo-valkey:latest",
+      "dockerfile": "stacks/holo-valkey/Dockerfile",
+      "upstreamBase": "valkey/valkey:8-alpine",
+      "platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ],
+      "casVolume": "/var/lib/b8g/cas",
+      "casV11Root": "/var/lib/b8g/cas/v11",
+      "description": "Slim Valkey 8 Alpine in-memory data store with /bin/holo-pm CAS runtime",
+      "legacySourcesCount": 3,
+      "legacySources": [
+        "dockerimages/docker-cache",
+        "sameersbn/docker-memcached",
+        "sameersbn/docker-redis"
+      ]
+    },
+    {
+      "name": "holo-mongodb",
+      "image": "ghcr.io/awesome-os/holo-mongodb:latest",
+      "dockerfile": "stacks/holo-mongodb/Dockerfile",
+      "upstreamBase": "mongo:8",
+      "platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ],
+      "casVolume": "/var/lib/b8g/cas",
+      "casV11Root": "/var/lib/b8g/cas/v11",
+      "description": "MongoDB 8 document database with /bin/holo-pm CAS runtime",
+      "legacySourcesCount": 3,
+      "legacySources": [
+        "dockerimages/docker-mongodb",
+        "dockerimages/mongodb-local",
+        "sameersbn/docker-mongodb"
+      ]
+    },
+    {
+      "name": "holo-solr",
+      "image": "ghcr.io/awesome-os/holo-solr:latest",
+      "dockerfile": "stacks/holo-solr/Dockerfile",
+      "upstreamBase": "solr:9-slim",
+      "platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ],
+      "casVolume": "/var/lib/b8g/cas",
+      "casV11Root": "/var/lib/b8g/cas/v11",
+      "description": "Apache Solr 9 slim search engine with /bin/holo-pm CAS runtime",
+      "legacySourcesCount": 3,
+      "legacySources": [
+        "dockerimages/docker-solr",
+        "dockerimages/docker-solr-systemd",
+        "dockerimages/solr"
+      ]
+    },
+    {
+      "name": "holo-go",
+      "image": "ghcr.io/awesome-os/holo-go:latest",
+      "dockerfile": "stacks/holo-go/Dockerfile",
+      "upstreamBase": "golang:alpine",
+      "platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ],
+      "casVolume": "/var/lib/b8g/cas",
+      "casV11Root": "/var/lib/b8g/cas/v11",
+      "description": "Slim Go Alpine toolchain with /bin/holo-pm CAS runtime",
+      "legacySourcesCount": 4,
+      "legacySources": [
+        "dockerimages/cbfs",
+        "dockerimages/cbfs-fused",
+        "dockerimages/cbfsd-go",
+        "dockerimages/golang-compiler"
+      ]
+    },
+    {
+      "name": "holo-deno",
+      "image": "ghcr.io/awesome-os/holo-deno:latest",
+      "dockerfile": "stacks/holo-deno/Dockerfile",
+      "upstreamBase": "denoland/deno:alpine",
+      "platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ],
+      "casVolume": "/var/lib/b8g/cas",
+      "casV11Root": "/var/lib/b8g/cas/v11",
+      "description": "Slim Deno Alpine runtime with /bin/holo-pm CAS runtime",
+      "legacySourcesCount": 2,
+      "legacySources": [
+        "dockerimages/deno-lambda",
+        "dockerimages/docker-deno"
+      ]
+    },
+    {
+      "name": "holo-git",
+      "image": "ghcr.io/awesome-os/holo-git:latest",
+      "dockerfile": "stacks/holo-git/Dockerfile",
+      "upstreamBase": "alpine/git:latest",
+      "platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ],
+      "casVolume": "/var/lib/b8g/cas",
+      "casV11Root": "/var/lib/b8g/cas/v11",
+      "description": "Slim Git Alpine client with /bin/holo-pm CAS runtime",
+      "legacySourcesCount": 2,
+      "legacySources": [
+        "dockerimages/git",
+        "dockerimages/harp-git"
+      ]
+    },
+    {
+      "name": "holo-wordpress",
+      "image": "ghcr.io/awesome-os/holo-wordpress:latest",
+      "dockerfile": "stacks/holo-wordpress/Dockerfile",
+      "upstreamBase": "wordpress:php8.4-fpm-alpine",
+      "platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ],
+      "casVolume": "/var/lib/b8g/cas",
+      "casV11Root": "/var/lib/b8g/cas/v11",
+      "description": "Slim WordPress PHP 8.4 FPM Alpine stack with /bin/holo-pm CAS runtime",
+      "legacySourcesCount": 1,
+      "legacySources": [
+        "dockerimages/docker-wordpress"
+      ]
+    },
+    {
+      "name": "holo-ghost",
+      "image": "ghcr.io/awesome-os/holo-ghost:latest",
+      "dockerfile": "stacks/holo-ghost/Dockerfile",
+      "upstreamBase": "ghost:5-alpine",
+      "platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ],
+      "casVolume": "/var/lib/b8g/cas",
+      "casV11Root": "/var/lib/b8g/cas/v11",
+      "description": "Slim Ghost 5 Alpine publishing stack with /bin/holo-pm CAS runtime",
+      "legacySourcesCount": 1,
+      "legacySources": [
+        "dockerimages/Ghost"
+      ]
+    },
+    {
+      "name": "holo-redmine",
+      "image": "ghcr.io/awesome-os/holo-redmine:latest",
+      "dockerfile": "stacks/holo-redmine/Dockerfile",
+      "upstreamBase": "redmine:6-alpine",
+      "platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ],
+      "casVolume": "/var/lib/b8g/cas",
+      "casV11Root": "/var/lib/b8g/cas/v11",
+      "description": "Slim Redmine 6 Alpine issue tracker with /bin/holo-pm CAS runtime",
+      "legacySourcesCount": 2,
+      "legacySources": [
+        "dockerimages/redmine",
+        "sameersbn/docker-redmine"
+      ]
+    },
+    {
+      "name": "holo-squid",
+      "image": "ghcr.io/awesome-os/holo-squid:latest",
+      "dockerfile": "stacks/holo-squid/Dockerfile",
+      "upstreamBase": "alpine:3.21",
+      "platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ],
+      "casVolume": "/var/lib/b8g/cas",
+      "casV11Root": "/var/lib/b8g/cas/v11",
+      "description": "Slim Squid HTTP caching proxy on Alpine 3.21 with /bin/holo-pm CAS runtime",
+      "legacySourcesCount": 2,
+      "legacySources": [
+        "dockerimages/direktspeed-gateway",
+        "sameersbn/docker-squid"
+      ]
+    }
+  ],
+  "entries": [
+    {
+      "id": "dockerimages/apt_cache",
+      "sourceOrg": "dockerimages",
+      "name": "apt_cache",
+      "url": "https://github.com/dockerimages/apt_cache",
+      "stars": 0,
+      "sourceCategory": "tier2_sameersbn_successors",
+      "description": "docker apt cache server",
+      "disposition": "superseded-by-awesome-os",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "upstart",
+        "apt-cacher-ng-daemon"
+      ],
+      "rationale": "Superseded by Holo v11 content-addressable store (/var/lib/b8g/cas/v11) on t2linux."
+    },
+    {
+      "id": "dockerimages/apt-cacher",
+      "sourceOrg": "dockerimages",
+      "name": "apt-cacher",
+      "url": "https://github.com/dockerimages/apt-cacher",
+      "stars": 0,
+      "sourceCategory": "tier2_sameersbn_successors",
+      "description": "A APT Cache Server that gets used by dockerimages/ubuntu-baseimage if detected.",
+      "disposition": "superseded-by-awesome-os",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "upstart",
+        "apt-cacher-ng-daemon"
+      ],
+      "rationale": "Superseded by Holo v11 content-addressable store (/var/lib/b8g/cas/v11) on t2linux."
+    },
+    {
+      "id": "dockerimages/cbfs",
+      "sourceOrg": "dockerimages",
+      "name": "cbfs",
+      "url": "https://github.com/dockerimages/cbfs",
+      "stars": 1,
+      "sourceCategory": "tier3_modernizable_utilities",
+      "description": "Installs or runs cbfs & cbfsclient",
+      "disposition": "modernized-stack",
+      "targetImage": "ghcr.io/awesome-os/holo-go:latest",
+      "upstreamBase": "golang:alpine",
+      "dockerfile": "stacks/holo-go/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "legacy-gopath-setup"
+      ],
+      "rationale": "Modernized legacy Go compiler & Go storage daemons onto official golang:alpine + holo-pm."
+    },
+    {
+      "id": "dockerimages/cbfs-fused",
+      "sourceOrg": "dockerimages",
+      "name": "cbfs-fused",
+      "url": "https://github.com/dockerimages/cbfs-fused",
+      "stars": 0,
+      "sourceCategory": "tier3_modernizable_utilities",
+      "description": "This is a Dockerimage from DIREKTSPEED couchbase fuse daemon ",
+      "disposition": "modernized-stack",
+      "targetImage": "ghcr.io/awesome-os/holo-go:latest",
+      "upstreamBase": "golang:alpine",
+      "dockerfile": "stacks/holo-go/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "legacy-gopath-setup"
+      ],
+      "rationale": "Modernized legacy Go compiler & Go storage daemons onto official golang:alpine + holo-pm."
+    },
+    {
+      "id": "dockerimages/cbfsd-go",
+      "sourceOrg": "dockerimages",
+      "name": "cbfsd-go",
+      "url": "https://github.com/dockerimages/cbfsd-go",
+      "stars": 0,
+      "sourceCategory": "tier3_modernizable_utilities",
+      "description": "A Image that compiles and executes the https://github.com/couchbase-fs/cbfs-go",
+      "disposition": "modernized-stack",
+      "targetImage": "ghcr.io/awesome-os/holo-go:latest",
+      "upstreamBase": "golang:alpine",
+      "dockerfile": "stacks/holo-go/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "legacy-gopath-setup"
+      ],
+      "rationale": "Modernized legacy Go compiler & Go storage daemons onto official golang:alpine + holo-pm."
+    },
+    {
+      "id": "dockerimages/centos-core",
+      "sourceOrg": "dockerimages",
+      "name": "centos-core",
+      "url": "https://github.com/dockerimages/centos-core",
+      "stars": 0,
+      "sourceCategory": "tier4_archive_candidates",
+      "description": "CentOS cloud images",
+      "disposition": "consolidated-into-base",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "runit",
+        "s6",
+        "upstart",
+        "systemd-in-container"
+      ],
+      "rationale": "Consolidated legacy OS rootfs / init-system / container-tooling image into FROM scratch ghcr.io/awesome-os/t2linux:latest."
+    },
+    {
+      "id": "dockerimages/cloud9",
+      "sourceOrg": "dockerimages",
+      "name": "cloud9",
+      "url": "https://github.com/dockerimages/cloud9",
+      "stars": 1,
+      "sourceCategory": "tier1_flagships",
+      "description": "A Dockerimage for building Cloud9 Instances for diffrent Projects",
+      "disposition": "superseded-by-awesome-os",
+      "targetImage": "ghcr.io/awesome-os/holo-node:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "holo-node/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "legacy-cloud9-ide-init"
+      ],
+      "rationale": "Superseded by awesome-os/devtools (SectiumDevToolsPlane, code-oss, b8g-ide) on holo-node."
+    },
+    {
+      "id": "dockerimages/controller",
+      "sourceOrg": "dockerimages",
+      "name": "controller",
+      "url": "https://github.com/dockerimages/controller",
+      "stars": 1,
+      "sourceCategory": "tier4_archive_candidates",
+      "description": "Longshoreman controller application.",
+      "disposition": "archived-obsolete",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "systemd-in-container",
+        "upstart"
+      ],
+      "rationale": "Archived obsolete 2014-2019 single-purpose container with zero boilerplate; pointer set to FROM scratch t2linux."
+    },
+    {
+      "id": "dockerimages/couchbase",
+      "sourceOrg": "dockerimages",
+      "name": "couchbase",
+      "url": "https://github.com/dockerimages/couchbase",
+      "stars": 0,
+      "sourceCategory": "tier1_flagships",
+      "description": "Dockerfiles and configuration scripts for the Docker Hub Official Couchbase images",
+      "disposition": "archived-obsolete",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "systemd-in-container",
+        "upstart"
+      ],
+      "rationale": "Archived obsolete 2014-2019 single-purpose container with zero boilerplate; pointer set to FROM scratch t2linux."
+    },
+    {
+      "id": "dockerimages/couchbase-sandbox",
+      "sourceOrg": "dockerimages",
+      "name": "couchbase-sandbox",
+      "url": "https://github.com/dockerimages/couchbase-sandbox",
+      "stars": 1,
+      "sourceCategory": "tier1_flagships",
+      "description": "Dockerfiles for couchbase/server-sandbox automated build",
+      "disposition": "archived-obsolete",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "systemd-in-container",
+        "upstart"
+      ],
+      "rationale": "Archived obsolete 2014-2019 single-purpose container with zero boilerplate; pointer set to FROM scratch t2linux."
+    },
+    {
+      "id": "dockerimages/custom-build",
+      "sourceOrg": "dockerimages",
+      "name": "custom-build",
+      "url": "https://github.com/dockerimages/custom-build",
+      "stars": 0,
+      "sourceCategory": "tier1_flagships",
+      "description": "A Custom Build image",
+      "disposition": "consolidated-into-base",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "runit",
+        "s6",
+        "upstart",
+        "systemd-in-container"
+      ],
+      "rationale": "Consolidated legacy OS rootfs / init-system / container-tooling image into FROM scratch ghcr.io/awesome-os/t2linux:latest."
+    },
+    {
+      "id": "dockerimages/deno-lambda",
+      "sourceOrg": "dockerimages",
+      "name": "deno-lambda",
+      "url": "https://github.com/dockerimages/deno-lambda",
+      "stars": 0,
+      "sourceCategory": "tier1_flagships",
+      "description": "A deno runtime for AWS Lambda. Deploy deno via SAM, serverless, or bundle it yourself.",
+      "disposition": "modernized-stack",
+      "targetImage": "ghcr.io/awesome-os/holo-deno:latest",
+      "upstreamBase": "denoland/deno:alpine",
+      "dockerfile": "stacks/holo-deno/Dockerfile",
+      "eliminatedBoilerplate": [
+        "custom-deno-tarball-fetch",
+        "lambda-wrapper-boilerplate"
+      ],
+      "rationale": "Consolidated legacy Deno containers onto official denoland/deno:alpine + holo-pm."
+    },
+    {
+      "id": "dockerimages/dind",
+      "sourceOrg": "dockerimages",
+      "name": "dind",
+      "url": "https://github.com/dockerimages/dind",
+      "stars": 0,
+      "sourceCategory": "tier3_modernizable_utilities",
+      "description": "Docker in Docker",
+      "disposition": "consolidated-into-base",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "runit",
+        "s6",
+        "upstart",
+        "systemd-in-container"
+      ],
+      "rationale": "Consolidated legacy OS rootfs / init-system / container-tooling image into FROM scratch ghcr.io/awesome-os/t2linux:latest."
+    },
+    {
+      "id": "dockerimages/direktspeed-docker-toolbox",
+      "sourceOrg": "dockerimages",
+      "name": "direktspeed-docker-toolbox",
+      "url": "https://github.com/dockerimages/direktspeed-docker-toolbox",
+      "stars": 0,
+      "sourceCategory": "tier4_archive_candidates",
+      "description": "Some Scripts that we Use Like: Update ubuntu images, Update and Restart Containers, code snippets",
+      "disposition": "archived-obsolete",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "systemd-in-container",
+        "upstart"
+      ],
+      "rationale": "Archived obsolete 2014-2019 single-purpose container with zero boilerplate; pointer set to FROM scratch t2linux."
+    },
+    {
+      "id": "dockerimages/direktspeed-gateway",
+      "sourceOrg": "dockerimages",
+      "name": "direktspeed-gateway",
+      "url": "https://github.com/dockerimages/direktspeed-gateway",
+      "stars": 1,
+      "sourceCategory": "tier2_sameersbn_successors",
+      "description": "Container that runs GATEWAY Services like NGINX, APACHE, HAPROXY, FTP-PROXY, MYSQL-PROXY",
+      "disposition": "modernized-stack",
+      "targetImage": "ghcr.io/awesome-os/holo-squid:latest",
+      "upstreamBase": "alpine:3.21",
+      "dockerfile": "stacks/holo-squid/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "multi-daemon-gateway-init"
+      ],
+      "rationale": "Replaced legacy Squid & multi-daemon gateway with minimal alpine:3.21 Squid + holo-pm."
+    },
+    {
+      "id": "dockerimages/docker",
+      "sourceOrg": "dockerimages",
+      "name": "docker",
+      "url": "https://github.com/dockerimages/docker",
+      "stars": 0,
+      "sourceCategory": "tier3_modernizable_utilities",
+      "description": "Builds and Installs docker binary to /target ",
+      "disposition": "consolidated-into-base",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "runit",
+        "s6",
+        "upstart",
+        "systemd-in-container"
+      ],
+      "rationale": "Consolidated legacy OS rootfs / init-system / container-tooling image into FROM scratch ghcr.io/awesome-os/t2linux:latest."
+    },
+    {
+      "id": "dockerimages/docker-apache2",
+      "sourceOrg": "dockerimages",
+      "name": "docker-apache2",
+      "url": "https://github.com/dockerimages/docker-apache2",
+      "stars": 2,
+      "sourceCategory": "tier1_flagships",
+      "description": "This is the Apache249 Container Maintained by B8G Datentechnik",
+      "disposition": "modernized-stack",
+      "targetImage": "ghcr.io/awesome-os/holo-httpd:latest",
+      "upstreamBase": "httpd:2.4-alpine",
+      "dockerfile": "stacks/holo-httpd/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "apache2-boilerplate"
+      ],
+      "rationale": "Replaced legacy Apache2 container with official httpd:2.4-alpine + holo-pm."
+    },
+    {
+      "id": "dockerimages/docker-asterisk",
+      "sourceOrg": "dockerimages",
+      "name": "docker-asterisk",
+      "url": "https://github.com/dockerimages/docker-asterisk",
+      "stars": 0,
+      "sourceCategory": "tier1_flagships",
+      "description": " Docker image providing Asterisk PBX",
+      "disposition": "archived-obsolete",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "systemd-in-container",
+        "upstart"
+      ],
+      "rationale": "Archived obsolete 2014-2019 single-purpose container with zero boilerplate; pointer set to FROM scratch t2linux."
+    },
+    {
+      "id": "dockerimages/docker-build-s6",
+      "sourceOrg": "dockerimages",
+      "name": "docker-build-s6",
+      "url": "https://github.com/dockerimages/docker-build-s6",
+      "stars": 0,
+      "sourceCategory": "tier3_modernizable_utilities",
+      "description": "Dockerized S6 init builder",
+      "disposition": "consolidated-into-base",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "runit",
+        "s6",
+        "upstart",
+        "systemd-in-container"
+      ],
+      "rationale": "Consolidated legacy OS rootfs / init-system / container-tooling image into FROM scratch ghcr.io/awesome-os/t2linux:latest."
+    },
+    {
+      "id": "dockerimages/docker-builder",
+      "sourceOrg": "dockerimages",
+      "name": "docker-builder",
+      "url": "https://github.com/dockerimages/docker-builder",
+      "stars": 0,
+      "sourceCategory": "tier4_archive_candidates",
+      "description": "Image that does a Nightly Build via Cron Job and Uploads to S3",
+      "disposition": "consolidated-into-base",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "runit",
+        "s6",
+        "upstart",
+        "systemd-in-container"
+      ],
+      "rationale": "Consolidated legacy OS rootfs / init-system / container-tooling image into FROM scratch ghcr.io/awesome-os/t2linux:latest."
+    },
+    {
+      "id": "dockerimages/docker-cache",
+      "sourceOrg": "dockerimages",
+      "name": "docker-cache",
+      "url": "https://github.com/dockerimages/docker-cache",
+      "stars": 0,
+      "sourceCategory": "tier2_sameersbn_successors",
+      "description": "Redis cache for a cluster of Docker hosts",
+      "disposition": "modernized-stack",
+      "targetImage": "ghcr.io/awesome-os/holo-valkey:latest",
+      "upstreamBase": "valkey/valkey:8-alpine",
+      "dockerfile": "stacks/holo-valkey/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "legacy-redis-memcached-init"
+      ],
+      "rationale": "Replaced legacy Redis / Memcached cache containers with valkey/valkey:8-alpine + holo-pm."
+    },
+    {
+      "id": "dockerimages/docker-cockpit",
+      "sourceOrg": "dockerimages",
+      "name": "docker-cockpit",
+      "url": "https://github.com/dockerimages/docker-cockpit",
+      "stars": 1,
+      "sourceCategory": "tier3_modernizable_utilities",
+      "description": "A Containered Cockpit in Fedora 21",
+      "disposition": "archived-obsolete",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "systemd-in-container",
+        "upstart"
+      ],
+      "rationale": "Archived obsolete 2014-2019 single-purpose container with zero boilerplate; pointer set to FROM scratch t2linux."
+    },
+    {
+      "id": "dockerimages/docker-couchbase",
+      "sourceOrg": "dockerimages",
+      "name": "docker-couchbase",
+      "url": "https://github.com/dockerimages/docker-couchbase",
+      "stars": 1,
+      "sourceCategory": "tier4_archive_candidates",
+      "description": "Couchbase Dockerfile",
+      "disposition": "archived-obsolete",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "systemd-in-container",
+        "upstart"
+      ],
+      "rationale": "Archived obsolete 2014-2019 single-purpose container with zero boilerplate; pointer set to FROM scratch t2linux."
+    },
+    {
+      "id": "dockerimages/docker-couchbase-server",
+      "sourceOrg": "dockerimages",
+      "name": "docker-couchbase-server",
+      "url": "https://github.com/dockerimages/docker-couchbase-server",
+      "stars": 0,
+      "sourceCategory": "tier4_archive_candidates",
+      "description": "Docker & Vagrant for Couchbase Server",
+      "disposition": "archived-obsolete",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "systemd-in-container",
+        "upstart"
+      ],
+      "rationale": "Archived obsolete 2014-2019 single-purpose container with zero boilerplate; pointer set to FROM scratch t2linux."
+    },
+    {
+      "id": "dockerimages/docker-deno",
+      "sourceOrg": "dockerimages",
+      "name": "docker-deno",
+      "url": "https://github.com/dockerimages/docker-deno",
+      "stars": 0,
+      "sourceCategory": "tier1_flagships",
+      "description": "Latest dockerfiles and images for deno - alpine, centos, debian, ubuntu",
+      "disposition": "modernized-stack",
+      "targetImage": "ghcr.io/awesome-os/holo-deno:latest",
+      "upstreamBase": "denoland/deno:alpine",
+      "dockerfile": "stacks/holo-deno/Dockerfile",
+      "eliminatedBoilerplate": [
+        "custom-deno-tarball-fetch",
+        "lambda-wrapper-boilerplate"
+      ],
+      "rationale": "Consolidated legacy Deno containers onto official denoland/deno:alpine + holo-pm."
+    },
+    {
+      "id": "dockerimages/docker-desktop",
+      "sourceOrg": "dockerimages",
+      "name": "docker-desktop",
+      "url": "https://github.com/dockerimages/docker-desktop",
+      "stars": 1,
+      "sourceCategory": "tier3_modernizable_utilities",
+      "description": "Docker Desktop enables you to create virtual desktops that can be accessed remotely. It comes with Firefox and Libreoffice already installed!",
+      "disposition": "superseded-by-awesome-os",
+      "targetImage": "ghcr.io/awesome-os/holo-e2e-runner:latest",
+      "upstreamBase": "node:current-alpine",
+      "dockerfile": "holo-e2e-runner/Dockerfile",
+      "eliminatedBoilerplate": [
+        "x11-pulseaudio-vnc-boilerplate",
+        "ubuntu-desktop-bloat"
+      ],
+      "rationale": "Superseded by Sectium Layer-1 Display Appliance, headless Lavapipe Vulkan holo-e2e-runner, and awesome-os/devtools."
+    },
+    {
+      "id": "dockerimages/docker-donejs",
+      "sourceOrg": "dockerimages",
+      "name": "docker-donejs",
+      "url": "https://github.com/dockerimages/docker-donejs",
+      "stars": 0,
+      "sourceCategory": "tier4_archive_candidates",
+      "description": "DoneJS Dockerfiles",
+      "disposition": "archived-obsolete",
+      "targetImage": "ghcr.io/awesome-os/holo-node:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "holo-node/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "retired-2014-js-framework"
+      ],
+      "rationale": "Archived obsolete 2014-2017 Node.js app/CI stack; runtime pointer set to FROM scratch holo-node."
+    },
+    {
+      "id": "dockerimages/docker-dsjs",
+      "sourceOrg": "dockerimages",
+      "name": "docker-dsjs",
+      "url": "https://github.com/dockerimages/docker-dsjs",
+      "stars": 0,
+      "sourceCategory": "tier4_archive_candidates",
+      "description": "Dockerimage Including Node.JS via Nave and Couchbase Libs",
+      "disposition": "archived-obsolete",
+      "targetImage": "ghcr.io/awesome-os/holo-node:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "holo-node/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "retired-2014-js-framework"
+      ],
+      "rationale": "Archived obsolete 2014-2017 Node.js app/CI stack; runtime pointer set to FROM scratch holo-node."
+    },
+    {
+      "id": "dockerimages/docker-elasticsearch",
+      "sourceOrg": "dockerimages",
+      "name": "docker-elasticsearch",
+      "url": "https://github.com/dockerimages/docker-elasticsearch",
+      "stars": 1,
+      "sourceCategory": "tier3_modernizable_utilities",
+      "description": "ElasticSearch for Docker.",
+      "disposition": "consolidated-into-base",
+      "targetImage": "ghcr.io/awesome-os/holo-jvm:latest",
+      "upstreamBase": "eclipse-temurin:25-jre-alpine",
+      "dockerfile": "holo-jvm/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "oracle-jdk-7-tarball",
+        "supervisord"
+      ],
+      "rationale": "Consolidated legacy JVM / Java / Elastic stack onto ghcr.io/awesome-os/holo-jvm:latest (eclipse-temurin:25-jre-alpine)."
+    },
+    {
+      "id": "dockerimages/docker-enter",
+      "sourceOrg": "dockerimages",
+      "name": "docker-enter",
+      "url": "https://github.com/dockerimages/docker-enter",
+      "stars": 0,
+      "sourceCategory": "tier3_modernizable_utilities",
+      "description": "A docker tool to enter an existing container. The tools relies on docker and setns.",
+      "disposition": "consolidated-into-base",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "runit",
+        "s6",
+        "upstart",
+        "systemd-in-container"
+      ],
+      "rationale": "Consolidated legacy OS rootfs / init-system / container-tooling image into FROM scratch ghcr.io/awesome-os/t2linux:latest."
+    },
+    {
+      "id": "dockerimages/docker-galera",
+      "sourceOrg": "dockerimages",
+      "name": "docker-galera",
+      "url": "https://github.com/dockerimages/docker-galera",
+      "stars": 0,
+      "sourceCategory": "tier2_sameersbn_successors",
+      "description": "A MYSQL Galera Cluster Controller",
+      "disposition": "modernized-stack",
+      "targetImage": "ghcr.io/awesome-os/holo-mariadb:latest",
+      "upstreamBase": "mariadb:11",
+      "dockerfile": "stacks/holo-mariadb/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "legacy-mysql-5.7-galera-scripts"
+      ],
+      "rationale": "Replaced legacy MySQL 5.7 / Galera images with official multi-arch mariadb:11 + holo-pm."
+    },
+    {
+      "id": "dockerimages/docker-graphite-statsd",
+      "sourceOrg": "dockerimages",
+      "name": "docker-graphite-statsd",
+      "url": "https://github.com/dockerimages/docker-graphite-statsd",
+      "stars": 0,
+      "sourceCategory": "tier3_modernizable_utilities",
+      "description": "Docker image for Graphite & Statsd",
+      "disposition": "archived-obsolete",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "systemd-in-container",
+        "upstart"
+      ],
+      "rationale": "Archived obsolete 2014-2019 single-purpose container with zero boilerplate; pointer set to FROM scratch t2linux."
+    },
+    {
+      "id": "dockerimages/docker-haproxy-docker",
+      "sourceOrg": "dockerimages",
+      "name": "docker-haproxy-docker",
+      "url": "https://github.com/dockerimages/docker-haproxy-docker",
+      "stars": 1,
+      "sourceCategory": "tier3_modernizable_utilities",
+      "description": "Haproxy Self Updating via docker ps",
+      "disposition": "modernized-stack",
+      "targetImage": "ghcr.io/awesome-os/holo-haproxy:latest",
+      "upstreamBase": "haproxy:lts-alpine",
+      "dockerfile": "stacks/holo-haproxy/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "serf-marathon-geard-glue"
+      ],
+      "rationale": "Replaced legacy HAProxy + Serf/Marathon/Geard wrappers with official haproxy:lts-alpine + holo-pm."
+    },
+    {
+      "id": "dockerimages/docker-haproxy-for-marathon",
+      "sourceOrg": "dockerimages",
+      "name": "docker-haproxy-for-marathon",
+      "url": "https://github.com/dockerimages/docker-haproxy-for-marathon",
+      "stars": 0,
+      "sourceCategory": "tier4_archive_candidates",
+      "description": "Run haproxy and autoconfigure it from marathon",
+      "disposition": "modernized-stack",
+      "targetImage": "ghcr.io/awesome-os/holo-haproxy:latest",
+      "upstreamBase": "haproxy:lts-alpine",
+      "dockerfile": "stacks/holo-haproxy/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "serf-marathon-geard-glue"
+      ],
+      "rationale": "Replaced legacy HAProxy + Serf/Marathon/Geard wrappers with official haproxy:lts-alpine + holo-pm."
+    },
+    {
+      "id": "dockerimages/docker-haproxy-serf",
+      "sourceOrg": "dockerimages",
+      "name": "docker-haproxy-serf",
+      "url": "https://github.com/dockerimages/docker-haproxy-serf",
+      "stars": 1,
+      "sourceCategory": "tier3_modernizable_utilities",
+      "description": "Docker image for haproxy that uses serf to discover web servers.",
+      "disposition": "modernized-stack",
+      "targetImage": "ghcr.io/awesome-os/holo-haproxy:latest",
+      "upstreamBase": "haproxy:lts-alpine",
+      "dockerfile": "stacks/holo-haproxy/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "serf-marathon-geard-glue"
+      ],
+      "rationale": "Replaced legacy HAProxy + Serf/Marathon/Geard wrappers with official haproxy:lts-alpine + holo-pm."
+    },
+    {
+      "id": "dockerimages/docker-harp",
+      "sourceOrg": "dockerimages",
+      "name": "docker-harp",
+      "url": "https://github.com/dockerimages/docker-harp",
+      "stars": 2,
+      "sourceCategory": "tier3_modernizable_utilities",
+      "description": "Dockerimage Running Harp",
+      "disposition": "consolidated-into-base",
+      "targetImage": "ghcr.io/awesome-os/holo-node:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "holo-node/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "nvm-nave-pm2-process-manager",
+        "debian-bloat"
+      ],
+      "rationale": "Consolidated legacy Node.js / process-manager image into FROM scratch ghcr.io/awesome-os/holo-node:latest (Node v27)."
+    },
+    {
+      "id": "dockerimages/docker-icinga2",
+      "sourceOrg": "dockerimages",
+      "name": "docker-icinga2",
+      "url": "https://github.com/dockerimages/docker-icinga2",
+      "stars": 0,
+      "sourceCategory": "tier3_modernizable_utilities",
+      "description": "",
+      "disposition": "archived-obsolete",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "systemd-in-container",
+        "upstart"
+      ],
+      "rationale": "Archived obsolete 2014-2019 single-purpose container with zero boilerplate; pointer set to FROM scratch t2linux."
+    },
+    {
+      "id": "dockerimages/docker-ispconfig-php",
+      "sourceOrg": "dockerimages",
+      "name": "docker-ispconfig-php",
+      "url": "https://github.com/dockerimages/docker-ispconfig-php",
+      "stars": 1,
+      "sourceCategory": "tier4_archive_candidates",
+      "description": "PHP Environments for ISPConfig3",
+      "disposition": "consolidated-into-base",
+      "targetImage": "ghcr.io/awesome-os/holo-php:latest",
+      "upstreamBase": "php:8.6-cli-alpine",
+      "dockerfile": "holo-php/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "php5-all-in-one-lamp-boilerplate"
+      ],
+      "rationale": "Consolidated legacy PHP / LAMP / CMS runtime onto ghcr.io/awesome-os/holo-php:latest (php:8.6-cli-alpine)."
+    },
+    {
+      "id": "dockerimages/docker-java-oracle",
+      "sourceOrg": "dockerimages",
+      "name": "docker-java-oracle",
+      "url": "https://github.com/dockerimages/docker-java-oracle",
+      "stars": 0,
+      "sourceCategory": "tier4_archive_candidates",
+      "description": "Docker file for Ubuntu with Oracle 7",
+      "disposition": "consolidated-into-base",
+      "targetImage": "ghcr.io/awesome-os/holo-jvm:latest",
+      "upstreamBase": "eclipse-temurin:25-jre-alpine",
+      "dockerfile": "holo-jvm/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "oracle-jdk-7-tarball",
+        "supervisord"
+      ],
+      "rationale": "Consolidated legacy JVM / Java / Elastic stack onto ghcr.io/awesome-os/holo-jvm:latest (eclipse-temurin:25-jre-alpine)."
+    },
+    {
+      "id": "dockerimages/docker-jenkins-mesos",
+      "sourceOrg": "dockerimages",
+      "name": "docker-jenkins-mesos",
+      "url": "https://github.com/dockerimages/docker-jenkins-mesos",
+      "stars": 0,
+      "sourceCategory": "tier4_archive_candidates",
+      "description": "Docker definition for a Jenkins instance with the Mesos plugin installed",
+      "disposition": "archived-obsolete",
+      "targetImage": "ghcr.io/awesome-os/holo-jvm:latest",
+      "upstreamBase": "eclipse-temurin:25-jre-alpine",
+      "dockerfile": "holo-jvm/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "mesos-exhibitor-init"
+      ],
+      "rationale": "Archived obsolete Mesos/ZooKeeper JVM stack; runtime pointer set to holo-jvm."
+    },
+    {
+      "id": "dockerimages/docker-logman",
+      "sourceOrg": "dockerimages",
+      "name": "docker-logman",
+      "url": "https://github.com/dockerimages/docker-logman",
+      "stars": 0,
+      "sourceCategory": "tier4_archive_candidates",
+      "description": "Experimental Log Forwarder for Docker",
+      "disposition": "archived-obsolete",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "systemd-in-container",
+        "upstart"
+      ],
+      "rationale": "Archived obsolete 2014-2019 single-purpose container with zero boilerplate; pointer set to FROM scratch t2linux."
+    },
+    {
+      "id": "dockerimages/docker-marathon",
+      "sourceOrg": "dockerimages",
+      "name": "docker-marathon",
+      "url": "https://github.com/dockerimages/docker-marathon",
+      "stars": 0,
+      "sourceCategory": "tier4_archive_candidates",
+      "description": "Docker definition for a Mesos Marathon instance",
+      "disposition": "archived-obsolete",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "systemd-in-container",
+        "upstart"
+      ],
+      "rationale": "Archived obsolete 2014-2019 single-purpose container with zero boilerplate; pointer set to FROM scratch t2linux."
+    },
+    {
+      "id": "dockerimages/docker-mesos",
+      "sourceOrg": "dockerimages",
+      "name": "docker-mesos",
+      "url": "https://github.com/dockerimages/docker-mesos",
+      "stars": 0,
+      "sourceCategory": "tier4_archive_candidates",
+      "description": "The Updated Version of libmesos/ubuntu",
+      "disposition": "archived-obsolete",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "systemd-in-container",
+        "upstart"
+      ],
+      "rationale": "Archived obsolete 2014-2019 single-purpose container with zero boilerplate; pointer set to FROM scratch t2linux."
+    },
+    {
+      "id": "dockerimages/docker-mesos-slave",
+      "sourceOrg": "dockerimages",
+      "name": "docker-mesos-slave",
+      "url": "https://github.com/dockerimages/docker-mesos-slave",
+      "stars": 0,
+      "sourceCategory": "tier4_archive_candidates",
+      "description": "Docker definition for a Mesos Slave instance",
+      "disposition": "archived-obsolete",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "systemd-in-container",
+        "upstart"
+      ],
+      "rationale": "Archived obsolete 2014-2019 single-purpose container with zero boilerplate; pointer set to FROM scratch t2linux."
+    },
+    {
+      "id": "dockerimages/docker-mongodb",
+      "sourceOrg": "dockerimages",
+      "name": "docker-mongodb",
+      "url": "https://github.com/dockerimages/docker-mongodb",
+      "stars": 0,
+      "sourceCategory": "tier2_sameersbn_successors",
+      "description": "Docker image to run an out-of-the-box MongoDB server",
+      "disposition": "modernized-stack",
+      "targetImage": "ghcr.io/awesome-os/holo-mongodb:latest",
+      "upstreamBase": "mongo:8",
+      "dockerfile": "stacks/holo-mongodb/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "legacy-link-scripts",
+        "supervisord"
+      ],
+      "rationale": "Replaced legacy MongoDB linked containers with official multi-arch mongo:8 + holo-pm."
+    },
+    {
+      "id": "dockerimages/docker-nagios",
+      "sourceOrg": "dockerimages",
+      "name": "docker-nagios",
+      "url": "https://github.com/dockerimages/docker-nagios",
+      "stars": 1,
+      "sourceCategory": "tier3_modernizable_utilities",
+      "description": "",
+      "disposition": "archived-obsolete",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "systemd-in-container",
+        "upstart"
+      ],
+      "rationale": "Archived obsolete 2014-2019 single-purpose container with zero boilerplate; pointer set to FROM scratch t2linux."
+    },
+    {
+      "id": "dockerimages/docker-nagios-plugins",
+      "sourceOrg": "dockerimages",
+      "name": "docker-nagios-plugins",
+      "url": "https://github.com/dockerimages/docker-nagios-plugins",
+      "stars": 0,
+      "sourceCategory": "tier3_modernizable_utilities",
+      "description": "Docker definition for a Nagios plugin executor",
+      "disposition": "archived-obsolete",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "systemd-in-container",
+        "upstart"
+      ],
+      "rationale": "Archived obsolete 2014-2019 single-purpose container with zero boilerplate; pointer set to FROM scratch t2linux."
+    },
+    {
+      "id": "dockerimages/docker-nave",
+      "sourceOrg": "dockerimages",
+      "name": "docker-nave",
+      "url": "https://github.com/dockerimages/docker-nave",
+      "stars": 2,
+      "sourceCategory": "tier4_archive_candidates",
+      "description": "nave a NODE.JS Version manager - Running Virtual Envirments Node.JS Projects inside a docker container",
+      "disposition": "consolidated-into-base",
+      "targetImage": "ghcr.io/awesome-os/holo-node:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "holo-node/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "nvm-nave-pm2-process-manager",
+        "debian-bloat"
+      ],
+      "rationale": "Consolidated legacy Node.js / process-manager image into FROM scratch ghcr.io/awesome-os/holo-node:latest (Node v27)."
+    },
+    {
+      "id": "dockerimages/docker-nginx",
+      "sourceOrg": "dockerimages",
+      "name": "docker-nginx",
+      "url": "https://github.com/dockerimages/docker-nginx",
+      "stars": 0,
+      "sourceCategory": "tier2_sameersbn_successors",
+      "description": "A Dockerfile that installs nginx (from source) with nginx-rtmp module support (php5 support can be added using the sameersbn/php5-fpm image)",
+      "disposition": "modernized-stack",
+      "targetImage": "ghcr.io/awesome-os/holo-nginx:latest",
+      "upstreamBase": "nginx:alpine",
+      "dockerfile": "stacks/holo-nginx/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "legacy-source-nginx-build"
+      ],
+      "rationale": "Replaced legacy Nginx / PageSpeed / RTMP wrappers with official multi-arch nginx:alpine + holo-pm."
+    },
+    {
+      "id": "dockerimages/docker-nodejs-gdrive-sync",
+      "sourceOrg": "dockerimages",
+      "name": "docker-nodejs-gdrive-sync",
+      "url": "https://github.com/dockerimages/docker-nodejs-gdrive-sync",
+      "stars": 0,
+      "sourceCategory": "tier3_modernizable_utilities",
+      "description": "Sync local files to Google Drive using Node.JS. Fast and portable.",
+      "disposition": "consolidated-into-base",
+      "targetImage": "ghcr.io/awesome-os/holo-node:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "holo-node/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "nvm-nave-pm2-process-manager",
+        "debian-bloat"
+      ],
+      "rationale": "Consolidated legacy Node.js / process-manager image into FROM scratch ghcr.io/awesome-os/holo-node:latest (Node v27)."
+    },
+    {
+      "id": "dockerimages/docker-omd",
+      "sourceOrg": "dockerimages",
+      "name": "docker-omd",
+      "url": "https://github.com/dockerimages/docker-omd",
+      "stars": 0,
+      "sourceCategory": "tier3_modernizable_utilities",
+      "description": "Open Monitoring Distribution",
+      "disposition": "archived-obsolete",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "systemd-in-container",
+        "upstart"
+      ],
+      "rationale": "Archived obsolete 2014-2019 single-purpose container with zero boilerplate; pointer set to FROM scratch t2linux."
+    },
+    {
+      "id": "dockerimages/docker-oracle-xe-11g",
+      "sourceOrg": "dockerimages",
+      "name": "docker-oracle-xe-11g",
+      "url": "https://github.com/dockerimages/docker-oracle-xe-11g",
+      "stars": 0,
+      "sourceCategory": "tier4_archive_candidates",
+      "description": "Dockerfile of Oracle Database Express Edition 11g Release 2",
+      "disposition": "archived-obsolete",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "systemd-in-container",
+        "upstart"
+      ],
+      "rationale": "Archived obsolete 2014-2019 single-purpose container with zero boilerplate; pointer set to FROM scratch t2linux."
+    },
+    {
+      "id": "dockerimages/Docker-OSX",
+      "sourceOrg": "dockerimages",
+      "name": "Docker-OSX",
+      "url": "https://github.com/dockerimages/Docker-OSX",
+      "stars": 0,
+      "sourceCategory": "tier1_flagships",
+      "description": "Run macOS VM in a Docker! Run near native OSX-KVM in Docker! X11 Forwarding! CI/CD for OS X Security Research! Docker mac Containers.",
+      "disposition": "superseded-by-awesome-os",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "qemu-x11-kvm-wrapper-scripts"
+      ],
+      "rationale": "Superseded by awesome-os/maclab, siliconforest, and firecracker microVM substrate on t2linux."
+    },
+    {
+      "id": "dockerimages/docker-pagespeed",
+      "sourceOrg": "dockerimages",
+      "name": "docker-pagespeed",
+      "url": "https://github.com/dockerimages/docker-pagespeed",
+      "stars": 1,
+      "sourceCategory": "tier2_sameersbn_successors",
+      "description": "Sample Dockerfile and Nginx configuration to run nginx + ngx_pagespeed.",
+      "disposition": "modernized-stack",
+      "targetImage": "ghcr.io/awesome-os/holo-nginx:latest",
+      "upstreamBase": "nginx:alpine",
+      "dockerfile": "stacks/holo-nginx/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "legacy-source-nginx-build"
+      ],
+      "rationale": "Replaced legacy Nginx / PageSpeed / RTMP wrappers with official multi-arch nginx:alpine + holo-pm."
+    },
+    {
+      "id": "dockerimages/docker-patched",
+      "sourceOrg": "dockerimages",
+      "name": "docker-patched",
+      "url": "https://github.com/dockerimages/docker-patched",
+      "stars": 0,
+      "sourceCategory": "tier4_archive_candidates",
+      "description": "Applys Costum patches like adding dc. to the hostname for RFC compilanc",
+      "disposition": "archived-obsolete",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "systemd-in-container",
+        "upstart"
+      ],
+      "rationale": "Archived obsolete 2014-2019 single-purpose container with zero boilerplate; pointer set to FROM scratch t2linux."
+    },
+    {
+      "id": "dockerimages/docker-pm2",
+      "sourceOrg": "dockerimages",
+      "name": "docker-pm2",
+      "url": "https://github.com/dockerimages/docker-pm2",
+      "stars": 0,
+      "sourceCategory": "tier3_modernizable_utilities",
+      "description": "pm2 Manager inside docker",
+      "disposition": "consolidated-into-base",
+      "targetImage": "ghcr.io/awesome-os/holo-node:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "holo-node/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "nvm-nave-pm2-process-manager",
+        "debian-bloat"
+      ],
+      "rationale": "Consolidated legacy Node.js / process-manager image into FROM scratch ghcr.io/awesome-os/holo-node:latest (Node v27)."
+    },
+    {
+      "id": "dockerimages/docker-solr",
+      "sourceOrg": "dockerimages",
+      "name": "docker-solr",
+      "url": "https://github.com/dockerimages/docker-solr",
+      "stars": 0,
+      "sourceCategory": "tier3_modernizable_utilities",
+      "description": "Solr on Docker",
+      "disposition": "modernized-stack",
+      "targetImage": "ghcr.io/awesome-os/holo-solr:latest",
+      "upstreamBase": "solr:9-slim",
+      "dockerfile": "stacks/holo-solr/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "systemd-in-container",
+        "manual-jvm-tarball"
+      ],
+      "rationale": "Replaced legacy Ubuntu 14.04 + systemd Solr containers with non-root official solr:9-slim + holo-pm."
+    },
+    {
+      "id": "dockerimages/docker-solr-systemd",
+      "sourceOrg": "dockerimages",
+      "name": "docker-solr-systemd",
+      "url": "https://github.com/dockerimages/docker-solr-systemd",
+      "stars": 0,
+      "sourceCategory": "tier4_archive_candidates",
+      "description": "This image uses dockerimages/docker-solr and Adjusts it to use systemd to start and be manage able",
+      "disposition": "modernized-stack",
+      "targetImage": "ghcr.io/awesome-os/holo-solr:latest",
+      "upstreamBase": "solr:9-slim",
+      "dockerfile": "stacks/holo-solr/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "systemd-in-container",
+        "manual-jvm-tarball"
+      ],
+      "rationale": "Replaced legacy Ubuntu 14.04 + systemd Solr containers with non-root official solr:9-slim + holo-pm."
+    },
+    {
+      "id": "dockerimages/docker-strider",
+      "sourceOrg": "dockerimages",
+      "name": "docker-strider",
+      "url": "https://github.com/dockerimages/docker-strider",
+      "stars": 1,
+      "sourceCategory": "tier4_archive_candidates",
+      "description": "Strider-CD Modular Docker Image",
+      "disposition": "archived-obsolete",
+      "targetImage": "ghcr.io/awesome-os/holo-node:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "holo-node/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "retired-2014-js-framework"
+      ],
+      "rationale": "Archived obsolete 2014-2017 Node.js app/CI stack; runtime pointer set to FROM scratch holo-node."
+    },
+    {
+      "id": "dockerimages/docker-syslog",
+      "sourceOrg": "dockerimages",
+      "name": "docker-syslog",
+      "url": "https://github.com/dockerimages/docker-syslog",
+      "stars": 0,
+      "sourceCategory": "tier3_modernizable_utilities",
+      "description": "",
+      "disposition": "archived-obsolete",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "systemd-in-container",
+        "upstart"
+      ],
+      "rationale": "Archived obsolete 2014-2019 single-purpose container with zero boilerplate; pointer set to FROM scratch t2linux."
+    },
+    {
+      "id": "dockerimages/docker-systemd",
+      "sourceOrg": "dockerimages",
+      "name": "docker-systemd",
+      "url": "https://github.com/dockerimages/docker-systemd",
+      "stars": 38,
+      "sourceCategory": "tier1_flagships",
+      "description": "This is a Ubuntu Baseimage Running SystemD Init System inside a container it can idealy be applyed over any other ubuntu or fedora img",
+      "disposition": "consolidated-into-base",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "runit",
+        "s6",
+        "upstart",
+        "systemd-in-container"
+      ],
+      "rationale": "Consolidated legacy OS rootfs / init-system / container-tooling image into FROM scratch ghcr.io/awesome-os/t2linux:latest."
+    },
+    {
+      "id": "dockerimages/docker-tools",
+      "sourceOrg": "dockerimages",
+      "name": "docker-tools",
+      "url": "https://github.com/dockerimages/docker-tools",
+      "stars": 32,
+      "sourceCategory": "tier1_flagships",
+      "description": "Collection of useful docker-tools install able via docker run",
+      "disposition": "consolidated-into-base",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "runit",
+        "s6",
+        "upstart",
+        "systemd-in-container"
+      ],
+      "rationale": "Consolidated legacy OS rootfs / init-system / container-tooling image into FROM scratch ghcr.io/awesome-os/t2linux:latest."
+    },
+    {
+      "id": "dockerimages/docker-ubuntu-syslog-to-cb-logger",
+      "sourceOrg": "dockerimages",
+      "name": "docker-ubuntu-syslog-to-cb-logger",
+      "url": "https://github.com/dockerimages/docker-ubuntu-syslog-to-cb-logger",
+      "stars": 0,
+      "sourceCategory": "tier4_archive_candidates",
+      "description": "This Image Creates Containers that can be used as syslog backend to recive logs it will auto logrotate the logs into Couchbase for more Processing.",
+      "disposition": "archived-obsolete",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "systemd-in-container",
+        "upstart"
+      ],
+      "rationale": "Archived obsolete 2014-2019 single-purpose container with zero boilerplate; pointer set to FROM scratch t2linux."
+    },
+    {
+      "id": "dockerimages/docker-unrealircd",
+      "sourceOrg": "dockerimages",
+      "name": "docker-unrealircd",
+      "url": "https://github.com/dockerimages/docker-unrealircd",
+      "stars": 16,
+      "sourceCategory": "tier1_flagships",
+      "description": "UnrealIRCD with Anope Services",
+      "disposition": "archived-obsolete",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "systemd-in-container",
+        "upstart"
+      ],
+      "rationale": "Archived obsolete 2014-2019 single-purpose container with zero boilerplate; pointer set to FROM scratch t2linux."
+    },
+    {
+      "id": "dockerimages/docker-varnish",
+      "sourceOrg": "dockerimages",
+      "name": "docker-varnish",
+      "url": "https://github.com/dockerimages/docker-varnish",
+      "stars": 27,
+      "sourceCategory": "tier1_flagships",
+      "description": "Automated build of Varnish with Docker",
+      "disposition": "modernized-stack",
+      "targetImage": "ghcr.io/awesome-os/holo-varnish:latest",
+      "upstreamBase": "varnish:alpine",
+      "dockerfile": "stacks/holo-varnish/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "legacy-varnish-wrapper"
+      ],
+      "rationale": "Replaced legacy Varnish container with official multi-arch varnish:alpine + holo-pm."
+    },
+    {
+      "id": "dockerimages/docker-virtualmin",
+      "sourceOrg": "dockerimages",
+      "name": "docker-virtualmin",
+      "url": "https://github.com/dockerimages/docker-virtualmin",
+      "stars": 2,
+      "sourceCategory": "tier1_flagships",
+      "description": "http://software.virtualmin.com/gpl/scripts/install.sh",
+      "disposition": "archived-obsolete",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "systemd-in-container",
+        "upstart"
+      ],
+      "rationale": "Archived obsolete 2014-2019 single-purpose container with zero boilerplate; pointer set to FROM scratch t2linux."
+    },
+    {
+      "id": "dockerimages/docker-webmin",
+      "sourceOrg": "dockerimages",
+      "name": "docker-webmin",
+      "url": "https://github.com/dockerimages/docker-webmin",
+      "stars": 3,
+      "sourceCategory": "tier1_flagships",
+      "description": "Offical Webmin Dockerimages",
+      "disposition": "archived-obsolete",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "systemd-in-container",
+        "upstart"
+      ],
+      "rationale": "Archived obsolete 2014-2019 single-purpose container with zero boilerplate; pointer set to FROM scratch t2linux."
+    },
+    {
+      "id": "dockerimages/docker-wordpress",
+      "sourceOrg": "dockerimages",
+      "name": "docker-wordpress",
+      "url": "https://github.com/dockerimages/docker-wordpress",
+      "stars": 0,
+      "sourceCategory": "tier4_archive_candidates",
+      "description": "Wordpress docker image with bundled MySQL server (only for testing purposes)",
+      "disposition": "modernized-stack",
+      "targetImage": "ghcr.io/awesome-os/holo-wordpress:latest",
+      "upstreamBase": "wordpress:php8.4-fpm-alpine",
+      "dockerfile": "stacks/holo-wordpress/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "bundled-mysql-in-single-container"
+      ],
+      "rationale": "Replaced bundled Ubuntu/supervisord WordPress image with wordpress:php8.4-fpm-alpine + holo-pm."
+    },
+    {
+      "id": "dockerimages/docker-xampp",
+      "sourceOrg": "dockerimages",
+      "name": "docker-xampp",
+      "url": "https://github.com/dockerimages/docker-xampp",
+      "stars": 0,
+      "sourceCategory": "tier4_archive_candidates",
+      "description": "Docker XAMPP",
+      "disposition": "consolidated-into-base",
+      "targetImage": "ghcr.io/awesome-os/holo-php:latest",
+      "upstreamBase": "php:8.6-cli-alpine",
+      "dockerfile": "holo-php/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "php5-all-in-one-lamp-boilerplate"
+      ],
+      "rationale": "Consolidated legacy PHP / LAMP / CMS runtime onto ghcr.io/awesome-os/holo-php:latest (php:8.6-cli-alpine)."
+    },
+    {
+      "id": "dockerimages/docker-zk-exhibitor",
+      "sourceOrg": "dockerimages",
+      "name": "docker-zk-exhibitor",
+      "url": "https://github.com/dockerimages/docker-zk-exhibitor",
+      "stars": 0,
+      "sourceCategory": "tier3_modernizable_utilities",
+      "description": "Docker definition for an Exhibitor-managed ZooKeeper instance",
+      "disposition": "archived-obsolete",
+      "targetImage": "ghcr.io/awesome-os/holo-jvm:latest",
+      "upstreamBase": "eclipse-temurin:25-jre-alpine",
+      "dockerfile": "holo-jvm/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "mesos-exhibitor-init"
+      ],
+      "rationale": "Archived obsolete Mesos/ZooKeeper JVM stack; runtime pointer set to holo-jvm."
+    },
+    {
+      "id": "dockerimages/dockerimages",
+      "sourceOrg": "dockerimages",
+      "name": "dockerimages",
+      "url": "https://github.com/dockerimages/dockerimages",
+      "stars": 0,
+      "sourceCategory": "tier1_flagships",
+      "description": "General GUIDES about Docker based Deployments",
+      "disposition": "superseded-by-awesome-os",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "legacy-2014-build-scripts"
+      ],
+      "rationale": "Superseded by awesome-os/dockerimages catalog, Holo-CI v1, and awesome-os/deployment."
+    },
+    {
+      "id": "dockerimages/dockerimages.github.io",
+      "sourceOrg": "dockerimages",
+      "name": "dockerimages.github.io",
+      "url": "https://github.com/dockerimages/dockerimages.github.io",
+      "stars": 0,
+      "sourceCategory": "tier1_flagships",
+      "description": "Holds Repositorys of Qualifyed code from hub.docker.io dockerimages username developed and maintained by Direkt SPEED",
+      "disposition": "superseded-by-awesome-os",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "legacy-2014-build-scripts"
+      ],
+      "rationale": "Superseded by awesome-os/dockerimages catalog, Holo-CI v1, and awesome-os/deployment."
+    },
+    {
+      "id": "dockerimages/dockerLLM",
+      "sourceOrg": "dockerimages",
+      "name": "dockerLLM",
+      "url": "https://github.com/dockerimages/dockerLLM",
+      "stars": 0,
+      "sourceCategory": "tier1_flagships",
+      "description": "TheBloke's Dockerfiles",
+      "disposition": "superseded-by-awesome-os",
+      "targetImage": "ghcr.io/awesome-os/holo-cpp:latest",
+      "upstreamBase": "alpine:3.24",
+      "dockerfile": "holo-cpp/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ad-hoc-cuda-python-dockerfiles"
+      ],
+      "rationale": "Superseded by Awesome-OS Sovereign AI & GPU stack (awesome-os/colibri, llama.cpp, vllm) on holo-cpp."
+    },
+    {
+      "id": "dockerimages/dockersh",
+      "sourceOrg": "dockerimages",
+      "name": "dockersh",
+      "url": "https://github.com/dockerimages/dockersh",
+      "stars": 2,
+      "sourceCategory": "tier3_modernizable_utilities",
+      "description": "A shell which places users into individual docker containers",
+      "disposition": "archived-obsolete",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "systemd-in-container",
+        "upstart"
+      ],
+      "rationale": "Archived obsolete 2014-2019 single-purpose container with zero boilerplate; pointer set to FROM scratch t2linux."
+    },
+    {
+      "id": "dockerimages/docktorrent",
+      "sourceOrg": "dockerimages",
+      "name": "docktorrent",
+      "url": "https://github.com/dockerimages/docktorrent",
+      "stars": 0,
+      "sourceCategory": "tier4_archive_candidates",
+      "description": "Full-featured BitTorrent box run on Docker",
+      "disposition": "archived-obsolete",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "systemd-in-container",
+        "upstart"
+      ],
+      "rationale": "Archived obsolete 2014-2019 single-purpose container with zero boilerplate; pointer set to FROM scratch t2linux."
+    },
+    {
+      "id": "dockerimages/donejs",
+      "sourceOrg": "dockerimages",
+      "name": "donejs",
+      "url": "https://github.com/dockerimages/donejs",
+      "stars": 0,
+      "sourceCategory": "tier4_archive_candidates",
+      "description": "Node.JS Container with Done.JS Installed",
+      "disposition": "archived-obsolete",
+      "targetImage": "ghcr.io/awesome-os/holo-node:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "holo-node/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "retired-2014-js-framework"
+      ],
+      "rationale": "Archived obsolete 2014-2017 Node.js app/CI stack; runtime pointer set to FROM scratch holo-node."
+    },
+    {
+      "id": "dockerimages/dspeed_eu_accounts",
+      "sourceOrg": "dockerimages",
+      "name": "dspeed_eu_accounts",
+      "url": "https://github.com/dockerimages/dspeed_eu_accounts",
+      "stars": 0,
+      "sourceCategory": "tier4_archive_candidates",
+      "description": "Is a Complet Accounts Management Container used in Production at DSPEED.EU",
+      "disposition": "archived-obsolete",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "systemd-in-container",
+        "upstart"
+      ],
+      "rationale": "Archived obsolete 2014-2019 single-purpose container with zero boilerplate; pointer set to FROM scratch t2linux."
+    },
+    {
+      "id": "dockerimages/elk",
+      "sourceOrg": "dockerimages",
+      "name": "elk",
+      "url": "https://github.com/dockerimages/elk",
+      "stars": 0,
+      "sourceCategory": "tier3_modernizable_utilities",
+      "description": "Docker Image of ELK stack specific to pfSense",
+      "disposition": "consolidated-into-base",
+      "targetImage": "ghcr.io/awesome-os/holo-jvm:latest",
+      "upstreamBase": "eclipse-temurin:25-jre-alpine",
+      "dockerfile": "holo-jvm/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "oracle-jdk-7-tarball",
+        "supervisord"
+      ],
+      "rationale": "Consolidated legacy JVM / Java / Elastic stack onto ghcr.io/awesome-os/holo-jvm:latest (eclipse-temurin:25-jre-alpine)."
+    },
+    {
+      "id": "dockerimages/email-services",
+      "sourceOrg": "dockerimages",
+      "name": "email-services",
+      "url": "https://github.com/dockerimages/email-services",
+      "stars": 0,
+      "sourceCategory": "tier3_modernizable_utilities",
+      "description": "Simple and full-featured mail server using Docker ",
+      "disposition": "archived-obsolete",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "systemd-in-container",
+        "upstart"
+      ],
+      "rationale": "Archived obsolete 2014-2019 single-purpose container with zero boilerplate; pointer set to FROM scratch t2linux."
+    },
+    {
+      "id": "dockerimages/fedora-s6",
+      "sourceOrg": "dockerimages",
+      "name": "fedora-s6",
+      "url": "https://github.com/dockerimages/fedora-s6",
+      "stars": 2,
+      "sourceCategory": "tier3_modernizable_utilities",
+      "description": "This is Fedora Rawhid running s6 init",
+      "disposition": "consolidated-into-base",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "runit",
+        "s6",
+        "upstart",
+        "systemd-in-container"
+      ],
+      "rationale": "Consolidated legacy OS rootfs / init-system / container-tooling image into FROM scratch ghcr.io/awesome-os/t2linux:latest."
+    },
+    {
+      "id": "dockerimages/func",
+      "sourceOrg": "dockerimages",
+      "name": "func",
+      "url": "https://github.com/dockerimages/func",
+      "stars": 0,
+      "sourceCategory": "tier4_archive_candidates",
+      "description": "",
+      "disposition": "archived-obsolete",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "systemd-in-container",
+        "upstart"
+      ],
+      "rationale": "Archived obsolete 2014-2019 single-purpose container with zero boilerplate; pointer set to FROM scratch t2linux."
+    },
+    {
+      "id": "dockerimages/geard",
+      "sourceOrg": "dockerimages",
+      "name": "geard",
+      "url": "https://github.com/dockerimages/geard",
+      "stars": 0,
+      "sourceCategory": "tier4_archive_candidates",
+      "description": "A client and agent for installing and linking Docker containers into systemd across hosts",
+      "disposition": "archived-obsolete",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "systemd-in-container",
+        "upstart"
+      ],
+      "rationale": "Archived obsolete 2014-2019 single-purpose container with zero boilerplate; pointer set to FROM scratch t2linux."
+    },
+    {
+      "id": "dockerimages/geard-router-haproxy",
+      "sourceOrg": "dockerimages",
+      "name": "geard-router-haproxy",
+      "url": "https://github.com/dockerimages/geard-router-haproxy",
+      "stars": 0,
+      "sourceCategory": "tier4_archive_candidates",
+      "description": "A Docker image that can read a route configuration and generate and reload an HAProxy setup for massive vhosting",
+      "disposition": "modernized-stack",
+      "targetImage": "ghcr.io/awesome-os/holo-haproxy:latest",
+      "upstreamBase": "haproxy:lts-alpine",
+      "dockerfile": "stacks/holo-haproxy/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "serf-marathon-geard-glue"
+      ],
+      "rationale": "Replaced legacy HAProxy + Serf/Marathon/Geard wrappers with official haproxy:lts-alpine + holo-pm."
+    },
+    {
+      "id": "dockerimages/Ghost",
+      "sourceOrg": "dockerimages",
+      "name": "Ghost",
+      "url": "https://github.com/dockerimages/Ghost",
+      "stars": 0,
+      "sourceCategory": "tier4_archive_candidates",
+      "description": "Just a blogging platform",
+      "disposition": "modernized-stack",
+      "targetImage": "ghcr.io/awesome-os/holo-ghost:latest",
+      "upstreamBase": "ghost:5-alpine",
+      "dockerfile": "stacks/holo-ghost/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "legacy-nodejs-0.10-setup"
+      ],
+      "rationale": "Replaced legacy Ghost container fork with official ghost:5-alpine + holo-pm."
+    },
+    {
+      "id": "dockerimages/git",
+      "sourceOrg": "dockerimages",
+      "name": "git",
+      "url": "https://github.com/dockerimages/git",
+      "stars": 0,
+      "sourceCategory": "tier3_modernizable_utilities",
+      "description": "A useful simple git container running in alpine linux, especially for tiny linux distro, such as RancherOS, which don't have package manager.",
+      "disposition": "modernized-stack",
+      "targetImage": "ghcr.io/awesome-os/holo-git:latest",
+      "upstreamBase": "alpine/git:latest",
+      "dockerfile": "stacks/holo-git/Dockerfile",
+      "eliminatedBoilerplate": [
+        "legacy-alpine-git-bootstrap",
+        "supervisord"
+      ],
+      "rationale": "Modernized legacy Git helper containers onto official alpine/git:latest + holo-pm."
+    },
+    {
+      "id": "dockerimages/gitlab",
+      "sourceOrg": "dockerimages",
+      "name": "gitlab",
+      "url": "https://github.com/dockerimages/gitlab",
+      "stars": 0,
+      "sourceCategory": "tier2_sameersbn_successors",
+      "description": "",
+      "disposition": "superseded-by-awesome-os",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-baseimage",
+        "runit",
+        "supervisord",
+        "monolithic-omnibus-init"
+      ],
+      "rationale": "Superseded by Awesome-OS sovereign GitLab stack (awesome-os/gitlab-foss, gitlab-runner, gitlab-shell) on t2linux."
+    },
+    {
+      "id": "dockerimages/golang-compiler",
+      "sourceOrg": "dockerimages",
+      "name": "golang-compiler",
+      "url": "https://github.com/dockerimages/golang-compiler",
+      "stars": 0,
+      "sourceCategory": "tier3_modernizable_utilities",
+      "description": "This image can be runned with some parameters and throws out compiled go files ",
+      "disposition": "modernized-stack",
+      "targetImage": "ghcr.io/awesome-os/holo-go:latest",
+      "upstreamBase": "golang:alpine",
+      "dockerfile": "stacks/holo-go/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "legacy-gopath-setup"
+      ],
+      "rationale": "Modernized legacy Go compiler & Go storage daemons onto official golang:alpine + holo-pm."
+    },
+    {
+      "id": "dockerimages/google-drive-ocamlfuse",
+      "sourceOrg": "dockerimages",
+      "name": "google-drive-ocamlfuse",
+      "url": "https://github.com/dockerimages/google-drive-ocamlfuse",
+      "stars": 1,
+      "sourceCategory": "tier3_modernizable_utilities",
+      "description": "This is a Docker Image that has a Volume /vol/gdrive wich is synced with one of your gdrive accounts you can use that as base for interaction with your google drive account since it is a direct mount of your online Google Drive not a Sync with Snapshooting the FS you get a real sync",
+      "disposition": "superseded-by-awesome-os",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "fuse-supervisord-boilerplate"
+      ],
+      "rationale": "Superseded by Holo v11 CAS sovereign object storage on t2linux."
+    },
+    {
+      "id": "dockerimages/haproxy",
+      "sourceOrg": "dockerimages",
+      "name": "haproxy",
+      "url": "https://github.com/dockerimages/haproxy",
+      "stars": 1,
+      "sourceCategory": "tier1_flagships",
+      "description": "Haproxy Dockerfile for trusted automated Docker builds.",
+      "disposition": "modernized-stack",
+      "targetImage": "ghcr.io/awesome-os/holo-haproxy:latest",
+      "upstreamBase": "haproxy:lts-alpine",
+      "dockerfile": "stacks/holo-haproxy/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "serf-marathon-geard-glue"
+      ],
+      "rationale": "Replaced legacy HAProxy + Serf/Marathon/Geard wrappers with official haproxy:lts-alpine + holo-pm."
+    },
+    {
+      "id": "dockerimages/harp-git",
+      "sourceOrg": "dockerimages",
+      "name": "harp-git",
+      "url": "https://github.com/dockerimages/harp-git",
+      "stars": 0,
+      "sourceCategory": "tier3_modernizable_utilities",
+      "description": "A Container that fetches a git repo and runs harp on it so you can update the content of the container via git",
+      "disposition": "modernized-stack",
+      "targetImage": "ghcr.io/awesome-os/holo-git:latest",
+      "upstreamBase": "alpine/git:latest",
+      "dockerfile": "stacks/holo-git/Dockerfile",
+      "eliminatedBoilerplate": [
+        "legacy-alpine-git-bootstrap",
+        "supervisord"
+      ],
+      "rationale": "Modernized legacy Git helper containers onto official alpine/git:latest + holo-pm."
+    },
+    {
+      "id": "dockerimages/https-gitlab.com-gitlab-org-omnibus-gitlab",
+      "sourceOrg": "dockerimages",
+      "name": "https-gitlab.com-gitlab-org-omnibus-gitlab",
+      "url": "https://github.com/dockerimages/https-gitlab.com-gitlab-org-omnibus-gitlab",
+      "stars": 1,
+      "sourceCategory": "tier2_sameersbn_successors",
+      "description": "",
+      "disposition": "superseded-by-awesome-os",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-baseimage",
+        "runit",
+        "supervisord",
+        "monolithic-omnibus-init"
+      ],
+      "rationale": "Superseded by Awesome-OS sovereign GitLab stack (awesome-os/gitlab-foss, gitlab-runner, gitlab-shell) on t2linux."
+    },
+    {
+      "id": "dockerimages/ircanywhere",
+      "sourceOrg": "dockerimages",
+      "name": "ircanywhere",
+      "url": "https://github.com/dockerimages/ircanywhere",
+      "stars": 0,
+      "sourceCategory": "tier4_archive_candidates",
+      "description": "IRCAnywhere web based multi-user IRC bouncer built for teams",
+      "disposition": "archived-obsolete",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "systemd-in-container",
+        "upstart"
+      ],
+      "rationale": "Archived obsolete 2014-2019 single-purpose container with zero boilerplate; pointer set to FROM scratch t2linux."
+    },
+    {
+      "id": "dockerimages/java",
+      "sourceOrg": "dockerimages",
+      "name": "java",
+      "url": "https://github.com/dockerimages/java",
+      "stars": 0,
+      "sourceCategory": "tier3_modernizable_utilities",
+      "description": "Base Docker image with Java installed",
+      "disposition": "consolidated-into-base",
+      "targetImage": "ghcr.io/awesome-os/holo-jvm:latest",
+      "upstreamBase": "eclipse-temurin:25-jre-alpine",
+      "dockerfile": "holo-jvm/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "oracle-jdk-7-tarball",
+        "supervisord"
+      ],
+      "rationale": "Consolidated legacy JVM / Java / Elastic stack onto ghcr.io/awesome-os/holo-jvm:latest (eclipse-temurin:25-jre-alpine)."
+    },
+    {
+      "id": "dockerimages/koalab",
+      "sourceOrg": "dockerimages",
+      "name": "koalab",
+      "url": "https://github.com/dockerimages/koalab",
+      "stars": 0,
+      "sourceCategory": "tier4_archive_candidates",
+      "description": "A scrum-like board powered by nginx, nodejs, mongodb, backbone and html5",
+      "disposition": "archived-obsolete",
+      "targetImage": "ghcr.io/awesome-os/holo-node:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "holo-node/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "retired-2014-js-framework"
+      ],
+      "rationale": "Archived obsolete 2014-2017 Node.js app/CI stack; runtime pointer set to FROM scratch holo-node."
+    },
+    {
+      "id": "dockerimages/lampp",
+      "sourceOrg": "dockerimages",
+      "name": "lampp",
+      "url": "https://github.com/dockerimages/lampp",
+      "stars": 1,
+      "sourceCategory": "tier4_archive_candidates",
+      "description": "LAMP base docker image",
+      "disposition": "consolidated-into-base",
+      "targetImage": "ghcr.io/awesome-os/holo-php:latest",
+      "upstreamBase": "php:8.6-cli-alpine",
+      "dockerfile": "holo-php/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "php5-all-in-one-lamp-boilerplate"
+      ],
+      "rationale": "Consolidated legacy PHP / LAMP / CMS runtime onto ghcr.io/awesome-os/holo-php:latest (php:8.6-cli-alpine)."
+    },
+    {
+      "id": "dockerimages/lynx",
+      "sourceOrg": "dockerimages",
+      "name": "lynx",
+      "url": "https://github.com/dockerimages/lynx",
+      "stars": 0,
+      "sourceCategory": "tier4_archive_candidates",
+      "description": "Dockerimage ubuntu + lynx for checking websites and routes cookis all kind of that",
+      "disposition": "archived-obsolete",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "systemd-in-container",
+        "upstart"
+      ],
+      "rationale": "Archived obsolete 2014-2019 single-purpose container with zero boilerplate; pointer set to FROM scratch t2linux."
+    },
+    {
+      "id": "dockerimages/magento-stack",
+      "sourceOrg": "dockerimages",
+      "name": "magento-stack",
+      "url": "https://github.com/dockerimages/magento-stack",
+      "stars": 1,
+      "sourceCategory": "tier4_archive_candidates",
+      "description": "A dockerized Magento Community Edition 1.9.x",
+      "disposition": "consolidated-into-base",
+      "targetImage": "ghcr.io/awesome-os/holo-php:latest",
+      "upstreamBase": "php:8.6-cli-alpine",
+      "dockerfile": "holo-php/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "php5-all-in-one-lamp-boilerplate"
+      ],
+      "rationale": "Consolidated legacy PHP / LAMP / CMS runtime onto ghcr.io/awesome-os/holo-php:latest (php:8.6-cli-alpine)."
+    },
+    {
+      "id": "dockerimages/marathon-logger",
+      "sourceOrg": "dockerimages",
+      "name": "marathon-logger",
+      "url": "https://github.com/dockerimages/marathon-logger",
+      "stars": 0,
+      "sourceCategory": "tier4_archive_candidates",
+      "description": "Event logging service for Mesos Marathon",
+      "disposition": "archived-obsolete",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "systemd-in-container",
+        "upstart"
+      ],
+      "rationale": "Archived obsolete 2014-2019 single-purpose container with zero boilerplate; pointer set to FROM scratch t2linux."
+    },
+    {
+      "id": "dockerimages/mariadb-galera",
+      "sourceOrg": "dockerimages",
+      "name": "mariadb-galera",
+      "url": "https://github.com/dockerimages/mariadb-galera",
+      "stars": 1,
+      "sourceCategory": "tier1_flagships",
+      "description": "MariaDB Galera cluster in Docker containers",
+      "disposition": "modernized-stack",
+      "targetImage": "ghcr.io/awesome-os/holo-mariadb:latest",
+      "upstreamBase": "mariadb:11",
+      "dockerfile": "stacks/holo-mariadb/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "legacy-mysql-5.7-galera-scripts"
+      ],
+      "rationale": "Replaced legacy MySQL 5.7 / Galera images with official multi-arch mariadb:11 + holo-pm."
+    },
+    {
+      "id": "dockerimages/mesos-single",
+      "sourceOrg": "dockerimages",
+      "name": "mesos-single",
+      "url": "https://github.com/dockerimages/mesos-single",
+      "stars": 1,
+      "sourceCategory": "tier4_archive_candidates",
+      "description": "a Container that runs Mesos in a Single Container + Marathon + Deimos + Zookeper",
+      "disposition": "archived-obsolete",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "systemd-in-container",
+        "upstart"
+      ],
+      "rationale": "Archived obsolete 2014-2019 single-purpose container with zero boilerplate; pointer set to FROM scratch t2linux."
+    },
+    {
+      "id": "dockerimages/mesosphere-docker",
+      "sourceOrg": "dockerimages",
+      "name": "mesosphere-docker",
+      "url": "https://github.com/dockerimages/mesosphere-docker",
+      "stars": 1,
+      "sourceCategory": "tier4_archive_candidates",
+      "description": "",
+      "disposition": "archived-obsolete",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "systemd-in-container",
+        "upstart"
+      ],
+      "rationale": "Archived obsolete 2014-2019 single-purpose container with zero boilerplate; pointer set to FROM scratch t2linux."
+    },
+    {
+      "id": "dockerimages/mmonit",
+      "sourceOrg": "dockerimages",
+      "name": "mmonit",
+      "url": "https://github.com/dockerimages/mmonit",
+      "stars": 1,
+      "sourceCategory": "tier4_archive_candidates",
+      "description": "http://www.mmonit.com/dist/mmonit-3.2.1-linux-x64.tar.gz",
+      "disposition": "archived-obsolete",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "systemd-in-container",
+        "upstart"
+      ],
+      "rationale": "Archived obsolete 2014-2019 single-purpose container with zero boilerplate; pointer set to FROM scratch t2linux."
+    },
+    {
+      "id": "dockerimages/mongodb-local",
+      "sourceOrg": "dockerimages",
+      "name": "mongodb-local",
+      "url": "https://github.com/dockerimages/mongodb-local",
+      "stars": 0,
+      "sourceCategory": "tier2_sameersbn_successors",
+      "description": "A MongoDB Dockerimage for geting linked from a  application container so that it has access to it via its container name and standart port it is configured as single mongodb node not as cluster.",
+      "disposition": "modernized-stack",
+      "targetImage": "ghcr.io/awesome-os/holo-mongodb:latest",
+      "upstreamBase": "mongo:8",
+      "dockerfile": "stacks/holo-mongodb/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "legacy-link-scripts",
+        "supervisord"
+      ],
+      "rationale": "Replaced legacy MongoDB linked containers with official multi-arch mongo:8 + holo-pm."
+    },
+    {
+      "id": "dockerimages/mosaico",
+      "sourceOrg": "dockerimages",
+      "name": "mosaico",
+      "url": "https://github.com/dockerimages/mosaico",
+      "stars": 0,
+      "sourceCategory": "tier4_archive_candidates",
+      "description": "Mosaico - Responsive Email Template Editor",
+      "disposition": "archived-obsolete",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "systemd-in-container",
+        "upstart"
+      ],
+      "rationale": "Archived obsolete 2014-2019 single-purpose container with zero boilerplate; pointer set to FROM scratch t2linux."
+    },
+    {
+      "id": "dockerimages/mysql",
+      "sourceOrg": "dockerimages",
+      "name": "mysql",
+      "url": "https://github.com/dockerimages/mysql",
+      "stars": 0,
+      "sourceCategory": "tier2_sameersbn_successors",
+      "description": "Fresh Mysql Server Ready to Get Configed",
+      "disposition": "modernized-stack",
+      "targetImage": "ghcr.io/awesome-os/holo-mariadb:latest",
+      "upstreamBase": "mariadb:11",
+      "dockerfile": "stacks/holo-mariadb/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "legacy-mysql-5.7-galera-scripts"
+      ],
+      "rationale": "Replaced legacy MySQL 5.7 / Galera images with official multi-arch mariadb:11 + holo-pm."
+    },
+    {
+      "id": "dockerimages/nginx",
+      "sourceOrg": "dockerimages",
+      "name": "nginx",
+      "url": "https://github.com/dockerimages/nginx",
+      "stars": 0,
+      "sourceCategory": "tier2_sameersbn_successors",
+      "description": "FROM library/nginx Added some Scripts for Auto Configuration Based on Domain Named Directorys",
+      "disposition": "modernized-stack",
+      "targetImage": "ghcr.io/awesome-os/holo-nginx:latest",
+      "upstreamBase": "nginx:alpine",
+      "dockerfile": "stacks/holo-nginx/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "legacy-source-nginx-build"
+      ],
+      "rationale": "Replaced legacy Nginx / PageSpeed / RTMP wrappers with official multi-arch nginx:alpine + holo-pm."
+    },
+    {
+      "id": "dockerimages/nginx-docker-router",
+      "sourceOrg": "dockerimages",
+      "name": "nginx-docker-router",
+      "url": "https://github.com/dockerimages/nginx-docker-router",
+      "stars": 0,
+      "sourceCategory": "tier2_sameersbn_successors",
+      "description": "Automated nginx proxy for Docker containers using docker-gen",
+      "disposition": "modernized-stack",
+      "targetImage": "ghcr.io/awesome-os/holo-nginx:latest",
+      "upstreamBase": "nginx:alpine",
+      "dockerfile": "stacks/holo-nginx/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "legacy-source-nginx-build"
+      ],
+      "rationale": "Replaced legacy Nginx / PageSpeed / RTMP wrappers with official multi-arch nginx:alpine + holo-pm."
+    },
+    {
+      "id": "dockerimages/node",
+      "sourceOrg": "dockerimages",
+      "name": "node",
+      "url": "https://github.com/dockerimages/node",
+      "stars": 0,
+      "sourceCategory": "tier2_sameersbn_successors",
+      "description": "complet node images includes armv7",
+      "disposition": "consolidated-into-base",
+      "targetImage": "ghcr.io/awesome-os/holo-node:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "holo-node/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "nvm-nave-pm2-process-manager",
+        "debian-bloat"
+      ],
+      "rationale": "Consolidated legacy Node.js / process-manager image into FROM scratch ghcr.io/awesome-os/holo-node:latest (Node v27)."
+    },
+    {
+      "id": "dockerimages/node_multilogin",
+      "sourceOrg": "dockerimages",
+      "name": "node_multilogin",
+      "url": "https://github.com/dockerimages/node_multilogin",
+      "stars": 0,
+      "sourceCategory": "tier4_archive_candidates",
+      "description": "Facebook and Local Login via Node.JS and MongoDB Twitter support Passport and express 4.0 framework as docker file utils dockerimages/mongodb-local",
+      "disposition": "archived-obsolete",
+      "targetImage": "ghcr.io/awesome-os/holo-node:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "holo-node/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "retired-2014-js-framework"
+      ],
+      "rationale": "Archived obsolete 2014-2017 Node.js app/CI stack; runtime pointer set to FROM scratch holo-node."
+    },
+    {
+      "id": "dockerimages/nsd-dnssec",
+      "sourceOrg": "dockerimages",
+      "name": "nsd-dnssec",
+      "url": "https://github.com/dockerimages/nsd-dnssec",
+      "stars": 0,
+      "sourceCategory": "tier2_sameersbn_successors",
+      "description": ":warning: UNMAINTAINED -Simple authoritative name server with DNSSEC support using Docker",
+      "disposition": "archived-obsolete",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "systemd-in-container",
+        "upstart"
+      ],
+      "rationale": "Archived obsolete 2014-2019 single-purpose container with zero boilerplate; pointer set to FROM scratch t2linux."
+    },
+    {
+      "id": "dockerimages/nsenter",
+      "sourceOrg": "dockerimages",
+      "name": "nsenter",
+      "url": "https://github.com/dockerimages/nsenter",
+      "stars": 1,
+      "sourceCategory": "tier3_modernizable_utilities",
+      "description": "",
+      "disposition": "consolidated-into-base",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "runit",
+        "s6",
+        "upstart",
+        "systemd-in-container"
+      ],
+      "rationale": "Consolidated legacy OS rootfs / init-system / container-tooling image into FROM scratch ghcr.io/awesome-os/t2linux:latest."
+    },
+    {
+      "id": "dockerimages/official-images",
+      "sourceOrg": "dockerimages",
+      "name": "official-images",
+      "url": "https://github.com/dockerimages/official-images",
+      "stars": 0,
+      "sourceCategory": "tier1_flagships",
+      "description": "Primary source of truth for the Docker \"Official Images\" program",
+      "disposition": "superseded-by-awesome-os",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "legacy-2014-build-scripts"
+      ],
+      "rationale": "Superseded by awesome-os/dockerimages catalog, Holo-CI v1, and awesome-os/deployment."
+    },
+    {
+      "id": "dockerimages/openproject",
+      "sourceOrg": "dockerimages",
+      "name": "openproject",
+      "url": "https://github.com/dockerimages/openproject",
+      "stars": 6,
+      "sourceCategory": "tier1_flagships",
+      "description": "Let OpenProject run in a docker container",
+      "disposition": "consolidated-into-base",
+      "targetImage": "ghcr.io/awesome-os/holo-ruby:latest",
+      "upstreamBase": "ruby:4.0-alpine",
+      "dockerfile": "holo-ruby/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "legacy-rvm-bundler"
+      ],
+      "rationale": "Consolidated legacy Ruby/Rails OpenProject image onto ghcr.io/awesome-os/holo-ruby:latest (ruby:4.0-alpine)."
+    },
+    {
+      "id": "dockerimages/ovmf",
+      "sourceOrg": "dockerimages",
+      "name": "ovmf",
+      "url": "https://github.com/dockerimages/ovmf",
+      "stars": 0,
+      "sourceCategory": "tier3_modernizable_utilities",
+      "description": "This Repo Stores some ovmf examples",
+      "disposition": "superseded-by-awesome-os",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "qemu-x11-kvm-wrapper-scripts"
+      ],
+      "rationale": "Superseded by awesome-os/maclab, siliconforest, and firecracker microVM substrate on t2linux."
+    },
+    {
+      "id": "dockerimages/php",
+      "sourceOrg": "dockerimages",
+      "name": "php",
+      "url": "https://github.com/dockerimages/php",
+      "stars": 0,
+      "sourceCategory": "tier2_sameersbn_successors",
+      "description": "Docker Official Image packaging for PHP",
+      "disposition": "consolidated-into-base",
+      "targetImage": "ghcr.io/awesome-os/holo-php:latest",
+      "upstreamBase": "php:8.6-cli-alpine",
+      "dockerfile": "holo-php/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "php5-all-in-one-lamp-boilerplate"
+      ],
+      "rationale": "Consolidated legacy PHP / LAMP / CMS runtime onto ghcr.io/awesome-os/holo-php:latest (php:8.6-cli-alpine)."
+    },
+    {
+      "id": "dockerimages/pod-odoo",
+      "sourceOrg": "dockerimages",
+      "name": "pod-odoo",
+      "url": "https://github.com/dockerimages/pod-odoo",
+      "stars": 0,
+      "sourceCategory": "tier1_flagships",
+      "description": "A Play Pod Compatible Odoo Deployment",
+      "disposition": "archived-obsolete",
+      "targetImage": "ghcr.io/awesome-os/holo-py:latest",
+      "upstreamBase": "python:3.15-alpine",
+      "dockerfile": "holo-py/Dockerfile",
+      "eliminatedBoilerplate": [
+        "legacy-pod-odoo-wrapper"
+      ],
+      "rationale": "Archived obsolete Python Odoo pod wrapper; runtime pointer set to holo-py."
+    },
+    {
+      "id": "dockerimages/python",
+      "sourceOrg": "dockerimages",
+      "name": "python",
+      "url": "https://github.com/dockerimages/python",
+      "stars": 0,
+      "sourceCategory": "tier3_modernizable_utilities",
+      "description": "",
+      "disposition": "consolidated-into-base",
+      "targetImage": "ghcr.io/awesome-os/holo-py:latest",
+      "upstreamBase": "python:3.15-alpine",
+      "dockerfile": "holo-py/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "legacy-pip-virtualenv-boilerplate"
+      ],
+      "rationale": "Consolidated legacy Python image into ghcr.io/awesome-os/holo-py:latest (python:3.15-alpine)."
+    },
+    {
+      "id": "dockerimages/python-ws-to-tuntap-proxy",
+      "sourceOrg": "dockerimages",
+      "name": "python-ws-to-tuntap-proxy",
+      "url": "https://github.com/dockerimages/python-ws-to-tuntap-proxy",
+      "stars": 0,
+      "sourceCategory": "tier3_modernizable_utilities",
+      "description": "python-ws-to-tuntap-proxy mainly used to add network support to wasm builds via network switching",
+      "disposition": "consolidated-into-base",
+      "targetImage": "ghcr.io/awesome-os/holo-py:latest",
+      "upstreamBase": "python:3.15-alpine",
+      "dockerfile": "holo-py/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "legacy-pip-virtualenv-boilerplate"
+      ],
+      "rationale": "Consolidated legacy Python image into ghcr.io/awesome-os/holo-py:latest (python:3.15-alpine)."
+    },
+    {
+      "id": "dockerimages/rasbian",
+      "sourceOrg": "dockerimages",
+      "name": "rasbian",
+      "url": "https://github.com/dockerimages/rasbian",
+      "stars": 0,
+      "sourceCategory": "tier4_archive_candidates",
+      "description": "rasbian docker images",
+      "disposition": "consolidated-into-base",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "runit",
+        "s6",
+        "upstart",
+        "systemd-in-container"
+      ],
+      "rationale": "Consolidated legacy OS rootfs / init-system / container-tooling image into FROM scratch ghcr.io/awesome-os/t2linux:latest."
+    },
+    {
+      "id": "dockerimages/redmine",
+      "sourceOrg": "dockerimages",
+      "name": "redmine",
+      "url": "https://github.com/dockerimages/redmine",
+      "stars": 1,
+      "sourceCategory": "tier2_sameersbn_successors",
+      "description": "Dockerized redmine app server",
+      "disposition": "modernized-stack",
+      "targetImage": "ghcr.io/awesome-os/holo-redmine:latest",
+      "upstreamBase": "redmine:6-alpine",
+      "dockerfile": "stacks/holo-redmine/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-baseimage",
+        "supervisord",
+        "runit",
+        "legacy-ruby-bundler-scripts"
+      ],
+      "rationale": "Replaced legacy Redmine container with official redmine:6-alpine + holo-pm."
+    },
+    {
+      "id": "dockerimages/scratch",
+      "sourceOrg": "dockerimages",
+      "name": "scratch",
+      "url": "https://github.com/dockerimages/scratch",
+      "stars": 0,
+      "sourceCategory": "tier1_flagships",
+      "description": "This is a Empty docker image to get used with the docker-rootfs-mount",
+      "disposition": "consolidated-into-base",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "runit",
+        "s6",
+        "upstart",
+        "systemd-in-container"
+      ],
+      "rationale": "Consolidated legacy OS rootfs / init-system / container-tooling image into FROM scratch ghcr.io/awesome-os/t2linux:latest."
+    },
+    {
+      "id": "dockerimages/solr",
+      "sourceOrg": "dockerimages",
+      "name": "solr",
+      "url": "https://github.com/dockerimages/solr",
+      "stars": 0,
+      "sourceCategory": "tier3_modernizable_utilities",
+      "description": "Image that runs Apache Solr based on dockerimages/ubuntu-vm:14.04",
+      "disposition": "modernized-stack",
+      "targetImage": "ghcr.io/awesome-os/holo-solr:latest",
+      "upstreamBase": "solr:9-slim",
+      "dockerfile": "stacks/holo-solr/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "systemd-in-container",
+        "manual-jvm-tarball"
+      ],
+      "rationale": "Replaced legacy Ubuntu 14.04 + systemd Solr containers with non-root official solr:9-slim + holo-pm."
+    },
+    {
+      "id": "dockerimages/testpage",
+      "sourceOrg": "dockerimages",
+      "name": "testpage",
+      "url": "https://github.com/dockerimages/testpage",
+      "stars": 0,
+      "sourceCategory": "tier4_archive_candidates",
+      "description": "Simple Test Page Repo",
+      "disposition": "archived-obsolete",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "systemd-in-container",
+        "upstart"
+      ],
+      "rationale": "Archived obsolete 2014-2019 single-purpose container with zero boilerplate; pointer set to FROM scratch t2linux."
+    },
+    {
+      "id": "dockerimages/thebrain_8_linux",
+      "sourceOrg": "dockerimages",
+      "name": "thebrain_8_linux",
+      "url": "https://github.com/dockerimages/thebrain_8_linux",
+      "stars": 1,
+      "sourceCategory": "tier4_archive_candidates",
+      "description": "Die Software The Brain 8 als Container version Sollte also Unendlich gültig sein wenn man ein extra volumen benutzt und einmal im monat neu startet",
+      "disposition": "archived-obsolete",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "systemd-in-container",
+        "upstart"
+      ],
+      "rationale": "Archived obsolete 2014-2019 single-purpose container with zero boilerplate; pointer set to FROM scratch t2linux."
+    },
+    {
+      "id": "dockerimages/typo3",
+      "sourceOrg": "dockerimages",
+      "name": "typo3",
+      "url": "https://github.com/dockerimages/typo3",
+      "stars": 1,
+      "sourceCategory": "tier1_flagships",
+      "description": "Typo3 Versions for fast Development of Extensions",
+      "disposition": "consolidated-into-base",
+      "targetImage": "ghcr.io/awesome-os/holo-php:latest",
+      "upstreamBase": "php:8.6-cli-alpine",
+      "dockerfile": "holo-php/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "php5-all-in-one-lamp-boilerplate"
+      ],
+      "rationale": "Consolidated legacy PHP / LAMP / CMS runtime onto ghcr.io/awesome-os/holo-php:latest (php:8.6-cli-alpine)."
+    },
+    {
+      "id": "dockerimages/ubuntu-apt-cache",
+      "sourceOrg": "dockerimages",
+      "name": "ubuntu-apt-cache",
+      "url": "https://github.com/dockerimages/ubuntu-apt-cache",
+      "stars": 0,
+      "sourceCategory": "tier4_archive_candidates",
+      "description": "This is a Ubuntu base image even with docker ubuntu:* base images but it has added Some OnBuild Instructions",
+      "disposition": "superseded-by-awesome-os",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "upstart",
+        "apt-cacher-ng-daemon"
+      ],
+      "rationale": "Superseded by Holo v11 content-addressable store (/var/lib/b8g/cas/v11) on t2linux."
+    },
+    {
+      "id": "dockerimages/ubuntu-base",
+      "sourceOrg": "dockerimages",
+      "name": "ubuntu-base",
+      "url": "https://github.com/dockerimages/ubuntu-base",
+      "stars": 1,
+      "sourceCategory": "tier3_modernizable_utilities",
+      "description": "Ubuntu 14.04 Core Root FS added",
+      "disposition": "consolidated-into-base",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "runit",
+        "s6",
+        "upstart",
+        "systemd-in-container"
+      ],
+      "rationale": "Consolidated legacy OS rootfs / init-system / container-tooling image into FROM scratch ghcr.io/awesome-os/t2linux:latest."
+    },
+    {
+      "id": "dockerimages/ubuntu-baseimage-supervisord",
+      "sourceOrg": "dockerimages",
+      "name": "ubuntu-baseimage-supervisord",
+      "url": "https://github.com/dockerimages/ubuntu-baseimage-supervisord",
+      "stars": 0,
+      "sourceCategory": "tier4_archive_candidates",
+      "description": "My Ubuntu boilerplate image that forms the base for my docker containers. Starts a SSH server by default",
+      "disposition": "consolidated-into-base",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "runit",
+        "s6",
+        "upstart",
+        "systemd-in-container"
+      ],
+      "rationale": "Consolidated legacy OS rootfs / init-system / container-tooling image into FROM scratch ghcr.io/awesome-os/t2linux:latest."
+    },
+    {
+      "id": "dockerimages/ubuntu-core-build",
+      "sourceOrg": "dockerimages",
+      "name": "ubuntu-core-build",
+      "url": "https://github.com/dockerimages/ubuntu-core-build",
+      "stars": 0,
+      "sourceCategory": "tier3_modernizable_utilities",
+      "description": "Baseimage for building c Applications",
+      "disposition": "consolidated-into-base",
+      "targetImage": "ghcr.io/awesome-os/holo-cpp:latest",
+      "upstreamBase": "alpine:3.24",
+      "dockerfile": "holo-cpp/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "apt-build-essential-bloat"
+      ],
+      "rationale": "Consolidated legacy C/C++ build base into ghcr.io/awesome-os/holo-cpp:latest (alpine:3.24 + musl-dev)."
+    },
+    {
+      "id": "dockerimages/ubuntu-httpd-php-mysql",
+      "sourceOrg": "dockerimages",
+      "name": "ubuntu-httpd-php-mysql",
+      "url": "https://github.com/dockerimages/ubuntu-httpd-php-mysql",
+      "stars": 0,
+      "sourceCategory": "tier4_archive_candidates",
+      "description": "This image is a Image for Running fast a PHP/MYSQL Stack based on ubuntu via supervisor",
+      "disposition": "consolidated-into-base",
+      "targetImage": "ghcr.io/awesome-os/holo-php:latest",
+      "upstreamBase": "php:8.6-cli-alpine",
+      "dockerfile": "holo-php/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "php5-all-in-one-lamp-boilerplate"
+      ],
+      "rationale": "Consolidated legacy PHP / LAMP / CMS runtime onto ghcr.io/awesome-os/holo-php:latest (php:8.6-cli-alpine)."
+    },
+    {
+      "id": "dockerimages/ubuntu-installer",
+      "sourceOrg": "dockerimages",
+      "name": "ubuntu-installer",
+      "url": "https://github.com/dockerimages/ubuntu-installer",
+      "stars": 0,
+      "sourceCategory": "tier4_archive_candidates",
+      "description": "Collection of install scripts for ubuntu >= 14.04",
+      "disposition": "consolidated-into-base",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "runit",
+        "s6",
+        "upstart",
+        "systemd-in-container"
+      ],
+      "rationale": "Consolidated legacy OS rootfs / init-system / container-tooling image into FROM scratch ghcr.io/awesome-os/t2linux:latest."
+    },
+    {
+      "id": "dockerimages/ubuntu-runit",
+      "sourceOrg": "dockerimages",
+      "name": "ubuntu-runit",
+      "url": "https://github.com/dockerimages/ubuntu-runit",
+      "stars": 1,
+      "sourceCategory": "tier3_modernizable_utilities",
+      "description": "This is a RUNIT Update for Dockerimages/ubuntu-baseimage",
+      "disposition": "consolidated-into-base",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "runit",
+        "s6",
+        "upstart",
+        "systemd-in-container"
+      ],
+      "rationale": "Consolidated legacy OS rootfs / init-system / container-tooling image into FROM scratch ghcr.io/awesome-os/t2linux:latest."
+    },
+    {
+      "id": "dockerimages/ubuntu-supervisor",
+      "sourceOrg": "dockerimages",
+      "name": "ubuntu-supervisor",
+      "url": "https://github.com/dockerimages/ubuntu-supervisor",
+      "stars": 0,
+      "sourceCategory": "tier4_archive_candidates",
+      "description": "This is a Supervisor Init for dockerimages/ubuntu-baseimage",
+      "disposition": "consolidated-into-base",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "runit",
+        "s6",
+        "upstart",
+        "systemd-in-container"
+      ],
+      "rationale": "Consolidated legacy OS rootfs / init-system / container-tooling image into FROM scratch ghcr.io/awesome-os/t2linux:latest."
+    },
+    {
+      "id": "dockerimages/ubuntu-upstart",
+      "sourceOrg": "dockerimages",
+      "name": "ubuntu-upstart",
+      "url": "https://github.com/dockerimages/ubuntu-upstart",
+      "stars": 3,
+      "sourceCategory": "tier4_archive_candidates",
+      "description": "Upstart Addon for ubuntu-baseimage",
+      "disposition": "consolidated-into-base",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "runit",
+        "s6",
+        "upstart",
+        "systemd-in-container"
+      ],
+      "rationale": "Consolidated legacy OS rootfs / init-system / container-tooling image into FROM scratch ghcr.io/awesome-os/t2linux:latest."
+    },
+    {
+      "id": "dockerimages/ubuntu-vm",
+      "sourceOrg": "dockerimages",
+      "name": "ubuntu-vm",
+      "url": "https://github.com/dockerimages/ubuntu-vm",
+      "stars": 0,
+      "sourceCategory": "tier4_archive_candidates",
+      "description": "A minimal Ubuntu base image modified for Docker-friendliness",
+      "disposition": "consolidated-into-base",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "runit",
+        "s6",
+        "upstart",
+        "systemd-in-container"
+      ],
+      "rationale": "Consolidated legacy OS rootfs / init-system / container-tooling image into FROM scratch ghcr.io/awesome-os/t2linux:latest."
+    },
+    {
+      "id": "dockerimages/v8-build",
+      "sourceOrg": "dockerimages",
+      "name": "v8-build",
+      "url": "https://github.com/dockerimages/v8-build",
+      "stars": 1,
+      "sourceCategory": "tier1_flagships",
+      "description": "A baseimage for v8 Builds amd64-linux",
+      "disposition": "superseded-by-awesome-os",
+      "targetImage": "ghcr.io/awesome-os/holo-cpp:latest",
+      "upstreamBase": "alpine:3.24",
+      "dockerfile": "holo-cpp/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-v8-depot-tools-boilerplate"
+      ],
+      "rationale": "Superseded by Awesome-OS unified shared libv8_monolith (dup_v8=0 B) in awesome-os/chromium-baseline."
+    },
+    {
+      "id": "dockerimages/vagrant-aws",
+      "sourceOrg": "dockerimages",
+      "name": "vagrant-aws",
+      "url": "https://github.com/dockerimages/vagrant-aws",
+      "stars": 0,
+      "sourceCategory": "tier4_archive_candidates",
+      "description": "Use Vagrant to manage your EC2 and VPC instances.",
+      "disposition": "archived-obsolete",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "systemd-in-container",
+        "upstart"
+      ],
+      "rationale": "Archived obsolete 2014-2019 single-purpose container with zero boilerplate; pointer set to FROM scratch t2linux."
+    },
+    {
+      "id": "dockerimages/vscode-ubuntu",
+      "sourceOrg": "dockerimages",
+      "name": "vscode-ubuntu",
+      "url": "https://github.com/dockerimages/vscode-ubuntu",
+      "stars": 0,
+      "sourceCategory": "tier3_modernizable_utilities",
+      "description": "Baseimage for sails vscode",
+      "disposition": "superseded-by-awesome-os",
+      "targetImage": "ghcr.io/awesome-os/holo-e2e-runner:latest",
+      "upstreamBase": "node:current-alpine",
+      "dockerfile": "holo-e2e-runner/Dockerfile",
+      "eliminatedBoilerplate": [
+        "x11-pulseaudio-vnc-boilerplate",
+        "ubuntu-desktop-bloat"
+      ],
+      "rationale": "Superseded by Sectium Layer-1 Display Appliance, headless Lavapipe Vulkan holo-e2e-runner, and awesome-os/devtools."
+    },
+    {
+      "id": "sameersbn/docker-apt-cacher-ng",
+      "sourceOrg": "sameersbn",
+      "name": "docker-apt-cacher-ng",
+      "url": "https://github.com/sameersbn/docker-apt-cacher-ng",
+      "stars": 242,
+      "sourceCategory": "Package Mirror Cache",
+      "description": "Dockerfile to create a Docker container image for Apt-Cacher NG",
+      "disposition": "superseded-by-awesome-os",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "upstart",
+        "apt-cacher-ng-daemon"
+      ],
+      "rationale": "Superseded by Holo v11 content-addressable store (/var/lib/b8g/cas/v11) on t2linux."
+    },
+    {
+      "id": "sameersbn/docker-bind",
+      "sourceOrg": "sameersbn",
+      "name": "docker-bind",
+      "url": "https://github.com/sameersbn/docker-bind",
+      "stars": 925,
+      "sourceCategory": "DNS & Edge Infrastructure",
+      "description": "Dockerize BIND DNS server with webmin for DNS administration",
+      "disposition": "archived-obsolete",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "systemd-in-container",
+        "upstart"
+      ],
+      "rationale": "Archived obsolete 2014-2019 single-purpose container with zero boilerplate; pointer set to FROM scratch t2linux."
+    },
+    {
+      "id": "sameersbn/docker-browser-box",
+      "sourceOrg": "sameersbn",
+      "name": "docker-browser-box",
+      "url": "https://github.com/sameersbn/docker-browser-box",
+      "stars": 573,
+      "sourceCategory": "Browser Sandbox",
+      "description": "Dockerized google-chome and tor-browser with audio support via pulseaudio",
+      "disposition": "superseded-by-awesome-os",
+      "targetImage": "ghcr.io/awesome-os/holo-e2e-runner:latest",
+      "upstreamBase": "node:current-alpine",
+      "dockerfile": "holo-e2e-runner/Dockerfile",
+      "eliminatedBoilerplate": [
+        "x11-pulseaudio-vnc-boilerplate",
+        "ubuntu-desktop-bloat"
+      ],
+      "rationale": "Superseded by Sectium Layer-1 Display Appliance, headless Lavapipe Vulkan holo-e2e-runner, and awesome-os/devtools."
+    },
+    {
+      "id": "sameersbn/docker-gitlab",
+      "sourceOrg": "sameersbn",
+      "name": "docker-gitlab",
+      "url": "https://github.com/sameersbn/docker-gitlab",
+      "stars": 8113,
+      "sourceCategory": "Sovereign Forge & Identity",
+      "description": "Dockerized GitLab",
+      "disposition": "superseded-by-awesome-os",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-baseimage",
+        "runit",
+        "supervisord",
+        "monolithic-omnibus-init"
+      ],
+      "rationale": "Superseded by Awesome-OS sovereign GitLab stack (awesome-os/gitlab-foss, gitlab-runner, gitlab-shell) on t2linux."
+    },
+    {
+      "id": "sameersbn/docker-gitlab-ci",
+      "sourceOrg": "sameersbn",
+      "name": "docker-gitlab-ci",
+      "url": "https://github.com/sameersbn/docker-gitlab-ci",
+      "stars": 198,
+      "sourceCategory": "CI/CD Orchestration",
+      "description": "Dockerfile to build a GitLab CI container image.",
+      "disposition": "superseded-by-awesome-os",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-baseimage",
+        "runit",
+        "supervisord",
+        "monolithic-omnibus-init"
+      ],
+      "rationale": "Superseded by Awesome-OS sovereign GitLab stack (awesome-os/gitlab-foss, gitlab-runner, gitlab-shell) on t2linux."
+    },
+    {
+      "id": "sameersbn/docker-gitlab-ci-multi-runner",
+      "sourceOrg": "sameersbn",
+      "name": "docker-gitlab-ci-multi-runner",
+      "url": "https://github.com/sameersbn/docker-gitlab-ci-multi-runner",
+      "stars": 147,
+      "sourceCategory": "CI/CD Runner",
+      "description": "",
+      "disposition": "superseded-by-awesome-os",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-baseimage",
+        "runit",
+        "supervisord",
+        "monolithic-omnibus-init"
+      ],
+      "rationale": "Superseded by Awesome-OS sovereign GitLab stack (awesome-os/gitlab-foss, gitlab-runner, gitlab-shell) on t2linux."
+    },
+    {
+      "id": "sameersbn/docker-memcached",
+      "sourceOrg": "sameersbn",
+      "name": "docker-memcached",
+      "url": "https://github.com/sameersbn/docker-memcached",
+      "stars": 28,
+      "sourceCategory": "Ephemeral Object Cache",
+      "description": "Dockerfile to build a memcached container image which can be linked to other containers.",
+      "disposition": "modernized-stack",
+      "targetImage": "ghcr.io/awesome-os/holo-valkey:latest",
+      "upstreamBase": "valkey/valkey:8-alpine",
+      "dockerfile": "stacks/holo-valkey/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "legacy-redis-memcached-init"
+      ],
+      "rationale": "Replaced legacy Redis / Memcached cache containers with valkey/valkey:8-alpine + holo-pm."
+    },
+    {
+      "id": "sameersbn/docker-mongodb",
+      "sourceOrg": "sameersbn",
+      "name": "docker-mongodb",
+      "url": "https://github.com/sameersbn/docker-mongodb",
+      "stars": 48,
+      "sourceCategory": "Document Store",
+      "description": "Dockerfile to build a MongoDb container image which can be linked to other containers.",
+      "disposition": "modernized-stack",
+      "targetImage": "ghcr.io/awesome-os/holo-mongodb:latest",
+      "upstreamBase": "mongo:8",
+      "dockerfile": "stacks/holo-mongodb/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "legacy-link-scripts",
+        "supervisord"
+      ],
+      "rationale": "Replaced legacy MongoDB linked containers with official multi-arch mongo:8 + holo-pm."
+    },
+    {
+      "id": "sameersbn/docker-mysql",
+      "sourceOrg": "sameersbn",
+      "name": "docker-mysql",
+      "url": "https://github.com/sameersbn/docker-mysql",
+      "stars": 246,
+      "sourceCategory": "Relational Database",
+      "description": "A Dockerfile that installs a mysql server",
+      "disposition": "modernized-stack",
+      "targetImage": "ghcr.io/awesome-os/holo-mariadb:latest",
+      "upstreamBase": "mariadb:11",
+      "dockerfile": "stacks/holo-mariadb/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "legacy-mysql-5.7-galera-scripts"
+      ],
+      "rationale": "Replaced legacy MySQL 5.7 / Galera images with official multi-arch mariadb:11 + holo-pm."
+    },
+    {
+      "id": "sameersbn/docker-nextcloud",
+      "sourceOrg": "sameersbn",
+      "name": "docker-nextcloud",
+      "url": "https://github.com/sameersbn/docker-nextcloud",
+      "stars": 31,
+      "sourceCategory": "Sovereign Storage",
+      "description": "",
+      "disposition": "superseded-by-awesome-os",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "fuse-supervisord-boilerplate"
+      ],
+      "rationale": "Superseded by Holo v11 CAS sovereign object storage on t2linux."
+    },
+    {
+      "id": "sameersbn/docker-nginx",
+      "sourceOrg": "sameersbn",
+      "name": "docker-nginx",
+      "url": "https://github.com/sameersbn/docker-nginx",
+      "stars": 73,
+      "sourceCategory": "Web & RTMP Reverse Proxy",
+      "description": "A Dockerfile that installs nginx (from source) with nginx-rtmp module support (php5 support can be added using the sameersbn/php5-fpm image)",
+      "disposition": "modernized-stack",
+      "targetImage": "ghcr.io/awesome-os/holo-nginx:latest",
+      "upstreamBase": "nginx:alpine",
+      "dockerfile": "stacks/holo-nginx/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "legacy-source-nginx-build"
+      ],
+      "rationale": "Replaced legacy Nginx / PageSpeed / RTMP wrappers with official multi-arch nginx:alpine + holo-pm."
+    },
+    {
+      "id": "sameersbn/docker-nodejs",
+      "sourceOrg": "sameersbn",
+      "name": "docker-nodejs",
+      "url": "https://github.com/sameersbn/docker-nodejs",
+      "stars": 7,
+      "sourceCategory": "Node.js Runtime",
+      "description": "Dockerfile to build a nodejs+express image with nodemon",
+      "disposition": "consolidated-into-base",
+      "targetImage": "ghcr.io/awesome-os/holo-node:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "holo-node/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "nvm-nave-pm2-process-manager",
+        "debian-bloat"
+      ],
+      "rationale": "Consolidated legacy Node.js / process-manager image into FROM scratch ghcr.io/awesome-os/holo-node:latest (Node v27)."
+    },
+    {
+      "id": "sameersbn/docker-openfire",
+      "sourceOrg": "sameersbn",
+      "name": "docker-openfire",
+      "url": "https://github.com/sameersbn/docker-openfire",
+      "stars": 82,
+      "sourceCategory": "Real-Time Messaging",
+      "description": "Dockerfile to create a Docker container image for Openfire.",
+      "disposition": "archived-obsolete",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "systemd-in-container",
+        "upstart"
+      ],
+      "rationale": "Archived obsolete 2014-2019 single-purpose container with zero boilerplate; pointer set to FROM scratch t2linux."
+    },
+    {
+      "id": "sameersbn/docker-php-fpm",
+      "sourceOrg": "sameersbn",
+      "name": "docker-php-fpm",
+      "url": "https://github.com/sameersbn/docker-php-fpm",
+      "stars": 8,
+      "sourceCategory": "PHP Runtime",
+      "description": "Dockerfile to build a php-fpm container.",
+      "disposition": "consolidated-into-base",
+      "targetImage": "ghcr.io/awesome-os/holo-php:latest",
+      "upstreamBase": "php:8.6-cli-alpine",
+      "dockerfile": "holo-php/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "php5-all-in-one-lamp-boilerplate"
+      ],
+      "rationale": "Consolidated legacy PHP / LAMP / CMS runtime onto ghcr.io/awesome-os/holo-php:latest (php:8.6-cli-alpine)."
+    },
+    {
+      "id": "sameersbn/docker-postgresql",
+      "sourceOrg": "sameersbn",
+      "name": "docker-postgresql",
+      "url": "https://github.com/sameersbn/docker-postgresql",
+      "stars": 1088,
+      "sourceCategory": "Database Substrate",
+      "description": "Dockerfile to build a PostgreSQL container image which can be linked to other containers.",
+      "disposition": "modernized-stack",
+      "targetImage": "ghcr.io/awesome-os/holo-postgres:latest",
+      "upstreamBase": "postgres:17-alpine",
+      "dockerfile": "stacks/holo-postgres/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-baseimage",
+        "runit",
+        "manual-pg-entrypoint"
+      ],
+      "rationale": "Replaced legacy sameersbn PostgreSQL container with official postgres:17-alpine + holo-pm."
+    },
+    {
+      "id": "sameersbn/docker-redis",
+      "sourceOrg": "sameersbn",
+      "name": "docker-redis",
+      "url": "https://github.com/sameersbn/docker-redis",
+      "stars": 155,
+      "sourceCategory": "In-Memory Cache",
+      "description": "Dockerfile to create a Docker container image for Redis.",
+      "disposition": "modernized-stack",
+      "targetImage": "ghcr.io/awesome-os/holo-valkey:latest",
+      "upstreamBase": "valkey/valkey:8-alpine",
+      "dockerfile": "stacks/holo-valkey/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "legacy-redis-memcached-init"
+      ],
+      "rationale": "Replaced legacy Redis / Memcached cache containers with valkey/valkey:8-alpine + holo-pm."
+    },
+    {
+      "id": "sameersbn/docker-redmine",
+      "sourceOrg": "sameersbn",
+      "name": "docker-redmine",
+      "url": "https://github.com/sameersbn/docker-redmine",
+      "stars": 1333,
+      "sourceCategory": "Project & Issue Tracking",
+      "description": "Docker Image for Redmine",
+      "disposition": "modernized-stack",
+      "targetImage": "ghcr.io/awesome-os/holo-redmine:latest",
+      "upstreamBase": "redmine:6-alpine",
+      "dockerfile": "stacks/holo-redmine/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-baseimage",
+        "supervisord",
+        "runit",
+        "legacy-ruby-bundler-scripts"
+      ],
+      "rationale": "Replaced legacy Redmine container with official redmine:6-alpine + holo-pm."
+    },
+    {
+      "id": "sameersbn/docker-squid",
+      "sourceOrg": "sameersbn",
+      "name": "docker-squid",
+      "url": "https://github.com/sameersbn/docker-squid",
+      "stars": 853,
+      "sourceCategory": "Proxy & Caching Gateway",
+      "description": "Dockerfile to create a Docker container image for Squid proxy server",
+      "disposition": "modernized-stack",
+      "targetImage": "ghcr.io/awesome-os/holo-squid:latest",
+      "upstreamBase": "alpine:3.21",
+      "dockerfile": "stacks/holo-squid/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "multi-daemon-gateway-init"
+      ],
+      "rationale": "Replaced legacy Squid & multi-daemon gateway with minimal alpine:3.21 Squid + holo-pm."
+    },
+    {
+      "id": "sameersbn/docker-ubuntu",
+      "sourceOrg": "sameersbn",
+      "name": "docker-ubuntu",
+      "url": "https://github.com/sameersbn/docker-ubuntu",
+      "stars": 32,
+      "sourceCategory": "Base OS Image",
+      "description": "My Ubuntu boilerplate image that forms the base for my docker containers.",
+      "disposition": "consolidated-into-base",
+      "targetImage": "ghcr.io/awesome-os/t2linux:latest",
+      "upstreamBase": "FROM scratch",
+      "dockerfile": "t2linux/Dockerfile",
+      "eliminatedBoilerplate": [
+        "ubuntu-14.04",
+        "supervisord",
+        "runit",
+        "s6",
+        "upstart",
+        "systemd-in-container"
+      ],
+      "rationale": "Consolidated legacy OS rootfs / init-system / container-tooling image into FROM scratch ghcr.io/awesome-os/t2linux:latest."
+    }
+  ]
+}

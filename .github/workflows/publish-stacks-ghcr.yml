@@ -1,0 +1,161 @@
+name: Build, Smoke-Test & Publish 16 Modernized Stacks to GHCR
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'stacks/**'
+      - '.github/workflows/publish-stacks-ghcr.yml'
+  schedule:
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build-and-publish-stacks:
+    name: ${{ matrix.stack }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      max-parallel: 6
+      matrix:
+        stack:
+          - holo-nginx
+          - holo-haproxy
+          - holo-varnish
+          - holo-httpd
+          - holo-postgres
+          - holo-mariadb
+          - holo-valkey
+          - holo-mongodb
+          - holo-solr
+          - holo-go
+          - holo-deno
+          - holo-git
+          - holo-wordpress
+          - holo-ghost
+          - holo-redmine
+          - holo-squid
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build linux/amd64 smoke image
+        uses: docker/build-push-action@v6
+        with:
+          context: stacks/${{ matrix.stack }}
+          file: stacks/${{ matrix.stack }}/Dockerfile
+          platforms: linux/amd64
+          load: true
+          push: false
+          tags: ghcr.io/awesome-os/${{ matrix.stack }}:smoke
+
+      - name: Smoke-test linux/amd64 stack container
+        run: |
+          IMAGE="ghcr.io/awesome-os/${{ matrix.stack }}:smoke"
+          SIZE="$(docker images --format '{{.Size}}' "${IMAGE}" | head -n 1)"
+          echo "=== IMAGE SIZE (linux/amd64): ${IMAGE} -> ${SIZE} ==="
+
+          docker run --rm --entrypoint sh "${IMAGE}" -c '
+            set -eu
+            test -x /bin/holo-pm
+            test -d /var/lib/b8g/cas/v11
+            test "$B8G_CAS_DIR" = "/var/lib/b8g/cas"
+            test "$B8G_CAS_V11_ROOT" = "/var/lib/b8g/cas/v11"
+            echo "[smoke] holo-pm & CAS env OK (B8G_CAS_V11_ROOT=$B8G_CAS_V11_ROOT)"
+          '
+
+          case "${{ matrix.stack }}" in
+            holo-nginx)
+              docker run --rm --entrypoint sh "${IMAGE}" -c 'set -eu; nginx -v 2>&1'
+              ;;
+            holo-haproxy)
+              docker run --rm --entrypoint sh "${IMAGE}" -c 'set -eu; haproxy -v | head -n 2'
+              ;;
+            holo-varnish)
+              docker run --rm --entrypoint sh "${IMAGE}" -c 'set -eu; varnishd -V 2>&1 | head -n 2'
+              ;;
+            holo-httpd)
+              docker run --rm --entrypoint sh "${IMAGE}" -c 'set -eu; httpd -v'
+              ;;
+            holo-postgres)
+              docker run --rm --entrypoint sh "${IMAGE}" -c 'set -eu; postgres --version'
+              ;;
+            holo-mariadb)
+              docker run --rm --entrypoint sh "${IMAGE}" -c 'set -eu; mariadbd --version'
+              ;;
+            holo-valkey)
+              docker run --rm --entrypoint sh "${IMAGE}" -c 'set -eu; valkey-server --version'
+              ;;
+            holo-mongodb)
+              docker run --rm --entrypoint sh "${IMAGE}" -c 'set -eu; mongod --version | head -n 3'
+              ;;
+            holo-solr)
+              docker run --rm --entrypoint sh "${IMAGE}" -c 'set -eu; solr version'
+              ;;
+            holo-go)
+              docker run --rm --entrypoint sh "${IMAGE}" -c 'set -eu; go version'
+              ;;
+            holo-deno)
+              docker run --rm --entrypoint sh "${IMAGE}" -c 'set -eu; deno --version'
+              ;;
+            holo-git)
+              docker run --rm --entrypoint sh "${IMAGE}" -c 'set -eu; git --version'
+              ;;
+            holo-wordpress)
+              docker run --rm --entrypoint sh "${IMAGE}" -c 'set -eu; php -v | head -n 1 && php-fpm -v | head -n 1'
+              ;;
+            holo-ghost)
+              docker run --rm --entrypoint sh "${IMAGE}" -c 'set -eu; node -v && test -d /var/lib/ghost'
+              ;;
+            holo-redmine)
+              docker run --rm --entrypoint sh "${IMAGE}" -c 'set -eu; ruby -v && bundle --version'
+              ;;
+            holo-squid)
+              docker run --rm --entrypoint sh "${IMAGE}" -c 'set -eu; squid -v | head -n 2'
+              ;;
+            *)
+              echo "Unknown stack: ${{ matrix.stack }}" >&2
+              exit 1
+              ;;
+          esac
+          echo "[smoke] ${{ matrix.stack }} OK"
+
+      - name: Build & push multi-arch OCI manifest (linux/amd64, linux/arm64)
+        uses: docker/build-push-action@v6
+        with:
+          context: stacks/${{ matrix.stack }}
+          file: stacks/${{ matrix.stack }}/Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: true
+          provenance: false
+          tags: ghcr.io/awesome-os/${{ matrix.stack }}:latest
+
+      - name: Verify published multi-arch OCI manifest list
+        run: |
+          IMAGE="ghcr.io/awesome-os/${{ matrix.stack }}:latest"
+          RAW="$(docker buildx imagetools inspect --raw "${IMAGE}")"
+          echo "=== OCI MANIFEST LIST: ${IMAGE} ==="
+          docker buildx imagetools inspect "${IMAGE}"
+          printf '%s' "${RAW}" | jq -e '
+            (.manifests | map(.platform.os + "/" + .platform.architecture)) as $p |
+            ($p | index("linux/amd64") != null) and ($p | index("linux/arm64") != null)
+          '
+          echo "[verify] ${IMAGE} confirmed linux/amd64 + linux/arm64"

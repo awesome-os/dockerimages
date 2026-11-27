@@ -4,7 +4,8 @@
   "kind": "control-plane",
   "tests": [
     "node -e \"const fs=require('node:fs'); for(const d of ['t2linux','holo-node','holo-py','holo-cpp','holo-jvm','holo-php','holo-ruby','holo-e2e-runner','holo-e2e-lite']){ if(!fs.existsSync(d+'/Dockerfile')) process.exit(1); } if(!fs.existsSync('holo-e2e-runner/holo-e2e-probe.mjs')) process.exit(1); if(!fs.existsSync('holo-e2e-lite/holo-e2e-probe.mjs')) process.exit(1);\"",
-    "node --test catalog/oci-catalog.test.mts"
+    "node --test catalog/oci-catalog.test.mts",
+    "node --test catalog/modernize-catalog.test.mts"
   ],
   "docs": [
     "README.md",

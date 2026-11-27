@@ -3,16 +3,19 @@
   "plane": 2,
   "publicEntrypoints": [
     "catalog/oci-catalog.json",
+    "catalog/modernized-stacks.json",
     "holo-e2e-runner/holo-e2e-probe.mjs",
     "holo-e2e-lite/holo-e2e-probe.mjs"
   ],
   "includePaths": [
     "catalog",
+    "stacks",
     "holo-e2e-lite",
     "holo-e2e-runner"
   ],
   "abiGoldenFiles": [
-    "catalog/oci-catalog.json"
+    "catalog/oci-catalog.json",
+    "catalog/modernized-stacks.json"
   ],
   "forbiddenImports": [
     "intersections/sectium-browser",
