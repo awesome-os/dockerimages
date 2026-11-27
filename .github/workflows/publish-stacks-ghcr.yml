@@ -58,7 +58,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build linux/amd64 smoke image
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: stacks/${{ matrix.stack }}
           file: stacks/${{ matrix.stack }}/Dockerfile
@@ -139,7 +139,7 @@ jobs:
           echo "[smoke] ${{ matrix.stack }} OK"
 
       - name: Build & push multi-arch OCI manifest (linux/amd64, linux/arm64)
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: stacks/${{ matrix.stack }}
           file: stacks/${{ matrix.stack }}/Dockerfile

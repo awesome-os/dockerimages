@@ -48,7 +48,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build linux/amd64 image for smoke test
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: ${{ matrix.image }}
           file: ${{ matrix.image }}/Dockerfile
@@ -177,7 +177,7 @@ jobs:
 
       - name: Build linux/arm64 holo-node image for QEMU smoke test
         if: matrix.image == 'holo-node'
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: holo-node
           file: holo-node/Dockerfile
@@ -238,7 +238,7 @@ jobs:
             --clobber
 
       - name: Build & push multi-arch OCI manifest (linux/amd64, linux/arm64)
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: ${{ matrix.image }}
           file: ${{ matrix.image }}/Dockerfile
