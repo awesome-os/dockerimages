@@ -1,6 +1,6 @@
 # Awesome-OS Docker Images (`ghcr.io/awesome-os/*`)
 
-Ultra-slim `FROM scratch` and Holo v11 (`holo-pm`) OCI container images built and published daily to **GitHub Container Registry (`ghcr.io/awesome-os/*`)** and public GitHub Release **`v11-oci-latest`** (`holo-e2e-runner-linux-amd64.oci.tar.gz`, `holo-e2e-lite-linux-amd64.oci.tar.gz`) with shared Content-Addressable Store (CAS) volume support, alongside the unified [`CATALOG.md`](CATALOG.md) & [`catalog/oci-catalog.json`](catalog/oci-catalog.json) inventory covering `awesome-os`, sister org [`github.com/dockerimages`](https://github.com/dockerimages) (`138` repos), and [`sameersbn`](https://github.com/sameersbn) successor mappings.
+Ultra-slim `FROM scratch` and Holo v11 (`holo-pm`) OCI container images built and published daily to **GitHub Container Registry (`ghcr.io/awesome-os/*`)** and anonymous public GitHub Release **`v11-oci-latest`** (all 9 base images as `<name>-linux-amd64.oci.tar.gz` + `SHA512SUMS-<name>.txt`) with shared Content-Addressable Store (CAS) volume support, alongside the unified [`CATALOG.md`](CATALOG.md) & [`catalog/oci-catalog.json`](catalog/oci-catalog.json) inventory covering `awesome-os`, sister org [`github.com/dockerimages`](https://github.com/dockerimages) (`138` repos), and [`sameersbn`](https://github.com/sameersbn) successor mappings.
 
 ## Published Images
 
@@ -20,12 +20,19 @@ All images verify `/bin/holo-pm` (and `libholo-pm.so` / `libholo_pm.h`) bit-for-
 
 ---
 
-## Public Sovereign OCI Tarballs (`v11-oci-latest`)
+## Public Sovereign OCI Tarballs (`v11-oci-latest`) & Anonymous GHCR Pulls
 
-For zero-GHCR-auth clean-box `Holo-E2E` execution, [`.github/workflows/publish-ghcr.yml`](.github/workflows/publish-ghcr.yml) also exports and uploads SHA-512 verified `holo-e2e-runner` and `holo-e2e-lite` OCI bundles to GitHub Release [`v11-oci-latest`](https://github.com/awesome-os/dockerimages/releases/tag/v11-oci-latest):
+For zero-GHCR-auth clean-box execution, [`.github/workflows/publish-ghcr.yml`](.github/workflows/publish-ghcr.yml) exports and uploads SHA-512 verified `<name>-linux-amd64.oci.tar.gz` + `SHA512SUMS-<name>.txt` bundles for **all 9 base images** (`t2linux`, `holo-node`, `holo-py`, `holo-cpp`, `holo-jvm`, `holo-php`, `holo-ruby`, `holo-e2e-runner`, `holo-e2e-lite`) to GitHub Release [`v11-oci-latest`](https://github.com/awesome-os/dockerimages/releases/tag/v11-oci-latest).
 
-- `holo-e2e-runner-linux-amd64.oci.tar.gz` + `SHA512SUMS-holo-e2e-runner.txt` (`gcc` + `g++` + Mesa Lavapipe Vulkan)
-- `holo-e2e-lite-linux-amd64.oci.tar.gz` + `SHA512SUMS-holo-e2e-lite.txt` (lightweight headless Node + `git` + `holo-pm`)
+### Anonymous Public `v11-oci-latest` Tarball Consumption (Zero Auth)
+
+Stream directly into `docker load` without a GitHub token:
+
+```sh
+curl -fsSL https://github.com/awesome-os/dockerimages/releases/download/v11-oci-latest/holo-node-linux-amd64.oci.tar.gz | gunzip | docker load
+```
+
+Or download and verify SHA-512 checksums explicitly before loading:
 
 ```sh
 curl -fsSLO https://github.com/awesome-os/dockerimages/releases/download/v11-oci-latest/holo-e2e-lite-linux-amd64.oci.tar.gz
@@ -33,6 +40,19 @@ curl -fsSLO https://github.com/awesome-os/dockerimages/releases/download/v11-oci
 sha512sum -c SHA512SUMS-holo-e2e-lite.txt
 docker load -i holo-e2e-lite-linux-amd64.oci.tar.gz
 ```
+
+Verify anonymous HTTP 200 reachability across all 9 release checksums:
+
+```sh
+node catalog/oci-smoke.mts --mode verify-anonymous-release --tag v11-oci-latest
+```
+
+### Optional Org Admin Step for Public `ghcr.io/awesome-os/*` Pulls
+
+To allow unauthenticated `docker pull ghcr.io/awesome-os/<image>:latest` directly from GHCR, a GitHub organization admin sets default package creation visibility to **Public** under:
+
+1. [`https://github.com/organizations/awesome-os/settings/packages`](https://github.com/organizations/awesome-os/settings/packages)
+2. **Package creation** -> select **Public** -> Save (and mark existing packages Public in package settings if previously created private).
 
 ---
 
@@ -165,7 +185,7 @@ Mount a single host CAS directory across all containers (`-v ~/.b8g/cas:/var/lib
 
 ## Automated Daily Publishing & `holo-ci@v1`
 
-- [`.github/workflows/publish-ghcr.yml`](.github/workflows/publish-ghcr.yml) rebuilds, smoke-tests (including `holo-node` on both `linux/amd64` and `linux/arm64` under QEMU), reports image sizes, publishes all 9 multi-arch (`linux/amd64`, `linux/arm64`) images to `ghcr.io/awesome-os/*:latest`, and uploads the public `holo-e2e-runner-linux-amd64.oci.tar.gz` and `holo-e2e-lite-linux-amd64.oci.tar.gz` bundles + `SHA512SUMS-*.txt` to release `v11-oci-latest` on every push to `main`, daily at `05:00 UTC`, and on manual `workflow_dispatch`.
+- [`.github/workflows/publish-ghcr.yml`](.github/workflows/publish-ghcr.yml) rebuilds, smoke-tests (including `holo-node` on both `linux/amd64` and `linux/arm64` under QEMU), reports image sizes, exports and uploads `<name>-linux-amd64.oci.tar.gz` + `SHA512SUMS-<name>.txt` for all 9 base images to anonymous public release `v11-oci-latest`, and publishes all 9 multi-arch (`linux/amd64`, `linux/arm64`) images to `ghcr.io/awesome-os/*:latest` on every push to `main`, daily at `05:00 UTC`, and on manual `workflow_dispatch`.
 - [`.github/workflows/holo-ci.yml`](.github/workflows/holo-ci.yml) runs `holo-ci@v1` (`awesome-os/maintenance-workflows/.github/workflows/reusable-holo-ci.yml@v1`) against [`holo-ci.json`](holo-ci.json) (`zeroGhost`, `zeroCasV1`, `spdxLicense`, `gitattributes`, `codeowners`, Dockerfile presence, `catalog/oci-catalog.test.mts`, and doc integrity).
 
 ## License

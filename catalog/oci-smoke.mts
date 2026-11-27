@@ -289,6 +289,94 @@ async function computeFileSha512(filePath: string): Promise<string> {
   return hash.digest('hex');
 }
 
+export interface TarballMetadata {
+  readonly name: string;
+  readonly tag: string;
+  readonly repo: string;
+  readonly tarName: string;
+  readonly sumName: string;
+  readonly tarUrl: string;
+  readonly sumUrl: string;
+}
+
+export interface AnonymousReleaseCheckResult {
+  readonly name: string;
+  readonly tag: string;
+  readonly repo: string;
+  readonly sumUrl: string;
+  readonly status: number;
+  readonly ok: boolean;
+}
+
+export function resolveReleaseAssetUrl(
+  repo: string,
+  tag: string,
+  assetName: string,
+): string {
+  const cleanRepo = repo.trim().replace(/^\/+|\/+$/g, '');
+  const cleanTag = tag.trim();
+  const cleanAsset = assetName.trim();
+  if (!cleanRepo || !cleanTag || !cleanAsset) {
+    throw new Error('repo, tag, and assetName must be non-empty');
+  }
+  return `https://github.com/${cleanRepo}/releases/download/${encodeURIComponent(cleanTag)}/${encodeURIComponent(cleanAsset)}`;
+}
+
+export function exportTarballMetadata(
+  name: string,
+  tag = 'v11-oci-latest',
+  repo = 'awesome-os/dockerimages',
+): TarballMetadata {
+  const cleanName = name.trim();
+  if (!cleanName || !/^[a-z0-9][a-z0-9._-]*$/i.test(cleanName)) {
+    throw new Error(`Invalid image name for tarball metadata: ${name}`);
+  }
+  const tarName = `${cleanName}-linux-amd64.oci.tar.gz`;
+  const sumName = `SHA512SUMS-${cleanName}.txt`;
+  return {
+    name: cleanName,
+    tag: tag.trim(),
+    repo: repo.trim(),
+    tarName,
+    sumName,
+    tarUrl: resolveReleaseAssetUrl(repo, tag, tarName),
+    sumUrl: resolveReleaseAssetUrl(repo, tag, sumName),
+  };
+}
+
+export async function verifyAnonymousReleaseAsset(
+  options: {
+    readonly name: string;
+    readonly tag?: string;
+    readonly repo?: string;
+  },
+  fetchFn: typeof fetch = fetch,
+): Promise<AnonymousReleaseCheckResult> {
+  const meta = exportTarballMetadata(
+    options.name,
+    options.tag || 'v11-oci-latest',
+    options.repo || 'awesome-os/dockerimages',
+  );
+  // Explicitly issue an unauthenticated GET without Authorization headers.
+  const res = await fetchFn(meta.sumUrl, {
+    method: 'GET',
+    redirect: 'follow',
+  });
+  if (res.status !== 200) {
+    throw new Error(
+      `Anonymous release check failed for ${meta.sumUrl}: expected HTTP 200, got ${res.status}`,
+    );
+  }
+  return {
+    name: meta.name,
+    tag: meta.tag,
+    repo: meta.repo,
+    sumUrl: meta.sumUrl,
+    status: res.status,
+    ok: true,
+  };
+}
+
 async function runExportE2eTarball(
   name: string,
   tag: string,
@@ -296,8 +384,7 @@ async function runExportE2eTarball(
 ): Promise<void> {
   const smokeRef = `ghcr.io/awesome-os/${name}:smoke`;
   const latestRef = `ghcr.io/awesome-os/${name}:latest`;
-  const tarName = `${name}-linux-amd64.oci.tar.gz`;
-  const sumName = `SHA512SUMS-${name}.txt`;
+  const { tarName, sumName } = exportTarballMetadata(name, tag, repo);
   const workDir = tmpdir();
   const tarPath = join(workDir, tarName);
   const sumPath = join(workDir, sumName);
@@ -418,8 +505,18 @@ async function main(): Promise<void> {
     );
     return;
   }
+  if (mode === 'verify-anonymous-release') {
+    const tag = args.tag || 'v11-oci-latest';
+    const repo = args.repo || 'awesome-os/dockerimages';
+    const targets = args.name && args.name !== 'all' ? [args.name] : listBaseImages();
+    for (const target of targets) {
+      const result = await verifyAnonymousReleaseAsset({ name: target, tag, repo });
+      console.log(`[verify-anonymous-release] HTTP ${result.status} ${result.sumUrl}`);
+    }
+    return;
+  }
   throw new Error(
-    `Invalid or missing --mode (${mode ?? 'none'}); expected base|stack|verify-manifest|export-e2e`,
+    `Invalid or missing --mode (${mode ?? 'none'}); expected base|stack|verify-manifest|export-e2e|verify-anonymous-release`,
   );
 }
 

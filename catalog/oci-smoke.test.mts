@@ -5,10 +5,13 @@ import test from 'node:test';
 import { fileURLToPath } from 'node:url';
 import {
   buildDockerRunArgs,
+  exportTarballMetadata,
   getBaseSmokeSpec,
   getStackSmokeSpec,
   listBaseImages,
   listStackImages,
+  resolveReleaseAssetUrl,
+  verifyAnonymousReleaseAsset,
   verifyManifestPlatforms,
 } from './oci-smoke.mts';
 
@@ -151,4 +154,55 @@ test('verifyManifestPlatforms validates linux/amd64 and linux/arm64', () => {
     manifests: [{ platform: { os: 'linux', architecture: 'amd64' } }],
   });
   assert.throws(() => verifyManifestPlatforms(missingArm64), /linux\/arm64/);
+});
+
+test('exportTarballMetadata and resolveReleaseAssetUrl build canonical v11-oci-latest URLs', () => {
+  assert.equal(
+    resolveReleaseAssetUrl('awesome-os/dockerimages', 'v11-oci-latest', 'SHA512SUMS-holo-node.txt'),
+    'https://github.com/awesome-os/dockerimages/releases/download/v11-oci-latest/SHA512SUMS-holo-node.txt',
+  );
+  assert.throws(() => resolveReleaseAssetUrl('', 'v11-oci-latest', 'a'), /non-empty/);
+
+  for (const name of listBaseImages()) {
+    const meta = exportTarballMetadata(name);
+    assert.equal(meta.name, name);
+    assert.equal(meta.tag, 'v11-oci-latest');
+    assert.equal(meta.repo, 'awesome-os/dockerimages');
+    assert.equal(meta.tarName, `${name}-linux-amd64.oci.tar.gz`);
+    assert.equal(meta.sumName, `SHA512SUMS-${name}.txt`);
+    assert.equal(
+      meta.tarUrl,
+      `https://github.com/awesome-os/dockerimages/releases/download/v11-oci-latest/${name}-linux-amd64.oci.tar.gz`,
+    );
+    assert.equal(
+      meta.sumUrl,
+      `https://github.com/awesome-os/dockerimages/releases/download/v11-oci-latest/SHA512SUMS-${name}.txt`,
+    );
+  }
+  assert.throws(() => exportTarballMetadata('../bad'), /Invalid image name/);
+});
+
+test('verifyAnonymousReleaseAsset checks HTTP 200 without auth headers', async () => {
+  const seenCalls: Array<{ url: string; init?: RequestInit }> = [];
+  const okFetch: typeof fetch = async (input, init) => {
+    seenCalls.push({ url: String(input), init });
+    return new Response('deadbeef  holo-node-linux-amd64.oci.tar.gz\n', { status: 200 });
+  };
+
+  const res = await verifyAnonymousReleaseAsset({ name: 'holo-node' }, okFetch);
+  assert.equal(res.ok, true);
+  assert.equal(res.status, 200);
+  assert.equal(
+    res.sumUrl,
+    'https://github.com/awesome-os/dockerimages/releases/download/v11-oci-latest/SHA512SUMS-holo-node.txt',
+  );
+  assert.equal(seenCalls.length, 1);
+  assert.equal(seenCalls[0].init?.method, 'GET');
+  assert.equal(seenCalls[0].init?.headers, undefined);
+
+  const failFetch: typeof fetch = async () => new Response('Not Found', { status: 404 });
+  await assert.rejects(
+    () => verifyAnonymousReleaseAsset({ name: 't2linux' }, failFetch),
+    /expected HTTP 200, got 404/,
+  );
 });

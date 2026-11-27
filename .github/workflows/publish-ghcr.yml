@@ -60,7 +60,6 @@ jobs:
         if: matrix.image == 'holo-node'
         run: node catalog/oci-smoke.mts --mode base --name holo-node --image ghcr.io/awesome-os/holo-node:smoke-arm64 --platform linux/arm64
       - name: Export and publish E2E OCI tarball (v11-oci-latest)
-        if: matrix.image == 'holo-e2e-runner' || matrix.image == 'holo-e2e-lite'
         env:
           IMAGE_NAME: ${{ matrix.image }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

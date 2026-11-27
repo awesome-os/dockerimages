@@ -15,6 +15,7 @@
   "guards": {
     "zeroGhost": true,
     "zeroCasV1": true,
+    "noWorkflowBloat": true,
     "spdxLicense": true,
     "gitattributes": true,
     "codeowners": true
