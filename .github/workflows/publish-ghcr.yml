@@ -19,35 +19,20 @@ jobs:
       fail-fast: false
       max-parallel: 2
       matrix:
-        image:
-          - t2linux
-          - holo-node
-          - holo-py
-          - holo-cpp
-          - holo-jvm
-          - holo-php
-          - holo-ruby
-          - holo-e2e-runner
-          - holo-e2e-lite
-
+        image: [t2linux, holo-node, holo-py, holo-cpp, holo-jvm, holo-php, holo-ruby, holo-e2e-runner, holo-e2e-lite]
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v7
-
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v4
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v4
-
-      - name: Log in to GitHub Container Registry
-        uses: docker/login-action@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+      - uses: docker/setup-qemu-action@v4
+      - uses: docker/setup-buildx-action@v4
+      - uses: docker/login-action@v4
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Build linux/amd64 image for smoke test
+      - name: Build linux/amd64 smoke image
         uses: docker/build-push-action@v7
         with:
           context: ${{ matrix.image }}
@@ -56,126 +41,12 @@ jobs:
           load: true
           push: false
           tags: ghcr.io/awesome-os/${{ matrix.image }}:smoke
-
-      - name: Smoke-test linux/amd64 container and print image size
-        run: |
-          IMAGE="ghcr.io/awesome-os/${{ matrix.image }}:smoke"
-          SIZE="$(docker images --format '{{.Size}}' "${IMAGE}" | head -n 1)"
-          echo "=== IMAGE SIZE (linux/amd64): ${IMAGE} -> ${SIZE} ==="
-          case "${{ matrix.image }}" in
-            t2linux)
-              docker run --rm "${IMAGE}" -c '
-                set -eu
-                cat /etc/t2linux-release
-                /bin/coreutils --version | head -n 1
-                ls -la /bin/busybox /bin/sh /bin/coreutils /bin/holo-pm /etc/ssl/certs/ca-certificates.crt
-                test -x /bin/busybox
-                test -x /bin/coreutils
-                test -x /bin/holo-pm
-                test -s /etc/ssl/certs/ca-certificates.crt
-                test "$B8G_CAS_DIR" = "/var/lib/b8g/cas"
-                test "$B8G_CAS_V11_ROOT" = "/var/lib/b8g/cas/v11"
-                echo "[smoke] t2linux OK (B8G_CAS_V11_ROOT=$B8G_CAS_V11_ROOT)"
-              '
-              ;;
-            holo-node)
-              docker run --rm "${IMAGE}" sh -c '
-                set -eu
-                NODE_V="$(node -v)"
-                echo "amd64 node -v -> ${NODE_V}"
-                case "${NODE_V}" in
-                  v27.*) ;;
-                  *) echo "ERROR: expected Node v27.x on linux/amd64, got ${NODE_V}" >&2; exit 1 ;;
-                esac
-                /bin/coreutils --version | head -n 1
-                ls -la /bin/busybox /bin/coreutils /bin/holo-pm /usr/local/bin/holo-node-launcher /etc/ssl/certs/ca-certificates.crt
-                test -x /bin/coreutils
-                test -x /bin/holo-pm
-                test -x /usr/local/bin/holo-node-launcher
-                test "$B8G_CAS_DIR" = "/var/lib/b8g/cas"
-                test "$B8G_CAS_V11_ROOT" = "/var/lib/b8g/cas/v11"
-                echo "[smoke] holo-node linux/amd64 OK (${NODE_V})"
-              '
-              ;;
-            holo-py)
-              docker run --rm "${IMAGE}" sh -c '
-                set -eu
-                python3 --version
-                ls -la /bin/busybox /bin/holo-pm /etc/ssl/certs/ca-certificates.crt
-                test -x /bin/holo-pm
-                test "$B8G_CAS_DIR" = "/var/lib/b8g/cas"
-                test "$B8G_CAS_V11_ROOT" = "/var/lib/b8g/cas/v11"
-                echo "[smoke] holo-py OK"
-              '
-              ;;
-            holo-cpp)
-              docker run --rm "${IMAGE}" sh -c '
-                set -eu
-                ls -la /bin/busybox /bin/holo-pm /usr/local/include/libholo_pm.h /usr/local/lib/libholo-pm.so /usr/include/stdio.h /etc/ssl/certs/ca-certificates.crt
-                test -x /bin/holo-pm
-                test "$B8G_CAS_DIR" = "/var/lib/b8g/cas"
-                test "$B8G_CAS_V11_ROOT" = "/var/lib/b8g/cas/v11"
-                echo "[smoke] holo-cpp OK"
-              '
-              ;;
-            holo-jvm)
-              docker run --rm "${IMAGE}" sh -c '
-                set -eu
-                java -version
-                ls -la /bin/busybox /bin/holo-pm /etc/ssl/certs/ca-certificates.crt
-                test -x /bin/holo-pm
-                test "$B8G_CAS_DIR" = "/var/lib/b8g/cas"
-                test "$B8G_CAS_V11_ROOT" = "/var/lib/b8g/cas/v11"
-                echo "[smoke] holo-jvm OK"
-              '
-              ;;
-            holo-php)
-              docker run --rm "${IMAGE}" sh -c '
-                set -eu
-                php -v
-                composer --version
-                ls -la /bin/busybox /bin/holo-pm /usr/local/bin/composer /etc/ssl/certs/ca-certificates.crt
-                test -x /bin/holo-pm
-                test "$B8G_CAS_DIR" = "/var/lib/b8g/cas"
-                test "$B8G_CAS_V11_ROOT" = "/var/lib/b8g/cas/v11"
-                test "$COMPOSER_CACHE_DIR" = "/var/lib/b8g/cas/v11/composer"
-                echo "[smoke] holo-php OK"
-              '
-              ;;
-            holo-ruby)
-              docker run --rm "${IMAGE}" sh -c '
-                set -eu
-                ruby -v
-                bundle --version
-                ls -la /bin/busybox /bin/holo-pm /etc/ssl/certs/ca-certificates.crt
-                test -x /bin/holo-pm
-                test "$B8G_CAS_DIR" = "/var/lib/b8g/cas"
-                test "$B8G_CAS_V11_ROOT" = "/var/lib/b8g/cas/v11"
-                test "$BUNDLE_CACHE_PATH" = "/var/lib/b8g/cas/v11/gems"
-                echo "[smoke] holo-ruby OK"
-              '
-              ;;
-            holo-e2e-runner)
-              docker run --rm "${IMAGE}" sh -c '
-                set -eu
-                node -v && gcc --version | head -n 1 && g++ --version | head -n 1 && test -x /bin/holo-pm && /usr/local/bin/holo-e2e-probe --out /tmp/probe.bmp && ls -la /usr/share/vulkan/icd.d/
-                echo "[smoke] holo-e2e-runner OK"
-              '
-              ;;
-            holo-e2e-lite)
-              docker run --rm "${IMAGE}" sh -c '
-                set -eu
-                node -v && git --version && test -x /bin/holo-pm && /usr/local/bin/holo-e2e-probe --out /tmp/probe.bmp
-                test "$B8G_CAS_DIR" = "/var/lib/b8g/cas"
-                test "$B8G_CAS_V11_ROOT" = "/var/lib/b8g/cas/v11"
-                test "$HOLO_E2E_OFFSCREEN" = "1"
-                test "$HOLO_E2E_LITE" = "1"
-                echo "[smoke] holo-e2e-lite OK"
-              '
-              ;;
-          esac
-
-      - name: Build linux/arm64 holo-node image for QEMU smoke test
+      - name: Smoke-test linux/amd64 container
+        env:
+          IMAGE_NAME: ${{ matrix.image }}
+          SMOKE_REF: ghcr.io/awesome-os/${{ matrix.image }}:smoke
+        run: node catalog/oci-smoke.mts --mode base --name "$IMAGE_NAME" --image "$SMOKE_REF"
+      - name: Build linux/arm64 holo-node smoke image
         if: matrix.image == 'holo-node'
         uses: docker/build-push-action@v7
         with:
@@ -185,59 +56,16 @@ jobs:
           load: true
           push: false
           tags: ghcr.io/awesome-os/holo-node:smoke-arm64
-
-      - name: Smoke-test linux/arm64 holo-node container under QEMU
+      - name: Smoke-test linux/arm64 holo-node under QEMU
         if: matrix.image == 'holo-node'
-        run: |
-          IMAGE="ghcr.io/awesome-os/holo-node:smoke-arm64"
-          SIZE="$(docker images --format '{{.Size}}' "${IMAGE}" | head -n 1)"
-          echo "=== IMAGE SIZE (linux/arm64): ${IMAGE} -> ${SIZE} ==="
-          docker run --rm --platform linux/arm64 "${IMAGE}" sh -c '
-            set -eu
-            uname -m
-            NODE_V="$(node -v)"
-            echo "arm64 node -v -> ${NODE_V}"
-            case "${NODE_V}" in
-              v27.*) ;;
-              *) echo "ERROR: expected Node v27.x on linux/arm64, got ${NODE_V}" >&2; exit 1 ;;
-            esac
-            /bin/coreutils --version | head -n 1
-            ls -la /bin/busybox /bin/coreutils /bin/holo-pm /usr/local/bin/holo-node-launcher /etc/ssl/certs/ca-certificates.crt
-            test -x /bin/coreutils
-            test -x /bin/holo-pm
-            test -x /usr/local/bin/holo-node-launcher
-            test "$B8G_CAS_DIR" = "/var/lib/b8g/cas"
-            test "$B8G_CAS_V11_ROOT" = "/var/lib/b8g/cas/v11"
-            echo "[smoke] holo-node linux/arm64 OK (${NODE_V})"
-          '
-
-      - name: Export and publish public E2E OCI tarball (v11-oci-latest)
+        run: node catalog/oci-smoke.mts --mode base --name holo-node --image ghcr.io/awesome-os/holo-node:smoke-arm64 --platform linux/arm64
+      - name: Export and publish E2E OCI tarball (v11-oci-latest)
         if: matrix.image == 'holo-e2e-runner' || matrix.image == 'holo-e2e-lite'
         env:
+          IMAGE_NAME: ${{ matrix.image }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          set -eu
-          IMG="${{ matrix.image }}"
-          TARBALL="/tmp/${IMG}-linux-amd64.oci.tar.gz"
-          SUMFILE="/tmp/SHA512SUMS-${IMG}.txt"
-          docker tag "ghcr.io/awesome-os/${IMG}:smoke" "ghcr.io/awesome-os/${IMG}:latest"
-          docker save "ghcr.io/awesome-os/${IMG}:latest" | gzip -6 > "${TARBALL}"
-          (cd /tmp && sha512sum "${IMG}-linux-amd64.oci.tar.gz" > "SHA512SUMS-${IMG}.txt")
-          ls -lh "${TARBALL}" "${SUMFILE}"
-          cat "${SUMFILE}"
-          if ! gh release view v11-oci-latest --repo awesome-os/dockerimages >/dev/null 2>&1; then
-            gh release create v11-oci-latest \
-              --repo awesome-os/dockerimages \
-              --title "Awesome-OS Holo v11 Public OCI Images (v11-oci-latest)" \
-              --notes "Public SHA-512 verified OCI container bundles for zero-GHCR-auth clean-box Holo-E2E execution." || true
-          fi
-          gh release upload v11-oci-latest \
-            "${TARBALL}" \
-            "${SUMFILE}" \
-            --repo awesome-os/dockerimages \
-            --clobber
-
-      - name: Build & push multi-arch OCI manifest (linux/amd64, linux/arm64)
+        run: node catalog/oci-smoke.mts --mode export-e2e --name "$IMAGE_NAME" --tag v11-oci-latest --repo awesome-os/dockerimages
+      - name: Build & push multi-arch OCI manifest
         uses: docker/build-push-action@v7
         with:
           context: ${{ matrix.image }}
@@ -246,15 +74,7 @@ jobs:
           push: true
           provenance: false
           tags: ghcr.io/awesome-os/${{ matrix.image }}:latest
-
       - name: Verify published multi-arch OCI manifest list
-        run: |
-          IMAGE="ghcr.io/awesome-os/${{ matrix.image }}:latest"
-          RAW="$(docker buildx imagetools inspect --raw "${IMAGE}")"
-          echo "=== OCI MANIFEST LIST: ${IMAGE} ==="
-          docker buildx imagetools inspect "${IMAGE}"
-          printf '%s' "${RAW}" | jq -e '
-            (.manifests | map(.platform.os + "/" + .platform.architecture)) as $p |
-            ($p | index("linux/amd64") != null) and ($p | index("linux/arm64") != null)
-          '
-          echo "[verify] ${IMAGE} confirmed linux/amd64 + linux/arm64"
+        env:
+          LATEST_REF: ghcr.io/awesome-os/${{ matrix.image }}:latest
+        run: node catalog/oci-smoke.mts --mode verify-manifest --image "$LATEST_REF"
